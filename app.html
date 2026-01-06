@@ -11,52 +11,29 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
-  <!-- CSS -->
+  <!-- Existing CSS -->
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="stylesheet" href="assets/css/pages.css">
 
   <style>
-    /* App page layout */
-    .apps-container {
+    /* ZERO redesign — layout correction only */
+
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .apps-toolbar {
+      padding: 20px 40px;
       display: flex;
-      flex-direction: column;
-      height: calc(100vh - 70px); /* subtract top bar */
+      gap: 24px;
     }
 
-    .apps-buttons {
-      padding: 24px;
-      display: flex;
-      gap: 16px;
-    }
-
-    .apps-buttons button {
-      font-family: Orbitron, sans-serif;
-      font-size: 18px;
-      padding: 14px 28px;
-      border-radius: 12px;
-      background: #0ff;
-      color: #000;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 0 18px #00ffff;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    .apps-buttons button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 28px #00ffff;
-    }
-
-    .apps-frame {
-      flex: 1;
-      border-top: 2px solid #00ffff;
-      box-shadow: 0 0 20px #00ffff inset;
-    }
-
-    .apps-frame iframe {
+    .apps-iframe {
       width: 100%;
-      height: 100%;
+      height: calc(100vh - 70px - 88px); /* nav + buttons */
       border: none;
+      display: block;
       background: black;
     }
   </style>
@@ -64,7 +41,7 @@
 
 <body>
 
-  <!-- Top Bar -->
+  <!-- Top Bar (unchanged) -->
   <header class="top-bar">
     <a href="index.html" class="controller-home" title="Home">
       <img src="assets/img/controller.svg" alt="Home">
@@ -80,30 +57,25 @@
     </a>
   </header>
 
-  <!-- Apps Content -->
-  <main class="apps-container">
+  <!-- App Buttons (same style as before) -->
+  <div class="apps-toolbar">
 
-    <!-- App Buttons -->
-    <div class="apps-buttons">
-      <button onclick="loadApp('https://learn.zeptoinitiative.org/')">
-        Zepto
-      </button>
+    <a class="nav-card" onclick="loadApp('https://learn.zeptoinitiative.org/')">
+      <span>Zepto</span>
+    </a>
 
-      <button onclick="loadApp('https://shadow-good.bostoncareercounselor.com/')">
-        Shadow
-      </button>
+    <a class="nav-card" onclick="loadApp('https://shadow-good.bostoncareercounselor.com/')">
+      <span>Shadow</span>
+    </a>
 
-      <button onclick="loadApp('https://trinitypreschoolmp.org/')">
-        Froggies Arcade
-      </button>
-    </div>
+    <a class="nav-card" onclick="loadApp('https://trinitypreschoolmp.org/')">
+      <span>Froggies Arcade</span>
+    </a>
 
-    <!-- Iframe Area -->
-    <div class="apps-frame">
-      <iframe id="appFrame" src=""></iframe>
-    </div>
+  </div>
 
-  </main>
+  <!-- IFRAME: NOW OWNS ALL REMAINING SPACE -->
+  <iframe id="appFrame" class="apps-iframe"></iframe>
 
   <script>
     function loadApp(url) {
