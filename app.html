@@ -1,52 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>G.GUI • Apps</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>G.GUI — Apps</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <link rel="icon" type="image/png" href="assets/img/favicon.png">
-
+  <link rel="icon" type="image/png" href="assets/img/favicon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="stylesheet" href="assets/css/pages.css">
 
   <style>
-    /* HARD GUARANTEES */
     html, body {
       height: 100%;
       margin: 0;
+      background: #000;
+      font-family: 'Orbitron', sans-serif;
+      overflow: hidden;
     }
 
-    .apps-page {
+    /* NAV BAR HEIGHT */
+    .top-bar {
+      height: 64px;
+    }
+
+    /* MAIN AREA UNDER NAV */
+    .app-shell {
       position: absolute;
-      top: 70px; /* same height as top-bar */
+      top: 64px;
       left: 0;
       right: 0;
       bottom: 0;
-      display: flex;
-      flex-direction: column;
+      background: #080808;
     }
 
-    .apps-grid {
-      padding: 24px;
+    /* APP SELECT SCREEN */
+    .app-selector {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .app-selector h1 {
+      color: #9ffcff;
+      font-size: 48px;
+      text-shadow: 0 0 20px #00ffe7;
+      margin: 0;
+    }
+
+    .app-buttons {
       display: flex;
       gap: 20px;
     }
 
-    .apps-frame {
-      flex: 1;
-      width: 100%;
+    .app-buttons button {
+      background: linear-gradient(135deg, #00ffe7, #006666);
       border: none;
-      background: black;
+      padding: 16px 28px;
+      font-size: 18px;
+      border-radius: 14px;
+      cursor: pointer;
+      box-shadow: 0 0 25px #00ffe7aa;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .app-buttons button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 40px #00ffe7;
+    }
+
+    /* IFRAME VIEW */
+    .app-view {
+      position: absolute;
+      inset: 0;
+      display: none;
+    }
+
+    .app-view iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #000;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- Top Bar (unchanged) -->
+  <!-- NAV BAR -->
   <header class="top-bar">
     <a href="index.html" class="controller-home" title="Home">
       <img src="assets/img/controller.svg" alt="Home">
@@ -62,37 +107,36 @@
     </a>
   </header>
 
-  <!-- Everything below nav -->
-  <main class="apps-page">
+  <!-- APP SHELL -->
+  <main class="app-shell">
 
-    <!-- Buttons (same visual system as home) -->
-    <div class="apps-grid">
-      <a class="nav-card" onclick="loadApp('https://learn.zeptoinitiative.org/')">
-        <span>Zepto</span>
-      </a>
+    <!-- APP SELECT -->
+    <div class="app-selector" id="appSelector">
+      <h1>Apps</h1>
 
-      <a class="nav-card" onclick="loadApp('https://shadow-good.bostoncareercounselor.com/')">
-        <span>Shadow</span>
-      </a>
+      <div class="app-buttons">
+        <button onclick="launchApp('https://learn.zeptoinitiative.org/')">
+          Zepto Learning
+        </button>
 
-      <a class="nav-card" onclick="loadApp('https://trinitypreschoolmp.org/')">
-        <span>Froggies Arcade</span>
-      </a>
+        <button onclick="launchApp('https://shadow-good.bostoncareercounselor.com/')">
+          Shadow Good
+        </button>
+      </div>
     </div>
 
-    <!-- IFRAME TAKES ALL REMAINING SPACE -->
-    <iframe
-      id="appFrame"
-      class="apps-frame"
-      loading="lazy"
-      referrerpolicy="no-referrer"
-    ></iframe>
+    <!-- APP VIEW -->
+    <div class="app-view" id="appView">
+      <iframe id="appFrame"></iframe>
+    </div>
 
   </main>
 
   <script>
-    function loadApp(url) {
-      document.getElementById("appFrame").src = url;
+    function launchApp(url) {
+      document.getElementById('appSelector').style.display = 'none';
+      document.getElementById('appView').style.display = 'block';
+      document.getElementById('appFrame').src = url;
     }
   </script>
 
