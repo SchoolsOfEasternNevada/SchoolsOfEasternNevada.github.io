@@ -5,100 +5,93 @@
   <title>G.GUI — Apps</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/img/favicon.png" />
-
-  <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
-  <!-- CSS -->
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="stylesheet" href="assets/css/pages.css">
 
   <style>
-    /* Page layout */
-    body {
+    html, body {
+      height: 100%;
       margin: 0;
       background: #000;
       font-family: 'Orbitron', sans-serif;
-      color: #fff;
       overflow: hidden;
     }
 
-    /* Top bar height MUST match calc below */
+    /* NAV BAR HEIGHT */
     .top-bar {
       height: 64px;
     }
 
-    /* Apps page container */
-    .apps-page {
-      height: calc(100vh - 64px);
+    /* MAIN AREA UNDER NAV */
+    .app-shell {
+      position: absolute;
+      top: 64px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #080808;
+    }
+
+    /* APP SELECT SCREEN */
+    .app-selector {
+      height: 100%;
       display: flex;
       flex-direction: column;
-      padding: 24px;
-      gap: 20px;
-      box-sizing: border-box;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
     }
 
-    /* Header text */
-    .apps-header h1 {
-      font-size: 48px;
-      margin: 0;
+    .app-selector h1 {
       color: #9ffcff;
+      font-size: 48px;
       text-shadow: 0 0 20px #00ffe7;
+      margin: 0;
     }
 
-    .apps-header p {
-      margin-top: 6px;
-      opacity: 0.7;
-    }
-
-    /* App buttons */
-    .apps-buttons {
+    .app-buttons {
       display: flex;
-      gap: 16px;
+      gap: 20px;
     }
 
-    .apps-buttons button {
-      background: linear-gradient(135deg, #00ffe7, #007a7a);
+    .app-buttons button {
+      background: linear-gradient(135deg, #00ffe7, #006666);
       border: none;
-      color: #000;
-      font-family: inherit;
-      font-size: 16px;
-      padding: 12px 22px;
-      border-radius: 12px;
+      padding: 16px 28px;
+      font-size: 18px;
+      border-radius: 14px;
       cursor: pointer;
-      box-shadow: 0 0 20px #00ffe7aa;
+      box-shadow: 0 0 25px #00ffe7aa;
       transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
 
-    .apps-buttons button:hover {
+    .app-buttons button:hover {
       transform: translateY(-2px);
-      box-shadow: 0 0 30px #00ffe7;
+      box-shadow: 0 0 40px #00ffe7;
     }
 
-    /* Iframe wrapper fills remaining space */
-    .app-frame-wrapper {
-      flex: 1;
-      width: 100%;
-      border-radius: 18px;
-      border: 2px solid #00ffe7;
-      box-shadow: 0 0 30px #00ffe7aa;
-      overflow: hidden;
-      background: #000;
+    /* IFRAME VIEW */
+    .app-view {
+      position: absolute;
+      inset: 0;
+      display: none;
     }
 
-    .app-frame-wrapper iframe {
+    .app-view iframe {
       width: 100%;
       height: 100%;
       border: none;
+      background: #000;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- Top Bar -->
+  <!-- NAV BAR -->
   <header class="top-bar">
     <a href="index.html" class="controller-home" title="Home">
       <img src="assets/img/controller.svg" alt="Home">
@@ -114,32 +107,35 @@
     </a>
   </header>
 
-  <!-- Apps Page -->
-  <main class="apps-page">
+  <!-- APP SHELL -->
+  <main class="app-shell">
 
-    <div class="apps-header">
+    <!-- APP SELECT -->
+    <div class="app-selector" id="appSelector">
       <h1>Apps</h1>
-      <p>Launch tools inside G.GUI</p>
+
+      <div class="app-buttons">
+        <button onclick="launchApp('https://learn.zeptoinitiative.org/')">
+          Zepto Learning
+        </button>
+
+        <button onclick="launchApp('https://shadow-good.bostoncareercounselor.com/')">
+          Shadow Good
+        </button>
+      </div>
     </div>
 
-    <div class="apps-buttons">
-      <button onclick="loadApp('https://learn.zeptoinitiative.org/')">
-        Zepto Learning
-      </button>
-
-      <button onclick="loadApp('https://shadow-good.bostoncareercounselor.com/')">
-        Shadow Good
-      </button>
-    </div>
-
-    <div class="app-frame-wrapper">
-      <iframe id="appFrame" src=""></iframe>
+    <!-- APP VIEW -->
+    <div class="app-view" id="appView">
+      <iframe id="appFrame"></iframe>
     </div>
 
   </main>
 
   <script>
-    function loadApp(url) {
+    function launchApp(url) {
+      document.getElementById('appSelector').style.display = 'none';
+      document.getElementById('appView').style.display = 'block';
       document.getElementById('appFrame').src = url;
     }
   </script>
