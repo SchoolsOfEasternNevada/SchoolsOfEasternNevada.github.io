@@ -1,62 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>G.GUI • Apps</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>G.GUI — Apps</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png" />
 
-  <!-- Fonts -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap"
-    rel="stylesheet"
-  >
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
-  <!-- Global + Page CSS -->
+  <!-- CSS -->
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="stylesheet" href="assets/css/pages.css">
 
   <style>
-    /* App page specific (safe inline tweaks) */
-    .app-container {
-      padding: 40px;
+    /* Page layout */
+    body {
+      margin: 0;
+      background: #000;
+      font-family: 'Orbitron', sans-serif;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    /* Top bar height MUST match calc below */
+    .top-bar {
+      height: 64px;
+    }
+
+    /* Apps page container */
+    .apps-page {
+      height: calc(100vh - 64px);
       display: flex;
       flex-direction: column;
-      gap: 30px;
-    }
-
-    .app-buttons {
-      display: flex;
+      padding: 24px;
       gap: 20px;
-      flex-wrap: wrap;
+      box-sizing: border-box;
     }
 
-    .app-btn {
-      padding: 16px 28px;
-      font-family: Orbitron, sans-serif;
-      font-size: 18px;
-      border-radius: 14px;
-      border: 2px solid #00ffe7;
-      background: linear-gradient(135deg, #202124, #00dbff);
-      color: #fff;
+    /* Header text */
+    .apps-header h1 {
+      font-size: 48px;
+      margin: 0;
+      color: #9ffcff;
+      text-shadow: 0 0 20px #00ffe7;
+    }
+
+    .apps-header p {
+      margin-top: 6px;
+      opacity: 0.7;
+    }
+
+    /* App buttons */
+    .apps-buttons {
+      display: flex;
+      gap: 16px;
+    }
+
+    .apps-buttons button {
+      background: linear-gradient(135deg, #00ffe7, #007a7a);
+      border: none;
+      color: #000;
+      font-family: inherit;
+      font-size: 16px;
+      padding: 12px 22px;
+      border-radius: 12px;
       cursor: pointer;
-      box-shadow: 0 0 12px #00ffe799;
-      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 20px #00ffe7aa;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
 
-    .app-btn:hover {
-      transform: scale(1.07);
-      box-shadow: 0 0 22px #00ffe7;
+    .apps-buttons button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px #00ffe7;
     }
 
+    /* Iframe wrapper fills remaining space */
     .app-frame-wrapper {
       flex: 1;
-      border-radius: 16px;
+      width: 100%;
+      border-radius: 18px;
       border: 2px solid #00ffe7;
+      box-shadow: 0 0 30px #00ffe7aa;
       overflow: hidden;
-      box-shadow: 0 0 25px #00ffe7aa;
       background: #000;
     }
 
@@ -64,12 +92,6 @@
       width: 100%;
       height: 100%;
       border: none;
-    }
-
-    .apps-page {
-      min-height: calc(100vh - 120px);
-      display: flex;
-      flex-direction: column;
     }
   </style>
 </head>
@@ -92,50 +114,35 @@
     </a>
   </header>
 
-  <!-- Main Content -->
+  <!-- Apps Page -->
   <main class="apps-page">
 
-    <div class="app-container">
+    <div class="apps-header">
+      <h1>Apps</h1>
+      <p>Launch tools inside G.GUI</p>
+    </div>
 
-      <h1 class="site-title">Apps</h1>
-      <p class="site-subtitle">Launch tools inside G.GUI</p>
+    <div class="apps-buttons">
+      <button onclick="loadApp('https://learn.zeptoinitiative.org/')">
+        Zepto Learning
+      </button>
 
-      <!-- App Buttons -->
-      <div class="app-buttons">
-        <button
-          class="app-btn"
-          onclick="loadApp('https://learn.zeptoinitiative.org/')"
-        >
-          Zepto Learning
-        </button>
+      <button onclick="loadApp('https://shadow-good.bostoncareercounselor.com/')">
+        Shadow Good
+      </button>
+    </div>
 
-        <button
-          class="app-btn"
-          onclick="loadApp('https://shadow-good.bostoncareercounselor.com/')"
-        >
-          Shadow Good
-        </button>
-      </div>
-
-      <!-- Iframe Area -->
-      <div class="app-frame-wrapper">
-        <iframe
-          id="appFrame"
-          src=""
-          allowfullscreen
-        ></iframe>
-      </div>
-
+    <div class="app-frame-wrapper">
+      <iframe id="appFrame" src=""></iframe>
     </div>
 
   </main>
 
   <script>
     function loadApp(url) {
-      document.getElementById("appFrame").src = url;
+      document.getElementById('appFrame').src = url;
     }
   </script>
 
 </body>
 </html>
-
