@@ -5,35 +5,40 @@
   <title>G.GUI • Apps</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
 
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
-  <!-- Existing CSS -->
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="stylesheet" href="assets/css/pages.css">
 
   <style>
-    /* ZERO redesign — layout correction only */
-
-    body {
+    /* HARD GUARANTEES */
+    html, body {
+      height: 100%;
       margin: 0;
-      overflow: hidden;
     }
 
-    .apps-toolbar {
-      padding: 20px 40px;
+    .apps-page {
+      position: absolute;
+      top: 70px; /* same height as top-bar */
+      left: 0;
+      right: 0;
+      bottom: 0;
       display: flex;
-      gap: 24px;
+      flex-direction: column;
     }
 
-    .apps-iframe {
+    .apps-grid {
+      padding: 24px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .apps-frame {
+      flex: 1;
       width: 100%;
-      height: calc(100vh - 70px - 88px); /* nav + buttons */
       border: none;
-      display: block;
       background: black;
     }
   </style>
@@ -57,25 +62,33 @@
     </a>
   </header>
 
-  <!-- App Buttons (same style as before) -->
-  <div class="apps-toolbar">
+  <!-- Everything below nav -->
+  <main class="apps-page">
 
-    <a class="nav-card" onclick="loadApp('https://learn.zeptoinitiative.org/')">
-      <span>Zepto</span>
-    </a>
+    <!-- Buttons (same visual system as home) -->
+    <div class="apps-grid">
+      <a class="nav-card" onclick="loadApp('https://learn.zeptoinitiative.org/')">
+        <span>Zepto</span>
+      </a>
 
-    <a class="nav-card" onclick="loadApp('https://shadow-good.bostoncareercounselor.com/')">
-      <span>Shadow</span>
-    </a>
+      <a class="nav-card" onclick="loadApp('https://shadow-good.bostoncareercounselor.com/')">
+        <span>Shadow</span>
+      </a>
 
-    <a class="nav-card" onclick="loadApp('https://trinitypreschoolmp.org/')">
-      <span>Froggies Arcade</span>
-    </a>
+      <a class="nav-card" onclick="loadApp('https://trinitypreschoolmp.org/')">
+        <span>Froggies Arcade</span>
+      </a>
+    </div>
 
-  </div>
+    <!-- IFRAME TAKES ALL REMAINING SPACE -->
+    <iframe
+      id="appFrame"
+      class="apps-frame"
+      loading="lazy"
+      referrerpolicy="no-referrer"
+    ></iframe>
 
-  <!-- IFRAME: NOW OWNS ALL REMAINING SPACE -->
-  <iframe id="appFrame" class="apps-iframe"></iframe>
+  </main>
 
   <script>
     function loadApp(url) {
