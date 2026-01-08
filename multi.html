@@ -5,83 +5,105 @@
   <title>G.GUI — Multi-Game Websites</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/img/favicon.png" />
-
-  <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
-  <!-- Global Styles -->
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="stylesheet" href="assets/css/pages.css">
 
   <style>
-    body {
+    html, body {
       margin: 0;
+      height: 100%;
       background: #000;
       font-family: 'Orbitron', sans-serif;
-      color: #fff;
+      overflow: hidden;
     }
 
-    /* PAGE HEADER */
-    .page-header {
+    /* NAV HEIGHT */
+    .top-bar {
+      height: 64px;
+    }
+
+    /* MAIN AREA */
+    .multi-shell {
+      position: absolute;
+      top: 64px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 40px;
+      box-sizing: border-box;
+    }
+
+    h1 {
+      color: #ffffff;
       text-align: center;
-      font-size: 36px;
-      margin: 40px 0 30px;
-      text-shadow: 0 0 18px #ffffffaa;
+      margin-bottom: 40px;
+      letter-spacing: 2px;
     }
 
-    /* GRID LAYOUT */
-    .games-grid {
+    /* GRID */
+    .game-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 40px;
-      padding: 0 60px 60px;
     }
 
-    /* GAME CARD */
+    /* CARD */
     .game-card {
       border: 2px solid #ffffff;
-      box-shadow: 0 0 20px #ffffff55;
+      cursor: pointer;
+      box-shadow: 0 0 25px rgba(0,255,231,0.2);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
-      text-decoration: none;
-      color: inherit;
-      background: #000;
     }
 
     .game-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 0 40px #ffffff;
+      transform: translateY(-4px);
+      box-shadow: 0 0 40px rgba(0,255,231,0.6);
     }
 
     .game-image {
-      height: 180px;
-      border-bottom: 2px solid #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #050505;
+      width: 100%;
+      height: 200px;
+      background: #000;
       overflow: hidden;
     }
 
     .game-image img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: cover; /* 🔥 FIX #1 */
+      display: block;
     }
 
     .game-title {
-      padding: 10px;
-      text-align: center;
-      font-size: 16px;
       border-top: 2px solid #ffffff;
+      padding: 12px;
+      text-align: center;
+      color: #ffffff;
+      background: #000;
+    }
+
+    /* IFRAME VIEW */
+    .iframe-view {
+      position: absolute;
+      inset: 0;
+      display: none;
+      background: #000;
+    }
+
+    .iframe-view iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- TOP NAV BAR -->
+  <!-- NAV BAR -->
   <header class="top-bar">
     <a href="index.html" class="controller-home" title="Home">
       <img src="assets/img/controller.svg" alt="Home">
@@ -97,49 +119,43 @@
     </a>
   </header>
 
-  <!-- PAGE TITLE -->
-  <h1 class="page-header">Multi-Game Websites</h1>
+  <!-- MAIN -->
+  <main class="multi-shell">
 
-  <!-- GAME GRID -->
-  <section class="games-grid">
+    <!-- GRID VIEW -->
+    <section id="gridView">
+      <h1>Multi-Game Websites</h1>
 
-    <!-- GAME CARD 1 -->
-    <a
-      href="https://gr4ys0n.github.io"
-      target="_blank"
-      class="game-card"
-    >
-      <div class="game-image">
-        <img src="assets/img/gr4ys0n.png" alt="gr4ys0n.github.io">
+      <div class="game-grid">
+
+        <!-- GAME CARD -->
+        <div class="game-card"
+             onclick="openSite('https://gr4ys0n.github.io')">
+          <div class="game-image">
+            <img src="assets/img/gr4ys0n.png" alt="gr4ys0n">
+          </div>
+          <div class="game-title">gr4ys0n.github.io</div>
+        </div>
+
+        <!-- ADD MORE CARDS BELOW -->
+
       </div>
-      <div class="game-title">gr4ys0n.github.io</div>
-    </a>
+    </section>
 
-    <!-- GAME CARD 2 (placeholder) -->
-    <div class="game-card">
-      <div class="game-image">
-        Image of game<br>INSERT HERE
-      </div>
-      <div class="game-title">Example Game Website</div>
-    </div>
+    <!-- IFRAME VIEW -->
+    <section class="iframe-view" id="iframeView">
+      <iframe id="siteFrame"></iframe>
+    </section>
 
-    <!-- GAME CARD 3 (placeholder) -->
-    <div class="game-card">
-      <div class="game-image">
-        Image of game<br>INSERT HERE
-      </div>
-      <div class="game-title">Example Game Website</div>
-    </div>
+  </main>
 
-    <!-- GAME CARD 4 (placeholder) -->
-    <div class="game-card">
-      <div class="game-image">
-        Image of game<br>INSERT HERE
-      </div>
-      <div class="game-title">Example Game Website</div>
-    </div>
-
-  </section>
+  <script>
+    function openSite(url) {
+      document.getElementById('gridView').style.display = 'none';
+      document.getElementById('iframeView').style.display = 'block';
+      document.getElementById('siteFrame').src = url;
+    }
+  </script>
 
 </body>
 </html>
