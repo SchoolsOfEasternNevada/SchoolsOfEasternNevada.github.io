@@ -1,24 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>G.GUI • Multi-Game</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>G.GUI — Multi-Game</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="assets/img/favicon.png">
-
-  <!-- Fonts -->
+  <link rel="icon" type="image/png" href="assets/img/favicon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
-  <!-- Global + Page CSS -->
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="stylesheet" href="assets/css/pages.css">
+
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      font-family: 'Orbitron', sans-serif;
+      color: #fff;
+    }
+
+    /* PAGE HEADER */
+    .page-title {
+      text-align: center;
+      font-size: 32px;
+      margin: 40px 0 20px;
+      text-shadow: 0 0 15px #00ffe7;
+    }
+
+    .divider {
+      width: 90%;
+      height: 2px;
+      margin: 0 auto 40px;
+      background: linear-gradient(to right, transparent, #00ffe7, transparent);
+      box-shadow: 0 0 12px #00ffe7;
+    }
+
+    /* GRID */
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px;
+      width: 90%;
+      max-width: 1100px;
+      margin: 0 auto 60px;
+    }
+
+    /* CARD */
+    .game-card {
+      border: 2px solid #fff;
+      box-shadow: 0 0 20px #00ffe733;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+    }
+
+    .game-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 35px #00ffe7;
+    }
+
+    .game-image {
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 18px;
+      line-height: 1.4;
+    }
+
+    .game-title {
+      border-top: 2px solid #fff;
+      padding: 10px;
+      text-align: center;
+      font-size: 16px;
+      background: #000;
+    }
+
+    @media (max-width: 800px) {
+      .game-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-  <!-- Top Bar -->
+  <!-- NAV BAR -->
   <header class="top-bar">
     <a href="index.html" class="controller-home" title="Home">
       <img src="assets/img/controller.svg" alt="Home">
@@ -34,24 +102,42 @@
     </a>
   </header>
 
-  <!-- Main Content -->
-  <main class="page multi-page coming-soon-page">
+  <!-- TITLE -->
+  <h1 class="page-title">Multi-Game Websites</h1>
+  <div class="divider"></div>
 
-    <h1 class="page-title">Multi-Game Websites</h1>
-    <p class="page-subtitle">
-      This section is under construction.
-    </p>
+  <!-- GRID -->
+  <section class="game-grid">
 
-    <div class="coming-soon-box">
-      <span class="coming-soon-text">COMING SOON</span>
+    <div class="game-card">
+      <div class="game-image">
+        Image of game<br>INSERT HERE
+      </div>
+      <div class="game-title">Example Game Website</div>
     </div>
 
-  </main>
+    <div class="game-card">
+      <div class="game-image">
+        Image of game<br>INSERT HERE
+      </div>
+      <div class="game-title">Example Game Website</div>
+    </div>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <span>G.GUI Project • Multi-Game</span>
-  </footer>
+    <div class="game-card">
+      <div class="game-image">
+        Image of game<br>INSERT HERE
+      </div>
+      <div class="game-title">Example Game Website</div>
+    </div>
+
+    <div class="game-card">
+      <div class="game-image">
+        Image of game<br>INSERT HERE
+      </div>
+      <div class="game-title">Example Game Website</div>
+    </div>
+
+  </section>
 
 </body>
 </html>
