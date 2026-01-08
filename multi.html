@@ -8,63 +8,133 @@
   <link rel="icon" type="image/png" href="assets/img/favicon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="assets/css/main.css">
-  <link rel="stylesheet" href="assets/css/pages.css">
-
   <style>
-    /* PAGE WRAPPER TO PREVENT FULL-WIDTH STRETCH */
-    .page-wrap {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 80px 20px;
+    * {
+      box-sizing: border-box;
     }
 
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: #000;
+      font-family: 'Orbitron', sans-serif;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    /* NAV BAR */
+    .top-bar {
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      border-bottom: 1px solid #00ffe7;
+    }
+
+    .top-bar img {
+      height: 32px;
+    }
+
+    .discord-btn {
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid #fff;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    /* MAIN AREA */
+    .page {
+      position: absolute;
+      top: 64px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 40px;
+      overflow-y: auto;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 36px;
+      color: #9ffcff;
+      text-shadow: 0 0 20px #00ffe7;
+    }
+
+    /* GRID */
     .game-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 40px;
+      justify-items: center;
     }
 
+    /* GAME CARD */
     .game-card {
+      width: 100%;
+      max-width: 520px; /* <<< FIXES THE GIANT BUTTON ISSUE */
       border: 2px solid #9ffcff;
-      box-shadow: 0 0 20px #00ffe766;
+      box-shadow: 0 0 25px #00ffe7aa;
       cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
 
-    /* IMAGE FRAME LOCKED */
-    .game-image {
+    .game-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 40px #00ffe7;
+    }
+
+    .game-thumb {
       width: 100%;
       aspect-ratio: 16 / 9;
-      overflow: hidden;
       background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
     }
 
-    .game-image img {
+    .game-thumb img {
       width: 100%;
       height: 100%;
-      object-fit: contain; /* 👈 KEY HTML-LEVEL FIX */
+      object-fit: contain; /* <<< NO CROPPING */
     }
 
-    .game-label {
-      padding: 12px;
+    .game-title {
       text-align: center;
-      color: #9ffcff;
-      background: #000;
+      padding: 10px;
       border-top: 2px solid #9ffcff;
+      font-size: 14px;
     }
 
-    /* IFRAME MODE */
+    /* IFRAME VIEW */
     .iframe-view {
-      position: fixed;
-      inset: 64px 0 0 0;
-      display: none;
+      position: absolute;
+      inset: 0;
       background: #000;
+      display: none;
     }
 
     .iframe-view iframe {
       width: 100%;
       height: 100%;
       border: none;
+    }
+
+    .back-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 10;
+      background: #000;
+      color: #9ffcff;
+      border: 1px solid #9ffcff;
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -73,32 +143,29 @@
 
   <!-- NAV BAR -->
   <header class="top-bar">
-    <a href="index.html" class="controller-home">
+    <a href="index.html">
       <img src="assets/img/controller.svg" alt="Home">
     </a>
 
-    <a
-      href="https://discord.gg/AC5nAtdd"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="discord-btn"
-    >
+    <a href="https://discord.gg/AC5nAtdd" target="_blank" class="discord-btn">
       Discord
     </a>
   </header>
 
   <!-- PAGE CONTENT -->
-  <main class="page-wrap" id="gridView">
-    <h1 class="site-title" style="text-align:center;">Multi-Game Websites</h1>
+  <main class="page" id="selectorView">
+    <h1>Multi-Game Websites</h1>
 
     <div class="game-grid">
 
       <!-- GAME CARD -->
-      <div class="game-card" onclick="openSite('https://gr4ys0n.github.io')">
-        <div class="game-image">
-          <img src="assets/img/gr4ys0n.png" alt="gr4ys0n.github.io">
+      <div class="game-card" onclick="launchSite('https://gr4ys0n.github.io')">
+        <div class="game-thumb">
+          <img src="assets/img/gr4ys0n.png" alt="gr4ys0n">
         </div>
-        <div class="game-label">gr4ys0n.github.io</div>
+        <div class="game-title">
+          gr4ys0n.github.io
+        </div>
       </div>
 
     </div>
@@ -106,14 +173,21 @@
 
   <!-- IFRAME VIEW -->
   <div class="iframe-view" id="iframeView">
+    <button class="back-btn" onclick="closeIframe()">← Back</button>
     <iframe id="siteFrame"></iframe>
   </div>
 
   <script>
-    function openSite(url) {
-      document.getElementById('gridView').style.display = 'none';
+    function launchSite(url) {
+      document.getElementById('selectorView').style.display = 'none';
       document.getElementById('iframeView').style.display = 'block';
       document.getElementById('siteFrame').src = url;
+    }
+
+    function closeIframe() {
+      document.getElementById('siteFrame').src = '';
+      document.getElementById('iframeView').style.display = 'none';
+      document.getElementById('selectorView').style.display = 'block';
     }
   </script>
 
