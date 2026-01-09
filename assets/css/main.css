@@ -23,8 +23,6 @@ html, body {
   justify-content: space-between;
   border-bottom: 1px solid rgba(0, 255, 255, 0.3);
   box-shadow: 0 0 12px rgba(0, 255, 255, 0.2);
-  background: transparent;
-  z-index: 20;
 }
 
 .controller-home img {
@@ -68,7 +66,7 @@ html, body {
   margin-bottom: 40px;
 }
 
-/* ===== Navigation Cards (Homepage) ===== */
+/* ===== Navigation Cards ===== */
 .nav-grid {
   display: flex;
   gap: 40px;
@@ -107,88 +105,4 @@ html, body {
   text-align: center;
   opacity: 0.5;
   font-size: 12px;
-}
-
-/* ========================================================= */
-/* ================= MULTI-GAME PAGE ======================= */
-/* ========================================================= */
-
-.multi-page {
-  height: calc(100vh - 60px);
-  padding: 32px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-}
-
-.multi-grid {
-  width: 100%;
-  max-width: 900px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 28px;
-}
-
-/* ===== Game Card ===== */
-.game-card {
-  background: #050505;
-  border: 2px solid rgba(0, 255, 255, 0.55);
-  border-radius: 16px;
-  overflow: hidden;
-  cursor: pointer;
-  box-shadow: 0 0 18px rgba(0, 255, 255, 0.35);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.game-card:hover {
-  transform: translateY(-4px) scale(1.03);
-  box-shadow: 0 0 30px rgba(0, 255, 255, 0.85);
-}
-
-/* ===== Thumbnail ===== */
-.game-thumb {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  background: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.game-thumb img {
-  max-width: 90%;
-  max-height: 90%;
-  object-fit: contain;
-  filter: drop-shadow(0 0 12px #00ffff);
-}
-
-/* ===== Title ===== */
-.game-title {
-  padding: 8px;
-  text-align: center;
-  font-size: 13px;
-  letter-spacing: 1px;
-  background: rgba(0, 0, 0, 0.65);
-}
-
-/* ========================================================= */
-/* ================= IFRAME VIEW =========================== */
-/* ========================================================= */
-
-.iframe-view {
-  position: fixed;
-  top: 60px;
-  left: 0;
-  width: 100%;
-  height: calc(100vh - 60px);
-  background: #000;
-  display: none;
-  z-index: 15;
-}
-
-.iframe-view iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-  background: #000;
 }
