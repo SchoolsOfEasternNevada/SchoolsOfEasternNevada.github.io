@@ -8,47 +8,21 @@
   <link rel="icon" type="image/png" href="assets/img/favicon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+  <link rel="stylesheet" href="assets/css/main.css">
 
+  <style>
     html, body {
-      margin: 0;
       height: 100%;
+      margin: 0;
       background: #000;
       font-family: 'Orbitron', sans-serif;
-      color: #fff;
       overflow: hidden;
     }
 
-    /* NAV BAR */
-    .top-bar {
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 20px;
-      border-bottom: 1px solid #00ffe7;
-    }
-
-    .top-bar img {
-      height: 32px;
-    }
-
-    .discord-btn {
-      color: #fff;
-      text-decoration: none;
-      border: 1px solid #fff;
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 14px;
-    }
-
-    /* MAIN AREA */
+    /* PAGE AREA UNDER NAV */
     .page {
       position: absolute;
-      top: 64px;
+      top: 60px;
       left: 0;
       right: 0;
       bottom: 0;
@@ -58,33 +32,34 @@
 
     h1 {
       text-align: center;
+      font-size: 42px;
       margin-bottom: 40px;
-      font-size: 36px;
       color: #9ffcff;
-      text-shadow: 0 0 20px #00ffe7;
+      text-shadow: 0 0 25px #00ffff;
     }
 
     /* GRID */
     .game-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 40px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 36px;
       justify-items: center;
     }
 
-    /* GAME CARD */
+    /* CARD */
     .game-card {
       width: 100%;
-      max-width: 520px;
-      border: 2px solid #9ffcff;
-      box-shadow: 0 0 25px #00ffe7aa;
+      max-width: 320px;
+      border: 2px solid rgba(0,255,255,0.7);
+      box-shadow: 0 0 18px rgba(0,255,255,0.4);
       cursor: pointer;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      background: #050505;
     }
 
     .game-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 0 40px #00ffe7;
+      box-shadow: 0 0 35px rgba(0,255,255,0.9);
     }
 
     .game-thumb {
@@ -98,22 +73,23 @@
     }
 
     .game-thumb img {
-      width: 100%;
-      height: 100%;
+      max-width: 90%;
+      max-height: 90%;
       object-fit: contain;
     }
 
     .game-title {
+      padding: 12px;
       text-align: center;
-      padding: 10px;
-      border-top: 2px solid #9ffcff;
       font-size: 14px;
+      border-top: 2px solid rgba(0,255,255,0.6);
+      color: #fff;
     }
 
-    /* IFRAME VIEW */
+    /* IFRAME MODE */
     .iframe-view {
       position: absolute;
-      inset: 0;
+      inset: 60px 0 0 0;
       background: #000;
       display: none;
     }
@@ -131,28 +107,38 @@
       z-index: 10;
       background: #000;
       color: #9ffcff;
-      border: 1px solid #9ffcff;
-      padding: 8px 14px;
-      border-radius: 8px;
+      border: 2px solid #9ffcff;
+      padding: 8px 16px;
+      border-radius: 10px;
       cursor: pointer;
+      box-shadow: 0 0 12px #00ffff;
+    }
+
+    .back-btn:hover {
+      box-shadow: 0 0 25px #00ffff;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- NAV BAR -->
+  <!-- TOP BAR -->
   <header class="top-bar">
-    <a href="index.html">
+    <a href="index.html" class="controller-home">
       <img src="assets/img/controller.svg" alt="Home">
     </a>
 
-    <a href="https://discord.gg/AC5nAtdd" target="_blank" class="discord-btn">
+    <a
+      href="https://discord.gg/AC5nAtdd"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="discord-btn"
+    >
       Discord
     </a>
   </header>
 
-  <!-- PAGE CONTENT -->
+  <!-- SELECTOR VIEW -->
   <main class="page" id="selectorView">
     <h1>Multi-Game Websites</h1>
 
@@ -163,9 +149,7 @@
         <div class="game-thumb">
           <img src="assets/img/gr4ys0n.png" alt="gr4ys0n">
         </div>
-        <div class="game-title">
-          gr4ys0n.github.io
-        </div>
+        <div class="game-title">gr4ys0n.github.io</div>
       </div>
 
       <!-- Tomb of the Mask -->
@@ -173,17 +157,19 @@
         <div class="game-thumb">
           <img src="assets/img/tomb.png" alt="Tomb of the Mask">
         </div>
-        <div class="game-title">
-          tomb-of-the-mask
+        <div class="game-title">Tomb of the Mask</div>
+      </div>
+
+      <!-- Bendover -->
+      <div class="game-card" onclick="launchSite('https://bendover111222333444.github.io')">
+        <div class="game-thumb">
+          <img src="assets/img/bendover.png" alt="Bendover">
         </div>
+        <div class="game-title">bendover111222333444.github.io</div>
       </div>
 
     </div>
   </main>
-    <!-- Bendover -->
-
-
-  
 
   <!-- IFRAME VIEW -->
   <div class="iframe-view" id="iframeView">
