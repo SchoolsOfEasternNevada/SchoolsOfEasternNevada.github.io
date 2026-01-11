@@ -1,1 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>G.GUI — Single-Game Websites</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="icon" type="image/png" href="assets/img/favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/main.css">
+
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: #000;
+      font-family: 'Orbitron', sans-serif;
+      overflow: hidden;
+    }
+
+    .page {
+      position: absolute;
+      top: 60px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 40px;
+      overflow-y: auto;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 42px;
+      margin-bottom: 40px;
+      color: #9ffcff;
+      text-shadow: 0 0 25px #00ffff;
+    }
+
+    /* GRID — 3 PER ROW */
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 36px;
+      justify-items: center;
+    }
+
+    @media (max-width: 1100px) {
+      .game-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 700px) {
+      .game-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .game-card {
+      width: 100%;
+      max-width: 320px;
+      background: #050505;
+      border: 2px solid rgba(0,255,255,0.7);
+      box-shadow: 0 0 18px rgba(0,255,255,0.4);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .game-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 35px rgba(0,255,255,0.9);
+    }
+
+    .game-thumb {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .game-thumb img {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+    }
+
+    .game-title {
+      padding: 12px;
+      text-align: center;
+      font-size: 14px;
+      border-top: 2px solid rgba(0,255,255,0.6);
+      color: #fff;
+    }
+
+    .iframe-view {
+      position: absolute;
+      inset: 60px 0 0 0;
+      background: #000;
+      display: none;
+    }
+
+    .iframe-view iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .back-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 10;
+      background: #000;
+      color: #9ffcff;
+      border: 2px solid #9ffcff;
+      padding: 8px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 0 12px #00ffff;
+    }
+
+    .back-btn:hover {
+      box-shadow: 0 0 25px #00ffff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- TOP BAR -->
+  <header class="top-bar">
+    <a href="index.html" class="controller-home">
+      <img src="assets/img/controller.svg" alt="Home">
+    </a>
+
+    <a href="https://discord.gg/AC5nAtdd" target="_blank" class="discord-btn">
+      Discord
+    </a>
+  </header>
+
+  <!-- SELECTOR VIEW -->
+  <main class="page" id="selectorView">
+    <h1>Single-Game Websites</h1>
+
+    <div class="game-grid">
+
+      <!-- EXAMPLE SINGLE GAME (replace / duplicate this) -->
+      <div class="game-card" onclick="launchSite('https://example.com')">
+        <div class="game-thumb">
+          <img src="assets/img/placeholder.png" alt="Example Game">
+        </div>
+        <div class="game-title">Example Game</div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- IFRAME VIEW -->
+  <div class="iframe-view" id="iframeView">
+    <button class="back-btn" onclick="closeIframe()">← Back</button>
+    <iframe id="siteFrame"></iframe>
+  </div>
+
+  <script>
+    function launchSite(url) {
+      document.getElementById('selectorView').style.display = 'none';
+      document.getElementById('iframeView').style.display = 'block';
+      document.getElementById('siteFrame').src = url;
+    }
+
+    function closeIframe() {
+      document.getElementById('siteFrame').src = '';
+      document.getElementById('iframeView').style.display = 'none';
+      document.getElementById('selectorView').style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>
 
