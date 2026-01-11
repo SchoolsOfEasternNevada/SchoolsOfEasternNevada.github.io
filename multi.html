@@ -18,7 +18,6 @@
       overflow: hidden;
     }
 
-    /* PAGE AREA UNDER NAV */
     .page {
       position: absolute;
       top: 60px;
@@ -37,38 +36,34 @@
       text-shadow: 0 0 25px #00ffff;
     }
 
-    /* GRID — EXACTLY 3 PER ROW */
+    /* GRID — 3 PER ROW */
     .game-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 36px;
       justify-items: center;
-      max-width: 1200px;
-      margin: 0 auto;
     }
 
-    /* RESPONSIVE FALLBACKS */
-    @media (max-width: 900px) {
+    @media (max-width: 1100px) {
       .game-grid {
         grid-template-columns: repeat(2, 1fr);
       }
     }
 
-    @media (max-width: 520px) {
+    @media (max-width: 700px) {
       .game-grid {
         grid-template-columns: 1fr;
       }
     }
 
-    /* CARD */
     .game-card {
       width: 100%;
       max-width: 320px;
+      background: #050505;
       border: 2px solid rgba(0,255,255,0.7);
       box-shadow: 0 0 18px rgba(0,255,255,0.4);
       cursor: pointer;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
-      background: #050505;
     }
 
     .game-card:hover {
@@ -100,7 +95,6 @@
       color: #fff;
     }
 
-    /* IFRAME MODE */
     .iframe-view {
       position: absolute;
       inset: 60px 0 0 0;
@@ -127,80 +121,86 @@
       cursor: pointer;
       box-shadow: 0 0 12px #00ffff;
     }
-
-    .back-btn:hover {
-      box-shadow: 0 0 25px #00ffff;
-    }
   </style>
 </head>
 
 <body>
 
-  <!-- TOP BAR -->
-  <header class="top-bar">
-    <a href="index.html" class="controller-home">
-      <img src="assets/img/controller.svg" alt="Home">
-    </a>
+<header class="top-bar">
+  <a href="index.html" class="controller-home">
+    <img src="assets/img/controller.svg" alt="Home">
+  </a>
+  <a href="https://discord.gg/AC5nAtdd" target="_blank" class="discord-btn">Discord</a>
+</header>
 
-    <a
-      href="https://discord.gg/AC5nAtdd"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="discord-btn"
-    >
-      Discord
-    </a>
-  </header>
+<main class="page" id="selectorView">
+  <h1>Multi-Game Websites</h1>
 
-  <!-- SELECTOR VIEW -->
-  <main class="page" id="selectorView">
-    <h1>Multi-Game Websites</h1>
+  <div class="game-grid">
 
-    <div class="game-grid">
-
-      <div class="game-card" onclick="launchSite('https://gr4ys0n.github.io')">
-        <div class="game-thumb">
-          <img src="assets/img/gr4ys0n.png" alt="gr4ys0n">
-        </div>
-        <div class="game-title">gr4ys0n.github.io</div>
-      </div>
-
-      <div class="game-card" onclick="launchSite('https://tomb-of-the-mask.bitbucket.io')">
-        <div class="game-thumb">
-          <img src="assets/img/tomb.png" alt="Tomb of the Mask">
-        </div>
-        <div class="game-title">Tomb of the Mask</div>
-      </div>
-
-      <div class="game-card" onclick="launchSite('https://bendover111222333444.github.io')">
-        <div class="game-thumb">
-          <img src="assets/img/bendover.png" alt="Bendover">
-        </div>
-        <div class="game-title">bendover111222333444.github.io</div>
-      </div>
-
+    <!-- Existing / earlier -->
+    <div class="game-card" onclick="launchSite('https://gr4ys0n.github.io')">
+      <div class="game-thumb"><img src="assets/img/gr4ys0n.png"></div>
+      <div class="game-title">gr4ys0n.github.io</div>
     </div>
-  </main>
 
-  <!-- IFRAME VIEW -->
-  <div class="iframe-view" id="iframeView">
-    <button class="back-btn" onclick="closeIframe()">← Back</button>
-    <iframe id="siteFrame"></iframe>
+    <div class="game-card" onclick="launchSite('https://tomb-of-the-mask.bitbucket.io')">
+      <div class="game-thumb"><img src="assets/img/tomb.png"></div>
+      <div class="game-title">Tomb of the Mask</div>
+    </div>
+
+    <!-- Added sites -->
+    <div class="game-card" onclick="launchSite('https://polytrack.bitbucket.io/')">
+      <div class="game-thumb"><img src="assets/img/polytrack.png"></div>
+      <div class="game-title">PolyTrack</div>
+    </div>
+
+    <div class="game-card" onclick="launchSite('https://topvaz86.github.io/')">
+      <div class="game-thumb"><img src="assets/img/topvaz.png"></div>
+      <div class="game-title">TopVAZ</div>
+    </div>
+
+    <div class="game-card" onclick="launchSite('https://bendover111222333444.github.io/')">
+      <div class="game-thumb"><img src="assets/img/bendover.png"></div>
+      <div class="game-title">Bendover</div>
+    </div>
+
+    <div class="game-card" onclick="launchSite('https://classroomgame.github.io/')">
+      <div class="game-thumb"><img src="assets/img/classroomgame.png"></div>
+      <div class="game-title">CLSRM Games</div>
+    </div>
+
+    <div class="game-card" onclick="launchSite('https://basket-randoms.github.io')">
+      <div class="game-thumb"><img src="assets/img/basket.png"></div>
+      <div class="game-title">BasketRNDM</div>
+    </div>
+
+    <div class="game-card" onclick="launchSite('https://classroomaccess1.github.io/')">
+      <div class="game-thumb"><img src="assets/img/classroomaccess.png"></div>
+      <div class="game-title">CLSRM Access Games</div>
+    </div>
+
   </div>
+</main>
 
-  <script>
-    function launchSite(url) {
-      document.getElementById('selectorView').style.display = 'none';
-      document.getElementById('iframeView').style.display = 'block';
-      document.getElementById('siteFrame').src = url;
-    }
+<div class="iframe-view" id="iframeView">
+  <button class="back-btn" onclick="closeIframe()">← Back</button>
+  <iframe id="siteFrame"></iframe>
+</div>
 
-    function closeIframe() {
-      document.getElementById('siteFrame').src = '';
-      document.getElementById('iframeView').style.display = 'none';
-      document.getElementById('selectorView').style.display = 'block';
-    }
-  </script>
+<script>
+  function launchSite(url) {
+    document.getElementById('selectorView').style.display = 'none';
+    document.getElementById('iframeView').style.display = 'block';
+    document.getElementById('siteFrame').src = url;
+  }
+
+  function closeIframe() {
+    document.getElementById('siteFrame').src = '';
+    document.getElementById('iframeView').style.display = 'none';
+    document.getElementById('selectorView').style.display = 'block';
+  }
+</script>
 
 </body>
 </html>
