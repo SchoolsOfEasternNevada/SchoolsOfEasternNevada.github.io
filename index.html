@@ -17,9 +17,59 @@
   <!-- Global + Page CSS -->
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="stylesheet" href="assets/css/pages.css">
+
+  <style>
+    /* ===== STARTUP OVERLAY (INDEX ONLY) ===== */
+    .startup-screen {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      animation: startupFadeOut 1s ease forwards;
+      animation-delay: 2.2s;
+    }
+
+    .startup-logo {
+      font-size: 64px;
+      letter-spacing: 6px;
+      color: #9ffcff;
+      text-shadow: 0 0 30px #00ffff;
+      animation: glowPulse 1.5s ease-in-out infinite;
+    }
+
+    .startup-sub {
+      margin-top: 12px;
+      font-size: 14px;
+      opacity: 0.7;
+      letter-spacing: 2px;
+    }
+
+    @keyframes glowPulse {
+      0% { text-shadow: 0 0 20px #00ffff; }
+      50% { text-shadow: 0 0 45px #00ffff; }
+      100% { text-shadow: 0 0 20px #00ffff; }
+    }
+
+    @keyframes startupFadeOut {
+      to {
+        opacity: 0;
+        pointer-events: none;
+      }
+    }
+  </style>
 </head>
 
 <body>
+
+  <!-- STARTUP ANIMATION (ONLY INDEX) -->
+  <div class="startup-screen">
+    <div class="startup-logo">G.GUI</div>
+    <div class="startup-sub">SYSTEM INITIALIZING</div>
+  </div>
 
   <!-- Top Bar -->
   <header class="top-bar">
@@ -39,7 +89,6 @@
 
   <!-- Main Content -->
   <main class="home">
-
     <h1 class="site-title">G.GUI</h1>
     <p class="site-subtitle">Gamers GUI</p>
 
@@ -64,7 +113,6 @@
       </a>
 
     </div>
-
   </main>
 
   <!-- Footer -->
