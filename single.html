@@ -36,7 +36,6 @@
       text-shadow: 0 0 25px #00ffff;
     }
 
-    /* GRID — 3 PER ROW */
     .game-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -45,15 +44,11 @@
     }
 
     @media (max-width: 1100px) {
-      .game-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      .game-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     @media (max-width: 700px) {
-      .game-grid {
-        grid-template-columns: 1fr;
-      }
+      .game-grid { grid-template-columns: 1fr; }
     }
 
     .game-card {
@@ -130,54 +125,105 @@
 
 <body>
 
-  <!-- TOP BAR -->
-  <header class="top-bar">
-    <a href="index.html" class="controller-home">
-      <img src="assets/img/controller.svg" alt="Home">
-    </a>
+<header class="top-bar">
+  <a href="index.html" class="controller-home">
+    <img src="assets/img/controller.svg" alt="Home">
+  </a>
+  <a href="https://discord.gg/AC5nAtdd" target="_blank" class="discord-btn">Discord</a>
+</header>
 
-    <a href="https://discord.gg/AC5nAtdd" target="_blank" class="discord-btn">
-      Discord
-    </a>
-  </header>
+<main class="page" id="selectorView">
+  <h1>Single-Game Websites</h1>
 
-  <!-- SELECTOR VIEW -->
-  <main class="page" id="selectorView">
-    <h1>Single-Game Websites</h1>
+  <div class="game-grid">
 
-    <div class="game-grid">
-
-      <!-- EXAMPLE SINGLE GAME (replace / duplicate this) -->
-      <div class="game-card" onclick="launchSite('https://example.com')">
-        <div class="game-thumb">
-          <img src="assets/img/placeholder.png" alt="Example Game">
-        </div>
-        <div class="game-title">Example Game</div>
-      </div>
-
+    <!-- EaglerCraft -->
+    <div class="game-card" onclick="launchSite('https://eaglercraftextras.github.io/')">
+      <div class="game-thumb"><img src="assets/img/placeholder.png"></div>
+      <div class="game-title">EaglerCraft</div>
     </div>
-  </main>
 
-  <!-- IFRAME VIEW -->
-  <div class="iframe-view" id="iframeView">
-    <button class="back-btn" onclick="closeIframe()">← Back</button>
-    <iframe id="siteFrame"></iframe>
+    <div class="game-card" onclick="launchSite('https://eaglerschool.github.io')">
+      <div class="game-thumb"><img src="assets/img/placeholder.png"></div>
+      <div class="game-title">EaglerCraft (Alt)</div>
+    </div>
+
+    <div class="game-card" onclick="launchSite('https://bitstore1612.github.io/g9/class-584/')">
+      <div class="game-thumb"><img src="assets/img/placeholder.png"></div>
+      <div class="game-title">Gold Miner</div>
+    </div>
+
+    <div class="game-card" onclick="launchSite('https://nurgak.github.io/Cube-engine/')">
+      <div class="game-thumb"><img src="assets/img/placeholder.png"></div>
+      <div class="game-title">Cube Engine</div>
+    </div>
+
+    <div class="game-card" onclick="launchSite('https://demonixis.github.io/Maze3D/')">
+      <div class="game-thumb"><img src="assets/img/placeholder.png"></div>
+      <div class="game-title">3D Maze</div>
+    </div>
+
+    <div class="game-card" onclick="launchSite('https://wwwtyro.github.io/Astray/')">
+      <div class="game-thumb"><img src="assets/img/placeholder.png"></div>
+      <div class="game-title">Astray</div>
+    </div>
+
+    <div class="game-card" onclick="launchSite('https://antila.github.io/ludum-dare-28/')">
+      <div class="game-thumb"><img src="assets/img/placeholder.png"></div>
+      <div class="game-title">Monkey Code</div>
+    </div>
+
+    <div class="game-card" onclick="launchSite('https://thepond.zolmeister.com/')">
+      <div class="game-thumb"><img src="assets/img/placeholder.png"></div>
+      <div class="game-title">The Pond</div>
+    </div>
+
+    <div class="game-card" onclick="launchSite('https://lulea.github.io/game-off-2012/')">
+      <div class="game-thumb"><img src="assets/img/placeholder.png"></div>
+      <div class="game-title">Zoko</div>
+    </div>
+
+    <div class="game-card" onclick="launchSite('https://zop.zolmeister.com/')">
+      <div class="game-thumb"><img src="assets/img/placeholder.png"></div>
+      <div class="game-title">Zopzolmeister</div>
+    </div>
+
+    <div class="game-card" onclick="launchSite('https://fernjager.github.io/game-off-2013/index.html')">
+      <div class="game-thumb"><img src="assets/img/placeholder.png"></div>
+      <div class="game-title">Turkey Simulator</div>
+    </div>
+
+    <div class="game-card" onclick="launchSite('https://particle-clicker.web.cern.ch/')">
+      <div class="game-thumb"><img src="assets/img/placeholder.png"></div>
+      <div class="game-title">Particle Clicker</div>
+    </div>
+
+    <div class="game-card" onclick="launchSite('https://cykod.github.io/AlienInvasion/')">
+      <div class="game-thumb"><img src="assets/img/placeholder.png"></div>
+      <div class="game-title">Alien Invasion</div>
+    </div>
+
   </div>
+</main>
 
-  <script>
-    function launchSite(url) {
-      document.getElementById('selectorView').style.display = 'none';
-      document.getElementById('iframeView').style.display = 'block';
-      document.getElementById('siteFrame').src = url;
-    }
+<div class="iframe-view" id="iframeView">
+  <button class="back-btn" onclick="closeIframe()">← Back</button>
+  <iframe id="siteFrame"></iframe>
+</div>
 
-    function closeIframe() {
-      document.getElementById('siteFrame').src = '';
-      document.getElementById('iframeView').style.display = 'none';
-      document.getElementById('selectorView').style.display = 'block';
-    }
-  </script>
+<script>
+  function launchSite(url) {
+    document.getElementById('selectorView').style.display = 'none';
+    document.getElementById('iframeView').style.display = 'block';
+    document.getElementById('siteFrame').src = url;
+  }
+
+  function closeIframe() {
+    document.getElementById('siteFrame').src = '';
+    document.getElementById('iframeView').style.display = 'none';
+    document.getElementById('selectorView').style.display = 'block';
+  }
+</script>
 
 </body>
 </html>
-
