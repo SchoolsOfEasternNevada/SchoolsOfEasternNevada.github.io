@@ -59,7 +59,6 @@
       box-shadow: 0 0 18px rgba(0,255,255,0.4);
       cursor: pointer;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
-      text-align: center;
     }
 
     .game-card:hover {
@@ -74,10 +73,18 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
+    }
+
+    .game-thumb img {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
     }
 
     .game-title {
       padding: 12px;
+      text-align: center;
       font-size: 14px;
       border-top: 2px solid rgba(0,255,255,0.6);
       color: #fff;
@@ -113,10 +120,6 @@
     .back-btn:hover {
       box-shadow: 0 0 25px #00ffff;
     }
-
-    input[type="file"] {
-      display: none;
-    }
   </style>
 </head>
 
@@ -134,80 +137,23 @@
 
   <div class="game-grid">
 
-    <!-- LOCAL HTML GAME -->
-    <div class="game-card" onclick="document.getElementById('fileInput').click()">
-      <div class="game-thumb">
-        <span style="color:#9ffcff;">＋</span>
-      </div>
-      <div class="game-title">Add Local HTML Game</div>
-    </div>
-
-    <input id="fileInput" type="file" accept=".html" onchange="loadLocalGame(event)">
-
-    <!-- EXISTING GAMES -->
+    <!-- ONLINE GAMES -->
     <div class="game-card" onclick="launchSite('https://eaglercraftextras.github.io/')">
-      <div class="game-thumb"></div>
+      <div class="game-thumb"><img src="assets/img/placeholder.png"></div>
       <div class="game-title">EaglerCraft</div>
     </div>
 
-    <div class="game-card" onclick="launchSite('https://eaglerschool.github.io')">
-      <div class="game-thumb"></div>
-      <div class="game-title">EaglerCraft (Alt)</div>
-    </div>
-
-    <div class="game-card" onclick="launchSite('https://bitstore1612.github.io/g9/class-584/')">
-      <div class="game-thumb"></div>
-      <div class="game-title">Gold Miner</div>
-    </div>
-
-    <div class="game-card" onclick="launchSite('https://nurgak.github.io/Cube-engine/')">
-      <div class="game-thumb"></div>
-      <div class="game-title">Cube Engine</div>
-    </div>
-
-    <div class="game-card" onclick="launchSite('https://demonixis.github.io/Maze3D/')">
-      <div class="game-thumb"></div>
-      <div class="game-title">3D Maze</div>
-    </div>
-
-    <div class="game-card" onclick="launchSite('https://wwwtyro.github.io/Astray/')">
-      <div class="game-thumb"></div>
-      <div class="game-title">Astray</div>
-    </div>
-
-    <div class="game-card" onclick="launchSite('https://antila.github.io/ludum-dare-28/')">
-      <div class="game-thumb"></div>
-      <div class="game-title">Monkey Code</div>
-    </div>
-
-    <div class="game-card" onclick="launchSite('https://thepond.zolmeister.com/')">
-      <div class="game-thumb"></div>
-      <div class="game-title">The Pond</div>
-    </div>
-
-    <div class="game-card" onclick="launchSite('https://lulea.github.io/game-off-2012/')">
-      <div class="game-thumb"></div>
-      <div class="game-title">Zoko</div>
-    </div>
-
-    <div class="game-card" onclick="launchSite('https://zop.zolmeister.com/')">
-      <div class="game-thumb"></div>
-      <div class="game-title">Zopzolmeister</div>
-    </div>
-
-    <div class="game-card" onclick="launchSite('https://fernjager.github.io/game-off-2013/index.html')">
-      <div class="game-thumb"></div>
-      <div class="game-title">Turkey Simulator</div>
-    </div>
-
     <div class="game-card" onclick="launchSite('https://particle-clicker.web.cern.ch/')">
-      <div class="game-thumb"></div>
+      <div class="game-thumb"><img src="assets/img/placeholder.png"></div>
       <div class="game-title">Particle Clicker</div>
     </div>
 
-    <div class="game-card" onclick="launchSite('https://cykod.github.io/AlienInvasion/')">
-      <div class="game-thumb"></div>
-      <div class="game-title">Alien Invasion</div>
+    <!-- LOCAL SINGLE-FILE HTML GAMES -->
+    <!-- Drop the .html file into /games/ and add a card like this -->
+
+    <div class="game-card" onclick="launchSite('games/example-game.html')">
+      <div class="game-thumb"><img src="assets/img/placeholder.png"></div>
+      <div class="game-title">Example Local Game</div>
     </div>
 
   </div>
@@ -223,14 +169,6 @@
     document.getElementById('selectorView').style.display = 'none';
     document.getElementById('iframeView').style.display = 'block';
     document.getElementById('siteFrame').src = url;
-  }
-
-  function loadLocalGame(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const url = URL.createObjectURL(file);
-    launchSite(url);
   }
 
   function closeIframe() {
