@@ -5,13 +5,10 @@
   <title>G.GUI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
 
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
-  <!-- Global CSS -->
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="stylesheet" href="assets/css/pages.css">
 
@@ -93,7 +90,6 @@
     }
 
     .update-btn {
-      display: inline-block;
       padding: 10px 28px;
       border: 2px solid #9ffcff;
       color: #9ffcff;
@@ -119,12 +115,12 @@
 <body>
 
   <!-- STARTUP -->
-  <div class="startup-screen">
+  <div class="startup-screen" id="startupScreen">
     <div class="startup-logo">G.GUI</div>
     <div class="startup-sub">Loading the stuff</div>
   </div>
 
-  <!-- UPDATE POPUP-->
+  <!-- UPDATE POPUP -->
   <div class="update-overlay" id="updateOverlay">
     <div class="update-box">
       <div class="update-title">Welcome to Version W.1.3</div>
@@ -170,7 +166,6 @@
         <span>Apps</span>
       </a>
 
-      <!--  NEW OFFLINE GAMES BUTTON -->
       <a href="offlinegame.html" class="nav-card">
         <img src="assets/img/grid.svg">
         <span>Offline Games</span>
@@ -178,14 +173,29 @@
     </div>
   </main>
 
-  <!-- FOOTER -->
   <footer class="footer">
     <span>G.GUI Project • Version W.1.3</span>
   </footer>
 
   <script>
+    const startup = document.getElementById('startupScreen');
+    const update = document.getElementById('updateOverlay');
+
+    // Startup animation: show once per tab
+    if (sessionStorage.getItem('startupShown')) {
+      startup.style.display = 'none';
+    } else {
+      sessionStorage.setItem('startupShown', 'true');
+    }
+
+    // Update popup: show once per tab
+    if (sessionStorage.getItem('updateShown')) {
+      update.classList.add('hidden');
+    }
+
     function closeUpdate() {
-      document.getElementById('updateOverlay').classList.add('hidden');
+      sessionStorage.setItem('updateShown', 'true');
+      update.classList.add('hidden');
     }
   </script>
 
