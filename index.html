@@ -6,9 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
-
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="stylesheet" href="assets/css/pages.css">
 
@@ -52,8 +50,8 @@
       to { opacity: 0; pointer-events: none; }
     }
 
-    /* ===== UPDATE OVERLAY ===== */
-    .update-overlay {
+    /* ===== OVERLAYS ===== */
+    .overlay {
       position: fixed;
       inset: 0;
       background: rgba(0,0,0,0.75);
@@ -64,7 +62,7 @@
       justify-content: center;
     }
 
-    .update-box {
+    .box {
       width: 90%;
       max-width: 520px;
       background: #050505;
@@ -75,21 +73,23 @@
       box-shadow: 0 0 40px rgba(0,255,255,0.6);
     }
 
-    .update-title {
+    .box-title {
       font-size: 22px;
       margin-bottom: 12px;
       color: #9ffcff;
       text-shadow: 0 0 18px #00ffff;
     }
 
-    .update-notes {
+    .box-text {
       font-size: 14px;
       opacity: 0.85;
       margin-bottom: 24px;
       line-height: 1.6;
+      text-align: left;
+      white-space: pre-line;
     }
 
-    .update-btn {
+    .box-btn {
       padding: 10px 28px;
       border: 2px solid #9ffcff;
       color: #9ffcff;
@@ -101,7 +101,7 @@
       transition: 0.25s ease;
     }
 
-    .update-btn:hover {
+    .box-btn:hover {
       box-shadow: 0 0 30px #00ffff;
       transform: translateY(-1px);
     }
@@ -120,17 +120,32 @@
     <div class="startup-sub">Loading the stuff</div>
   </div>
 
-  <!-- UPDATE POPUP -->
-  <div class="update-overlay" id="updateOverlay">
-    <div class="update-box">
-      <div class="update-title">Welcome to Version W.1.3</div>
+  <!-- TERMS OF USE -->
+  <div class="overlay hidden" id="termsOverlay">
+    <div class="box">
+      <div class="box-title">Terms of Use</div>
+      <div class="box-text">
+G.GUI project | Updated 1/21/25
 
-      <div class="update-notes">
-        • Offline Games Mode<br>
-        • Minor UI changes<br>
+Use Responsibly
+
+The creators and people who contributed to the G.GUI project shall not be responsible for any disciplinary action taken against you for using our service. The G.GUI project is an open-source project and is only for collecting gaming websites. If disciplinary actions are put against you, The G.GUI project will not take any blame at all.
+
+By clicking continue and continuing to use this service you agree to the stated "Terms of Use"
       </div>
+      <button class="box-btn" onclick="acceptTerms()">Continue</button>
+    </div>
+  </div>
 
-      <button class="update-btn" onclick="closeUpdate()">Continue</button>
+  <!-- UPDATE POPUP -->
+  <div class="overlay hidden" id="updateOverlay">
+    <div class="box">
+      <div class="box-title">Welcome to Version W.1.3</div>
+      <div class="box-text" style="text-align:center">
+        • Offline Games Mode<br>
+        • Minor UI changes
+      </div>
+      <button class="box-btn" onclick="closeUpdate()">Continue</button>
     </div>
   </div>
 
@@ -139,10 +154,7 @@
     <a href="index.html" class="controller-home">
       <img src="assets/img/controller.svg" alt="Home">
     </a>
-
-    <a href="https://discord.gg/AC5nAtdd" target="_blank" class="discord-btn">
-      Discord
-    </a>
+    <a href="https://discord.gg/AC5nAtdd" target="_blank" class="discord-btn">Discord</a>
   </header>
 
   <!-- MAIN CONTENT -->
@@ -151,25 +163,10 @@
     <p class="site-subtitle">Gamers GUI</p>
 
     <div class="nav-grid">
-      <a href="multi.html" class="nav-card">
-        <img src="assets/img/grid.svg">
-        <span>Multi-Game Websites</span>
-      </a>
-
-      <a href="single.html" class="nav-card">
-        <img src="assets/img/square.svg">
-        <span>Single-Game Websites</span>
-      </a>
-
-      <a href="app.html" class="nav-card">
-        <img src="assets/img/square.svg">
-        <span>Apps</span>
-      </a>
-
-      <a href="offlinegame.html" class="nav-card">
-        <img src="assets/img/grid.svg">
-        <span>Offline Games</span>
-      </a>
+      <a href="multi.html" class="nav-card"><img src="assets/img/grid.svg"><span>Multi-Game Websites</span></a>
+      <a href="single.html" class="nav-card"><img src="assets/img/square.svg"><span>Single-Game Websites</span></a>
+      <a href="app.html" class="nav-card"><img src="assets/img/square.svg"><span>Apps</span></a>
+      <a href="offlinegame.html" class="nav-card"><img src="assets/img/grid.svg"><span>Offline Games</span></a>
     </div>
   </main>
 
@@ -178,19 +175,38 @@
   </footer>
 
   <script>
+    const VERSION = "W.1.3";
+
     const startup = document.getElementById('startupScreen');
+    const terms = document.getElementById('termsOverlay');
     const update = document.getElementById('updateOverlay');
 
-    // Startup animation: show once per tab
+    // Startup animation (per tab)
     if (sessionStorage.getItem('startupShown')) {
       startup.style.display = 'none';
     } else {
       sessionStorage.setItem('startupShown', 'true');
     }
 
-    // Update popup: show once per tab
-    if (sessionStorage.getItem('updateShown')) {
-      update.classList.add('hidden');
+    // Reset terms when version changes
+    if (localStorage.getItem('acceptedVersion') !== VERSION) {
+      localStorage.removeItem('termsAccepted');
+    }
+
+    // Gate flow
+    window.addEventListener('load', () => {
+      if (!localStorage.getItem('termsAccepted')) {
+        terms.classList.remove('hidden');
+      } else if (!sessionStorage.getItem('updateShown')) {
+        update.classList.remove('hidden');
+      }
+    });
+
+    function acceptTerms() {
+      localStorage.setItem('termsAccepted', 'true');
+      localStorage.setItem('acceptedVersion', VERSION);
+      terms.classList.add('hidden');
+      update.classList.remove('hidden');
     }
 
     function closeUpdate() {
