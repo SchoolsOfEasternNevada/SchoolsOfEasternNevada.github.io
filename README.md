@@ -7,7 +7,7 @@ Thank you for using G.GUI!
 
 
 
-##HowToUse
+## HowToUse
 
 Vist the website for this repo at schoolsofeasternnevada.github.io
 
