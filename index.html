@@ -11,7 +11,6 @@
   <link rel="stylesheet" href="assets/css/pages.css">
 
   <style>
-    /* ===== STARTUP SCREEN ===== */
     .startup-screen {
       position: fixed;
       inset: 0;
@@ -50,7 +49,6 @@
       to { opacity: 0; pointer-events: none; }
     }
 
-    /* ===== OVERLAYS ===== */
     .overlay {
       position: fixed;
       inset: 0;
@@ -106,9 +104,7 @@
       transform: translateY(-1px);
     }
 
-    .hidden {
-      display: none;
-    }
+    .hidden { display: none; }
   </style>
 </head>
 
@@ -120,7 +116,7 @@
     <div class="startup-sub">Loading the stuff</div>
   </div>
 
-  <!-- TERMS OF USE -->
+  <!-- TERMS -->
   <div class="overlay hidden" id="termsOverlay">
     <div class="box">
       <div class="box-title">Terms of Use</div>
@@ -140,7 +136,7 @@ Under no circumstances shall the creators, maintainers, or contributors of the G
     </div>
   </div>
 
-  <!-- UPDATE POPUP -->
+  <!-- UPDATE -->
   <div class="overlay hidden" id="updateOverlay">
     <div class="box">
       <div class="box-title">Welcome to Version W.1.3</div>
@@ -152,15 +148,14 @@ Under no circumstances shall the creators, maintainers, or contributors of the G
     </div>
   </div>
 
-  <!-- TOP BAR -->
+  <!-- UI -->
   <header class="top-bar">
     <a href="index.html" class="controller-home">
-      <img src="assets/img/controller.svg" alt="Home">
+      <img src="assets/img/controller.svg">
     </a>
     <a href="https://discord.gg/AC5nAtdd" target="_blank" class="discord-btn">Discord</a>
   </header>
 
-  <!-- MAIN CONTENT -->
   <main class="home">
     <h1 class="site-title">G.GUI</h1>
     <p class="site-subtitle">Gamers GUI</p>
@@ -179,41 +174,36 @@ Under no circumstances shall the creators, maintainers, or contributors of the G
 
   <script>
     const VERSION = "W.1.3";
+    const TERMS_KEY  = `termsAccepted_${VERSION}`;
+    const UPDATE_KEY = `updateSeen_${VERSION}`;
 
     const startup = document.getElementById('startupScreen');
-    const terms = document.getElementById('termsOverlay');
-    const update = document.getElementById('updateOverlay');
+    const terms   = document.getElementById('termsOverlay');
+    const update  = document.getElementById('updateOverlay');
 
-    // Startup animation (per tab)
+    // Startup animation (once per tab)
     if (sessionStorage.getItem('startupShown')) {
       startup.style.display = 'none';
     } else {
       sessionStorage.setItem('startupShown', 'true');
     }
 
-    // Reset terms when version changes
-    if (localStorage.getItem('acceptedVersion') !== VERSION) {
-      localStorage.removeItem('termsAccepted');
-    }
-
-    // Gate flow
     window.addEventListener('load', () => {
-      if (!localStorage.getItem('termsAccepted')) {
+      if (!localStorage.getItem(TERMS_KEY)) {
         terms.classList.remove('hidden');
-      } else if (!sessionStorage.getItem('updateShown')) {
+      } else if (!localStorage.getItem(UPDATE_KEY)) {
         update.classList.remove('hidden');
       }
     });
 
     function acceptTerms() {
-      localStorage.setItem('termsAccepted', 'true');
-      localStorage.setItem('acceptedVersion', VERSION);
+      localStorage.setItem(TERMS_KEY, 'true');
       terms.classList.add('hidden');
       update.classList.remove('hidden');
     }
 
     function closeUpdate() {
-      sessionStorage.setItem('updateShown', 'true');
+      localStorage.setItem(UPDATE_KEY, 'true');
       update.classList.add('hidden');
     }
   </script>
