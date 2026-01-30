@@ -1,1 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>G.GUI — Resources</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: #000;
+      font-family: 'Orbitron', sans-serif;
+      overflow: hidden;
+    }
+
+    /* ===== TOP BAR HELPERS ===== */
+    .top-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .top-link {
+      padding: 8px 18px;
+      border: 2px solid rgba(0,255,255,0.8);
+      border-radius: 10px;
+      color: #9ffcff;
+      text-decoration: none;
+      font-size: 14px;
+      letter-spacing: 1px;
+      box-shadow: 0 0 12px rgba(0,255,255,0.6);
+    }
+
+    /* ===== PAGE BODY ===== */
+    .resources-page {
+      height: calc(100% - 60px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+    }
+
+    .resources-title {
+      font-size: 42px;
+      color: #9ffcff;
+      text-shadow: 0 0 30px #00ffff;
+    }
+
+    .resource-btn {
+      padding: 24px 64px;
+      font-size: 18px;
+      border-radius: 16px;
+      border: 2px solid rgba(0,255,255,0.9);
+      background: #050505;
+      color: #9ffcff;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 0 20px rgba(0,255,255,0.6);
+      transition: 0.25s ease;
+    }
+
+    .resource-btn:hover {
+      box-shadow: 0 0 40px rgba(0,255,255,1);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- TOP BAR -->
+  <header class="top-bar">
+    <div class="top-left">
+      <a href="index.html" class="controller-home">
+        <img src="assets/img/controller.svg" alt="Home">
+      </a>
+      <span class="top-link">Resources</span>
+    </div>
+
+    <a href="https://discord.gg/AC5nAtdd" target="_blank" class="discord-btn">
+      Discord
+    </a>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="resources-page">
+    <div class="resources-title">Resources</div>
+
+    <a href="Pr0xie.html" class="resource-btn">
+      Pr0xies
+    </a>
+  </main>
+
+  <footer class="footer">
+    <span>G.GUI Project • Resources</span>
+  </footer>
+
+</body>
+</html>
 
