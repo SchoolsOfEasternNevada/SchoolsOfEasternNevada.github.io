@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="assets/css/pages.css">
 
   <style>
+    /* ===== STARTUP SCREEN ===== */
     .startup-screen {
       position: fixed;
       inset: 0;
@@ -49,6 +50,7 @@
       to { opacity: 0; pointer-events: none; }
     }
 
+    /* ===== OVERLAYS ===== */
     .overlay {
       position: fixed;
       inset: 0;
@@ -66,9 +68,9 @@
       background: #050505;
       border-radius: 28px;
       padding: 28px;
-      text-align: center;
       border: 2px solid rgba(0,255,255,0.8);
       box-shadow: 0 0 40px rgba(0,255,255,0.6);
+      text-align: center;
     }
 
     .box-title {
@@ -83,8 +85,8 @@
       opacity: 0.85;
       margin-bottom: 24px;
       line-height: 1.6;
-      text-align: left;
       white-space: pre-line;
+      text-align: left;
     }
 
     .box-btn {
@@ -105,6 +107,30 @@
     }
 
     .hidden { display: none; }
+
+    /* ===== TOP BAR RESOURCES BUTTON ===== */
+    .top-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .top-link {
+      padding: 8px 18px;
+      border: 2px solid rgba(0,255,255,0.8);
+      border-radius: 10px;
+      color: #9ffcff;
+      text-decoration: none;
+      font-size: 14px;
+      letter-spacing: 1px;
+      box-shadow: 0 0 12px rgba(0,255,255,0.6);
+      transition: 0.25s ease;
+    }
+
+    .top-link:hover {
+      box-shadow: 0 0 25px rgba(0,255,255,1);
+      transform: translateY(-1px);
+    }
   </style>
 </head>
 
@@ -116,45 +142,51 @@
     <div class="startup-sub">Loading the stuff</div>
   </div>
 
-  <!-- TERMS -->
+  <!-- TERMS OF USE -->
   <div class="overlay hidden" id="termsOverlay">
     <div class="box">
       <div class="box-title">Terms of Use</div>
       <div class="box-text">
-Terms of Service
-
-G.GUI Project
+G.GUI Project  
 Last Updated: January 21, 2025
 
-1. Use at Your Own Responsibility
-The G.GUI Project is an open-source project intended solely for collecting and organizing publicly available gaming websites. By using this service, you acknowledge that you are responsible for how and where you access it. The creators and contributors of the G.GUI Project are not responsible for any disciplinary actions, restrictions, or consequences that may result from your use of this service.
+1. Use at Your Own Responsibility  
+The G.GUI Project is an open-source project intended solely for collecting and organizing publicly available gaming websites. The creators and contributors are not responsible for any disciplinary actions, restrictions, or consequences that may result from your use of this service.
 
-2. Limitation of Liability
-Under no circumstances shall the creators, maintainers, or contributors of the G.GUI Project be held liable for any direct or indirect issues, damages, or penalties arising from the use or misuse of this service. By continuing to use G.GUI, you agree that all responsibility rests with the user.
+2. Limitation of Liability  
+Under no circumstances shall the creators, maintainers, or contributors of the G.GUI Project be held liable for any issues, damages, or penalties arising from the use or misuse of this service.
       </div>
       <button class="box-btn" onclick="acceptTerms()">Continue</button>
     </div>
   </div>
 
-  <!-- UPDATE -->
+  <!-- UPDATE POPUP -->
   <div class="overlay hidden" id="updateOverlay">
     <div class="box">
-      <div class="box-title">Welcome to Version W.1.4</div>
+      <div class="box-title">Welcome to Version W.1.5</div>
       <div class="box-text" style="text-align:center">
-        • Added Pr0xies to apps (soon)<br>
+        • Resources Page Added<br>
+        
       </div>
       <button class="box-btn" onclick="closeUpdate()">Continue</button>
     </div>
   </div>
 
-  <!-- UI -->
+  <!-- TOP BAR -->
   <header class="top-bar">
-    <a href="index.html" class="controller-home">
-      <img src="assets/img/controller.svg">
+    <div class="top-left">
+      <a href="index.html" class="controller-home">
+        <img src="assets/img/controller.svg" alt="Home">
+      </a>
+      <a href="resources.html" class="top-link">Resources</a>
+    </div>
+
+    <a href="https://discord.gg/AC5nAtdd" target="_blank" class="discord-btn">
+      Discord
     </a>
-    <a href="https://discord.gg/AC5nAtdd" target="_blank" class="discord-btn">Discord</a>
   </header>
 
+  <!-- MAIN CONTENT -->
   <main class="home">
     <h1 class="site-title">G.GUI</h1>
     <p class="site-subtitle">Gamers GUI</p>
@@ -168,41 +200,47 @@ Under no circumstances shall the creators, maintainers, or contributors of the G
   </main>
 
   <footer class="footer">
-    <span>G.GUI Project • Version W.1.4</span>
+    <span>G.GUI Project • Version W.1.5</span>
   </footer>
 
   <script>
-    const VERSION = "W.1.4";
-    const TERMS_KEY  = `termsAccepted_${VERSION}`;
-    const UPDATE_KEY = `updateSeen_${VERSION}`;
+    const VERSION = "W.1.5";
 
     const startup = document.getElementById('startupScreen');
-    const terms   = document.getElementById('termsOverlay');
-    const update  = document.getElementById('updateOverlay');
+    const terms = document.getElementById('termsOverlay');
+    const update = document.getElementById('updateOverlay');
 
-    // Startup animation (once per tab)
+    // Startup animation (per tab)
     if (sessionStorage.getItem('startupShown')) {
       startup.style.display = 'none';
     } else {
       sessionStorage.setItem('startupShown', 'true');
     }
 
+    // Reset terms when version changes
+    if (localStorage.getItem('acceptedVersion') !== VERSION) {
+      localStorage.removeItem('termsAccepted');
+      sessionStorage.removeItem('updateShown');
+    }
+
+    // Gate flow
     window.addEventListener('load', () => {
-      if (!localStorage.getItem(TERMS_KEY)) {
+      if (!localStorage.getItem('termsAccepted')) {
         terms.classList.remove('hidden');
-      } else if (!localStorage.getItem(UPDATE_KEY)) {
+      } else if (!sessionStorage.getItem('updateShown')) {
         update.classList.remove('hidden');
       }
     });
 
     function acceptTerms() {
-      localStorage.setItem(TERMS_KEY, 'true');
+      localStorage.setItem('termsAccepted', 'true');
+      localStorage.setItem('acceptedVersion', VERSION);
       terms.classList.add('hidden');
       update.classList.remove('hidden');
     }
 
     function closeUpdate() {
-      localStorage.setItem(UPDATE_KEY, 'true');
+      sessionStorage.setItem('updateShown', 'true');
       update.classList.add('hidden');
     }
   </script>
