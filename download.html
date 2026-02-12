@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>G.GUI-UGS file download</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  background: #000;
+  font-family: Arial, sans-serif;
+  color: #9ffcff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  text-align: center;
+  width: 100%;
+  max-width: 900px;
+}
+
+.glow-box {
+  border: 2px solid #00ffff;
+  padding: 20px 40px;
+  display: inline-block;
+  font-size: 48px;
+  margin-bottom: 60px;
+  color: #ffffff;
+  text-decoration: none;
+  transition: 0.3s ease;
+  box-shadow: 0 0 20px rgba(0,255,255,0.4);
+}
+
+.glow-box:hover {
+  box-shadow: 0 0 35px rgba(0,255,255,0.9);
+  transform: scale(1.05);
+}
+
+.video-container {
+  border: 2px solid #00ffff;
+  padding: 30px;
+  box-shadow: 0 0 25px rgba(0,255,255,0.4);
+}
+
+iframe {
+  width: 100%;
+  height: 500px;
+  border: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- DOWNLOAD BUTTON -->
+  <a class="glow-box" href="yourfile.zip" download>
+    Download launcher
+  </a>
+
+  <!-- YOUTUBE EMBED -->
+  <div class="video-container">
+    <iframe 
+      src="https://www.youtube.com/embed/0qgqJh1MnlY?si=UAsEFBNCV8P_R4cs"
+      allowfullscreen>
+    </iframe>
+  </div>
+
+</div>
+
+</body>
+</html>
