@@ -1,77 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>G.GUI-UGS file download</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>G.GUI — Launcher</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-body {
-  margin: 0;
-  background: #000;
-  font-family: Arial, sans-serif;
-  color: #9ffcff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
 
-.container {
-  text-align: center;
-  width: 100%;
-  max-width: 900px;
-}
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: #000;
+      font-family: 'Orbitron', sans-serif;
+      overflow: hidden;
+    }
 
-.glow-box {
-  border: 2px solid #00ffff;
-  padding: 20px 40px;
-  display: inline-block;
-  font-size: 48px;
-  margin-bottom: 60px;
-  color: #ffffff;
-  text-decoration: none;
-  transition: 0.3s ease;
-  box-shadow: 0 0 20px rgba(0,255,255,0.4);
-}
+    .download-page {
+      height: calc(100% - 60px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      text-align: center;
+    }
 
-.glow-box:hover {
-  box-shadow: 0 0 35px rgba(0,255,255,0.9);
-  transform: scale(1.05);
-}
+    .download-title {
+      font-size: 42px;
+      color: #9ffcff;
+      text-shadow: 0 0 30px #00ffff;
+    }
 
-.video-container {
-  border: 2px solid #00ffff;
-  padding: 30px;
-  box-shadow: 0 0 25px rgba(0,255,255,0.4);
-}
+    .download-btn {
+      padding: 24px 64px;
+      font-size: 18px;
+      border-radius: 16px;
+      border: 2px solid rgba(0,255,255,0.9);
+      background: #050505;
+      color: #9ffcff;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 0 20px rgba(0,255,255,0.6);
+      transition: 0.25s ease;
+    }
 
-iframe {
-  width: 100%;
-  height: 500px;
-  border: none;
-}
-</style>
+    .download-btn:hover {
+      box-shadow: 0 0 40px rgba(0,255,255,1);
+      transform: translateY(-2px);
+    }
+
+    iframe {
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(0,255,255,0.6);
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="container">
+  <!-- TOP BAR -->
+  <header class="top-bar">
+    <div class="top-left">
+      <a href="index.html" class="controller-home">
+        <img src="assets/img/controller.svg" alt="Home">
+      </a>
+      <span class="top-link">Download</span>
+    </div>
 
-  <!-- DOWNLOAD BUTTON -->
-  <a class="glow-box" href="yourfile.zip" download>
-    Download launcher
-  </a>
+    <a href="https://discord.gg/AC5nAtdd" target="_blank" class="discord-btn">
+      Discord
+    </a>
+  </header>
 
-  <!-- YOUTUBE EMBED -->
-  <div class="video-container">
-    <iframe 
-      src="https://www.youtube.com/embed/0qgqJh1MnlY?si=UAsEFBNCV8P_R4cs"
-      allowfullscreen>
+  <!-- MAIN CONTENT -->
+  <main class="download-page">
+    <div class="download-title">G.GUI-UGS Launcher</div>
+
+    <a href="yourfile.zip" class="download-btn" download>
+      Download Launcher
+    </a>
+
+    
+    <iframe src="https://www.youtube.com/embed/0qgqJh1MnlY?si=UAsEFBNCV8P_R4cs"
+            width="600"
+            height="300">
     </iframe>
-  </div>
+  </main>
 
-</div>
+  <footer class="footer">
+    <span>G.GUI Project • Launcher</span>
+  </footer>
 
 </body>
 </html>
