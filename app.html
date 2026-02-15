@@ -20,12 +20,10 @@
       overflow: hidden;
     }
 
-    /* NAV BAR HEIGHT */
     .top-bar {
       height: 64px;
     }
 
-    /* MAIN AREA UNDER NAV */
     .app-shell {
       position: absolute;
       top: 64px;
@@ -33,16 +31,18 @@
       right: 0;
       bottom: 0;
       background: #080808;
+      overflow-y: auto; /* allow vertical scroll if many rows */
     }
 
-    /* APP SELECT SCREEN */
     .app-selector {
-      height: 100%;
+      min-height: 100%;
+      padding: 60px 40px;
+      box-sizing: border-box;
+
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      gap: 24px;
+      gap: 40px;
     }
 
     .app-selector h1 {
@@ -52,28 +52,51 @@
       margin: 0;
     }
 
+    /* ===== GRID SYSTEM (5 PER ROW) ===== */
     .app-buttons {
-      display: flex;
-      gap: 20px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 24px;
+      width: 100%;
+      max-width: 1200px;
     }
 
     .app-buttons button {
       background: linear-gradient(135deg, #00ffe7, #006666);
       border: none;
-      padding: 16px 28px;
-      font-size: 18px;
+      padding: 20px;
+      font-size: 16px;
       border-radius: 14px;
       cursor: pointer;
       box-shadow: 0 0 25px #00ffe7aa;
       transition: transform 0.15s ease, box-shadow 0.15s ease;
+      text-align: center;
     }
 
     .app-buttons button:hover {
-      transform: translateY(-2px);
+      transform: translateY(-3px);
       box-shadow: 0 0 40px #00ffe7;
     }
 
-    /* IFRAME VIEW */
+    /* Responsive fallback */
+    @media (max-width: 1200px) {
+      .app-buttons {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .app-buttons {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .app-buttons {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
     .app-view {
       position: absolute;
       inset: 0;
@@ -91,7 +114,6 @@
 
 <body>
 
-  <!-- NAV BAR -->
   <header class="top-bar">
     <a href="index.html" class="controller-home" title="Home">
       <img src="assets/img/controller.svg" alt="Home">
@@ -107,10 +129,8 @@
     </a>
   </header>
 
-  <!-- APP SHELL -->
   <main class="app-shell">
 
-    <!-- APP SELECT -->
     <div class="app-selector" id="appSelector">
       <h1>Apps</h1>
 
@@ -134,11 +154,11 @@
         <button onclick="launchApp('https://silvervalethegoat.graphicon.ru/')">
           Zepto Learning 2
         </button>
-        
+
+        <!-- Add more buttons freely below this line -->
       </div>
     </div>
 
-    <!-- APP VIEW -->
     <div class="app-view" id="appView">
       <iframe id="appFrame"></iframe>
     </div>
