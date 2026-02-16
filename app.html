@@ -31,14 +31,13 @@
       right: 0;
       bottom: 0;
       background: #080808;
-      overflow-y: auto; /* allow vertical scroll if many rows */
+      overflow-y: auto;
     }
 
     .app-selector {
       min-height: 100%;
       padding: 60px 40px;
       box-sizing: border-box;
-
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -52,7 +51,6 @@
       margin: 0;
     }
 
-    /* ===== GRID SYSTEM (5 PER ROW) ===== */
     .app-buttons {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -78,25 +76,6 @@
       box-shadow: 0 0 40px #00ffe7;
     }
 
-    /* Responsive fallback */
-    @media (max-width: 1200px) {
-      .app-buttons {
-        grid-template-columns: repeat(4, 1fr);
-      }
-    }
-
-    @media (max-width: 900px) {
-      .app-buttons {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-
-    @media (max-width: 600px) {
-      .app-buttons {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
     .app-view {
       position: absolute;
       inset: 0;
@@ -114,68 +93,70 @@
 
 <body>
 
-  <header class="top-bar">
-    <a href="index.html" class="controller-home" title="Home">
-      <img src="assets/img/controller.svg" alt="Home">
-    </a>
+<header class="top-bar">
+  <a href="index.html" class="controller-home" title="Home">
+    <img src="assets/img/controller.svg" alt="Home">
+  </a>
 
-    <a
-      href="https://discord.gg/AC5nAtdd"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="discord-btn"
-    >
-      Discord
-    </a>
-  </header>
+  <a
+    href="https://discord.gg/AC5nAtdd"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="discord-btn"
+  >
+    Discord
+  </a>
+</header>
 
-  <main class="app-shell">
+<main class="app-shell">
 
-    <div class="app-selector" id="appSelector">
-      <h1>Apps</h1>
+  <div class="app-selector" id="appSelector">
+    <h1>Apps</h1>
 
-      <div class="app-buttons">
-        <button onclick="launchApp('https://coolmathgames.metropolitanstaffingsolutions.com/')">
-          Truffled
-        </button>
+    <div class="app-buttons">
+      <button onclick="launchApp('https://coolmathgames.metropolitanstaffingsolutions.com/')">
+        Truffled
+      </button>
 
-        <button onclick="launchApp('https://shadow-good.bostoncareercounselor.com/')">
-          Shadow Good
-        </button>
+      <button onclick="launchApp('https://shadow-good.bostoncareercounselor.com/')">
+        Shadow Good
+      </button>
 
-        <button onclick="launchApp('https://highschoolmathteachers.com/')">
-          Froggies Arcade
-        </button>
+      <button onclick="launchApp('https://highschoolmathteachers.com/')">
+        Froggies Arcade
+      </button>
 
-        <button onclick="launchApp('https://abc.school.dovereducation.org/')">
-          Nebulo
-        </button>
+      <button onclick="launchApp('https://abc.school.dovereducation.org/')">
+        Nebulo
+      </button>
 
-        <button onclick="launchApp('https://silvervalethegoat.graphicon.ru/')">
-          Zepto Learning 2
-        </button>
+      <button onclick="launchApp('https://silvervalethegoat.graphicon.ru/')">
+        Zepto Learning 2
+      </button>
 
-        <button onclick="launchApp('https://dreams.centromariapolis.cl/')">
-          DayDream
-        </button>
+      <button onclick="launchApp('https://dreams.centromariapolis.cl/')">
+        DayDream
+      </button>
 
-        <button onclick="launchApp('https://u8q7m3f9.mendozaski.com/')">
-          infamous
-        </button>
+      <button onclick="launchApp('https://u8q7m3f9.mendozaski.com/')">
+        infamous
+      </button>
+    </div> <!-- CLOSE app-buttons -->
+  </div>   <!-- CLOSE app-selector -->
 
-    <div class="app-view" id="appView">
-      <iframe id="appFrame"></iframe>
-    </div>
+  <div class="app-view" id="appView">
+    <iframe id="appFrame"></iframe>
+  </div>
 
-  </main>
+</main>
 
-  <script>
-    function launchApp(url) {
-      document.getElementById('appSelector').style.display = 'none';
-      document.getElementById('appView').style.display = 'block';
-      document.getElementById('appFrame').src = url;
-    }
-  </script>
+<script>
+  function launchApp(url) {
+    document.getElementById('appSelector').style.display = 'none';
+    document.getElementById('appView').style.display = 'block';
+    document.getElementById('appFrame').src = url;
+  }
+</script>
 
 </body>
 </html>
