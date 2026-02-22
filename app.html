@@ -60,6 +60,7 @@
     }
 
     .app-buttons button {
+      position: relative;
       background: linear-gradient(135deg, #00ffe7, #006666);
       border: none;
       padding: 20px;
@@ -76,6 +77,26 @@
       box-shadow: 0 0 40px #00ffe7;
     }
 
+    /* ALT corner button */
+    .alt-corner {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      font-size: 10px;
+      padding: 4px 6px;
+      border-radius: 6px;
+      background: #000;
+      color: #00ffe7;
+      border: 1px solid #00ffe7;
+      cursor: pointer;
+      box-shadow: 0 0 10px #00ffe7aa;
+    }
+
+    .alt-corner:hover {
+      background: #00ffe7;
+      color: #000;
+    }
+
     .app-view {
       position: absolute;
       inset: 0;
@@ -87,6 +108,47 @@
       height: 100%;
       border: none;
       background: #000;
+    }
+
+    /* ALT popup */
+    .alt-popup {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .alt-popup-content {
+      background: #0d0d0d;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 0 40px #00ffe7aa;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-width: 300px;
+    }
+
+    .alt-popup-content button {
+      background: linear-gradient(135deg, #00ffe7, #006666);
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 0 15px #00ffe7aa;
+    }
+
+    .alt-popup-content button:hover {
+      box-shadow: 0 0 25px #00ffe7;
+    }
+
+    .close-alt {
+      background: #111 !important;
+      border: 1px solid #00ffe7 !important;
+      color: #00ffe7;
     }
   </style>
 </head>
@@ -114,71 +176,33 @@
     <h1>Apps</h1>
 
     <div class="app-buttons">
-      <button onclick="launchApp('https://edu.waterloomath.com/')">
+
+      <!-- Example with ALT -->
+      <button onclick="launchApp('https://edu.waterloomath.com/')"
+              data-alt="https://coolmathgames.metropolitanstaffingsolutions.com/,https://mathteachersforhire.shop/">
         Truffled
+        <div class="alt-corner" onclick="openAlt(event, this)">ALT</div>
       </button>
 
-      <button onclick="launchApp('https://shadow-good.bostoncareercounselor.com/')">
-        Shadow Good
-      </button>
+      <!-- Rest of apps (no alt yet but ready) -->
+      <button onclick="launchApp('https://shadow-good.bostoncareercounselor.com/')">Shadow Good</button>
+      <button onclick="launchApp('https://highschoolmathteachers.com/')">Froggies Arcade</button>
+      <button onclick="launchApp('https://abc.school.dovereducation.org/')">Nebulo</button>
+      <button onclick="launchApp('https://silvervalethegoat.graphicon.ru/')">Zepto Learning 2</button>
+      <button onclick="launchApp('https://pictures.about-anthony.com/')">infamous</button>
+      <button onclick="launchApp('https://rooms.verandahotels.com/')">Void Network</button>
+      <button onclick="launchApp('https://vcsayt.blanksheetstudios.com/')">Rammerhead Browser</button>
+      <button onclick="launchApp('https://math-help.blanksheetstudios.com/')">Glint Browser</button>
+      <button onclick="launchApp('https://family.1382.hotelconsuladoinn.com/')">Luminal OS</button>
+      <button onclick="launchApp('https://mathtoolseducation.allastella.it/')">OverCloaked</button>
+      <button onclick="launchApp('https://mall-shopping.egevad.se/')">Galaxy V6</button>
+      <button onclick="launchApp('https://joinergeometry.kathmandubiz.com/')">Interstellar</button>
+      <button onclick="launchApp('https://educationforindia.com/')">Vapor V4</button>
+      <button onclick="launchApp('https://cheese-tutorial-culinary-sciences.b-cdn.net/')">Cheesy</button>
+      <button onclick="launchApp('https://subscribevcsa.slowfactory.es/')">Boredom V2</button>
 
-      <button onclick="launchApp('https://highschoolmathteachers.com/')">
-        Froggies Arcade
-      </button>
-
-      <button onclick="launchApp('https://abc.school.dovereducation.org/')">
-        Nebulo
-      </button>
-
-      <button onclick="launchApp('https://silvervalethegoat.graphicon.ru/')">
-        Zepto Learning 2
-      </button>
-
-      <button onclick="launchApp('https://pictures.about-anthony.com/')">
-        infamous
-      </button>
-
-      <button onclick="launchApp('https://rooms.verandahotels.com/')">
-        Void Network
-      </button>
-
-      <button onclick="launchApp('https://vcsayt.blanksheetstudios.com/')">
-        Rammerhead Browser
-      </button>
-
-      <button onclick="launchApp('https://math-help.blanksheetstudios.com/')">
-        Glint Browser
-      </button>
-
-      <button onclick="launchApp('https://family.1382.hotelconsuladoinn.com/')">
-        Luminal OS
-      </button>
-
-      <button onclick="launchApp('https://mathtoolseducation.allastella.it/')">
-        OverCloaked
-      </button>
-
-      <button onclick="launchApp('https://mall-shopping.egevad.se/')">
-        Galaxy V6
-      </button>
-
-      <button onclick="launchApp('https://joinergeometry.kathmandubiz.com/')">
-        Interstellar
-      </button>
-
-      <button onclick="launchApp('https://educationforindia.com/')">
-        Vapor V4
-      </button>
-
-      <button onclick="launchApp('https://cheese-tutorial-culinary-sciences.b-cdn.net/')">
-        Cheesy
-      </button>
-
-      <button onclick="launchApp('https://subscribevcsa.slowfactory.es/')">
-        Boredom V2
-      </button>
-    </div> <!-- CLOSE app-buttons -->
-  </div>   <!-- CLOSE app-selector -->
+    </div>
+  </div>
 
   <div class="app-view" id="appView">
     <iframe id="appFrame"></iframe>
@@ -186,11 +210,43 @@
 
 </main>
 
+<!-- ALT Popup -->
+<div class="alt-popup" id="altPopup">
+  <div class="alt-popup-content" id="altContent"></div>
+</div>
+
 <script>
   function launchApp(url) {
     document.getElementById('appSelector').style.display = 'none';
     document.getElementById('appView').style.display = 'block';
     document.getElementById('appFrame').src = url;
+  }
+
+  function openAlt(event, element) {
+    event.stopPropagation();
+    const parentBtn = element.parentElement;
+    const altData = parentBtn.getAttribute('data-alt');
+    if (!altData) return;
+
+    const links = altData.split(',');
+    const popup = document.getElementById('altPopup');
+    const content = document.getElementById('altContent');
+    content.innerHTML = '';
+
+    links.forEach((link, index) => {
+      const btn = document.createElement('button');
+      btn.textContent = "Alt Link " + (index + 1);
+      btn.onclick = () => launchApp(link.trim());
+      content.appendChild(btn);
+    });
+
+    const closeBtn = document.createElement('button');
+    closeBtn.textContent = "Close";
+    closeBtn.className = "close-alt";
+    closeBtn.onclick = () => popup.style.display = 'none';
+    content.appendChild(closeBtn);
+
+    popup.style.display = 'flex';
   }
 </script>
 
