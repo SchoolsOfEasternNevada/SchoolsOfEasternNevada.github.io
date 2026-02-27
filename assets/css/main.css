@@ -12,48 +12,6 @@ html, body {
   font-family: 'Orbitron', sans-serif;
   background: radial-gradient(circle at top, #111 0%, #000 70%);
   color: #ffffff;
-  position: relative;
-}
-
-/* ===== TRON GRID INSIDE .home ===== */
-.home {
-  height: calc(100vh - 60px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  position: relative; /* required for ::before */
-}
-
-.home::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-
-  background:
-    linear-gradient(#00ffff22 1px, transparent 1px),
-    linear-gradient(90deg, #00ffff22 1px, transparent 1px);
-  background-size: 80px 80px;
-  animation: gridMove 12s linear infinite;
-}
-
-@keyframes gridMove {
-  from { transform: translateY(0); }
-  to   { transform: translateY(80px); }
-}
-
-@keyframes bgShift {
-  0% {
-    background-position: 0% 0%;
-    filter: hue-rotate(0deg);
-  }
-  100% {
-    background-position: 100% 100%;
-    filter: hue-rotate(40deg);
-  }
 }
 
 /* ===== Top Bar ===== */
@@ -87,7 +45,16 @@ html, body {
   transform: translateY(-1px);
 }
 
-/* ===== Title ===== */
+/* ===== Home Layout ===== */
+.home {
+  height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
 .site-title {
   font-size: 64px;
   letter-spacing: 4px;
