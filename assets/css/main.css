@@ -12,10 +12,11 @@ html, body {
   font-family: 'Orbitron', sans-serif;
   background: radial-gradient(circle at top, #111 0%, #000 70%);
   color: #ffffff;
-  position: relative; /* REQUIRED for Tron grid to show */
+  position: relative;
 }
 
-body::before {
+/* ===== TRON GRID (moved to html so it shows) ===== */
+html::before {
   content: "";
   position: fixed;
   inset: 0;
@@ -121,7 +122,6 @@ body::before {
   margin-bottom: 12px;
   display: block;
 
-  /* BORDER + GLOW */
   border: 2px solid rgba(0, 255, 255, 0.8);
   border-radius: 14px;
   box-shadow: 0 0 18px rgba(0, 255, 255, 0.6);
