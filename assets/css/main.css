@@ -86,6 +86,14 @@ html, body {
   transition: 0.3s ease;
 }
 
+.title-gif { 
+  width: 180px; /* adjust size */ 
+  height: auto; 
+  margin-bottom: 12px; /* spacing above the title */ 
+  image-rendering: auto;
+  display: block; 
+  animation: fadeIn 1.2s ease; }
+
 .nav-card img {
   width: 48px;
   margin-bottom: 12px;
