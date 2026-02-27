@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>G.GUI — Extras</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="icon" type="image/png" href="assets/img/favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: #000;
+      font-family: 'Orbitron', sans-serif;
+      overflow: hidden;
+    }
+
+    .top-bar {
+      height: 64px;
+    }
+
+    .extra-shell {
+      position: absolute;
+      top: 64px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #080808;
+      overflow-y: auto;
+    }
+
+    .extra-selector {
+      min-height: 100%;
+      padding: 60px 40px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .extra-selector h1 {
+      color: #9ffcff;
+      font-size: 48px;
+      text-shadow: 0 0 20px #00ffe7;
+      margin: 0;
+    }
+
+    .extra-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 30px;
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    .extra-card {
+      background: #0f0f0f;
+      border-radius: 18px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 0 20px #00ffe740;
+    }
+
+    .extra-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 35px #00ffe7aa;
+    }
+
+    .extra-card img {
+      width: 100%;
+      border-radius: 14px;
+      margin-bottom: 14px;
+      box-shadow: 0 0 20px #00ffe750;
+    }
+
+    .extra-card span {
+      display: block;
+      color: #9ffcff;
+      font-size: 16px;
+    }
+
+    .extra-view {
+      position: absolute;
+      inset: 0;
+      display: none;
+    }
+
+    .extra-view iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #000;
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="top-bar">
+  <a href="index.html" class="controller-home" title="Home">
+    <img src="assets/img/controller.svg" alt="Home">
+  </a>
+
+  <a
+    href="https://discord.gg/AC5nAtdd"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="discord-btn"
+  >
+    Discord
+  </a>
+</header>
+
+<main class="extra-shell">
+
+  <div class="extra-selector" id="extraSelector">
+    <h1>Extras</h1>
+
+    <div class="extra-grid">
+
+      
+      <div class="extra-card" onclick="launchExtra('https://schoolsofeasternnevada.github.io/games/Hollow%20Knight.html')">
+        <img src="assets/img/hollow_knight.png" alt="Hollow Knight">
+        <span>Hollow Knight</span>
+      </div>
+
+      <!-- Add more cards here -->
+
+    </div>
+  </div>
+
+  <div class="extra-view" id="extraView">
+    <iframe id="extraFrame"></iframe>
+  </div>
+
+</main>
+
+<script>
+  function launchExtra(url) {
+    document.getElementById('extraSelector').style.display = 'none';
+    document.getElementById('extraView').style.display = 'block';
+    document.getElementById('extraFrame').src = url;
+  }
+</script>
+
+</body>
+</html>
