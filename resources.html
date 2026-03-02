@@ -73,6 +73,40 @@
   </style>
 </head>
 
+<div class="custom-cursor" id="cursor"></div>
+
+<script>
+  const cursor = document.getElementById("cursor");
+
+  document.addEventListener("mousemove", (e) => {
+    cursor.style.left = e.clientX + "px";
+    cursor.style.top = e.clientY + "px";
+  });
+
+  document.addEventListener("mousedown", () => {
+    cursor.style.transform = "translate(-50%, -50%) scale(0.7)";
+  });
+
+  document.addEventListener("mouseup", () => {
+    cursor.style.transform = "translate(-50%, -50%) scale(1)";
+  });
+
+  const interactive = document.querySelectorAll("a, button, .nav-card");
+
+  interactive.forEach(el => {
+    el.addEventListener("mouseenter", () => {
+      cursor.style.width = "28px";
+      cursor.style.height = "28px";
+      cursor.style.boxShadow = "0 0 20px #00ffff";
+    });
+    el.addEventListener("mouseleave", () => {
+      cursor.style.width = "18px";
+      cursor.style.height = "18px";
+      cursor.style.boxShadow = "0 0 12px #00ffffaa";
+    });
+  });
+</script>
+  
 <body>
 
   <!-- TOP BAR -->
