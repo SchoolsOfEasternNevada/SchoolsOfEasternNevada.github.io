@@ -8,40 +8,12 @@
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/main.css">
-
-  <style>
-    /* ===== FORCE CANVAS LAYER ===== */
-    #bgCanvas {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    .custom-cursor {
-      position: fixed;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: rgba(0,255,255,0.9);
-      box-shadow: 0 0 12px #00ffffaa;
-      pointer-events: none;
-      transform: translate(-50%, -50%);
-      transition: 0.1s ease;
-      z-index: 10001;
-    }
-
-    /* Keep everything above canvas */
-    body > *:not(#bgCanvas) {
-      position: relative;
-      z-index: 1;
-    }
-  </style>
+  <link rel="stylesheet" href="assets/css/pages.css">
 </head>
 
 <body>
 
-  <!-- Background Layer -->
+  <!-- Background -->
   <canvas id="bgCanvas"></canvas>
   <div class="custom-cursor" id="cursor"></div>
 
@@ -127,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("resize", resize);
   resize();
 
-  let mouse = { x: window.innerWidth/2, y: window.innerHeight/2 };
+  let mouse = { x: -9999, y: -9999 };
 
   document.addEventListener("mousemove", (e) => {
     mouse.x = e.clientX;
@@ -145,7 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const spacing = 40;
-  const maxDist = 220;
+  const radius = 140;
 
   function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -157,10 +129,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const dy = mouse.y - y;
         const distance = Math.sqrt(dx*dx + dy*dy);
 
-        const intensity = Math.max(0, 1 - distance / maxDist);
+        let size = 1.5;
+        let alpha = 0.08;
 
-        const alpha = 0.05 + intensity * 0.9;
-        const size = 1.2 + intensity * 3;
+        if (distance < radius) {
+          const intensity = 1 - (distance / radius);
+          size += intensity * 2.5;
+          alpha += intensity * 0.6;
+        }
 
         ctx.beginPath();
         ctx.arc(x, y, size, 0, Math.PI * 2);
@@ -173,44 +149,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   draw();
-
-  /* ===== VERSION / TERMS LOGIC ===== */
-
-  const VERSION = "W.1.8";
-  const startup = document.getElementById('startupScreen');
-  const terms = document.getElementById('termsOverlay');
-  const update = document.getElementById('updateOverlay');
-
-  if (sessionStorage.getItem('startupShown')) {
-    startup.style.display = 'none';
-  } else {
-    sessionStorage.setItem('startupShown', 'true');
-  }
-
-  if (localStorage.getItem('acceptedVersion') !== VERSION) {
-    localStorage.removeItem('termsAccepted');
-    sessionStorage.removeItem('updateShown');
-  }
-
-  window.addEventListener('load', () => {
-    if (!localStorage.getItem('termsAccepted')) {
-      terms.classList.remove('hidden');
-    } else if (!sessionStorage.getItem('updateShown')) {
-      update.classList.remove('hidden');
-    }
-  });
-
-  window.acceptTerms = function() {
-    localStorage.setItem('termsAccepted', 'true');
-    localStorage.setItem('acceptedVersion', VERSION);
-    terms.classList.add('hidden');
-    update.classList.remove('hidden');
-  }
-
-  window.closeUpdate = function() {
-    sessionStorage.setItem('updateShown', 'true');
-    update.classList.add('hidden');
-  }
 
 });
 </script>
