@@ -9,21 +9,145 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="stylesheet" href="assets/css/pages.css">
+
+  <style>
+    body {
+      background: #000;
+      cursor: none;
+    }
+
+    /* ===== BACKGROUND CANVAS ===== */
+    #bgCanvas {
+      position: fixed;
+      top: 60px; /* Below navbar */
+      left: 0;
+      width: 100%;
+      height: calc(100vh - 60px);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ===== CUSTOM CURSOR ===== */
+    .custom-cursor {
+      position: fixed;
+      width: 18px;
+      height: 18px;
+      border: 2px solid #00ffff;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 10000;
+      box-shadow: 0 0 15px #00ffff, 0 0 30px rgba(0,255,255,0.5);
+      transition: transform 0.08s ease-out;
+    }
+
+    .startup-screen {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      animation: startupFadeOut 1s ease forwards;
+      animation-delay: 1s;
+    }
+
+    .startup-logo {
+      font-size: 64px;
+      letter-spacing: 6px;
+      color: #9ffcff;
+      text-shadow: 0 0 35px #00ffff;
+      animation: glowPulse 1.6s ease-in-out infinite;
+    }
+
+    .startup-sub {
+      margin-top: 12px;
+      font-size: 14px;
+      opacity: 0.7;
+      letter-spacing: 2px;
+    }
+
+    @keyframes glowPulse {
+      0% { text-shadow: 0 0 20px #00ffff; }
+      50% { text-shadow: 0 0 50px #00ffff; }
+      100% { text-shadow: 0 0 20px #00ffff; }
+    }
+
+    @keyframes startupFadeOut {
+      to { opacity: 0; pointer-events: none; }
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(8px);
+      z-index: 9000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .box {
+      width: 90%;
+      max-width: 520px;
+      background: #050505;
+      border-radius: 28px;
+      padding: 28px;
+      border: 2px solid rgba(0,255,255,0.8);
+      box-shadow: 0 0 40px rgba(0,255,255,0.6);
+      text-align: center;
+    }
+
+    .box-title {
+      font-size: 22px;
+      margin-bottom: 12px;
+      color: #9ffcff;
+      text-shadow: 0 0 18px #00ffff;
+    }
+
+    .box-text {
+      font-size: 14px;
+      opacity: 0.85;
+      margin-bottom: 24px;
+      line-height: 1.6;
+      white-space: pre-line;
+      text-align: left;
+    }
+
+    .box-btn {
+      padding: 10px 28px;
+      border: 2px solid #9ffcff;
+      color: #9ffcff;
+      background: transparent;
+      font-family: 'Orbitron', sans-serif;
+      cursor: pointer;
+      border-radius: 10px;
+      box-shadow: 0 0 15px #00ffff;
+      transition: 0.25s ease;
+    }
+
+    .box-btn:hover {
+      box-shadow: 0 0 30px #00ffff;
+      transform: translateY(-1px);
+    }
+
+    .hidden { display: none; }
+  </style>
 </head>
 
 <body>
 
-  <!-- Background -->
   <canvas id="bgCanvas"></canvas>
   <div class="custom-cursor" id="cursor"></div>
 
-  <!-- STARTUP -->
   <div class="startup-screen" id="startupScreen">
     <div class="startup-logo">G.GUI</div>
     <div class="startup-sub">Loading the stuff</div>
   </div>
 
-  <!-- TERMS -->
   <div class="overlay hidden" id="termsOverlay">
     <div class="box">
       <div class="box-title">Terms of Use</div>
@@ -41,7 +165,6 @@ The creators and contributors are not responsible for consequences arising from 
     </div>
   </div>
 
-  <!-- UPDATE -->
   <div class="overlay hidden" id="updateOverlay">
     <div class="box">
       <div class="box-title">Welcome to Version W.1.8</div>
@@ -52,7 +175,6 @@ The creators and contributors are not responsible for consequences arising from 
     </div>
   </div>
 
-  <!-- TOP BAR -->
   <header class="top-bar">
     <div class="top-left">
       <a href="index.html" class="controller-home">
@@ -65,7 +187,6 @@ The creators and contributors are not responsible for consequences arising from 
     </a>
   </header>
 
-  <!-- MAIN -->
   <main class="home">
     <img src="assets/img/controller.gif" class="title-gif" alt="Animated Banner">
     <h1 class="site-title">G.GUI</h1>
@@ -93,17 +214,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function resize() {
     canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.height = window.innerHeight - 60;
   }
 
   window.addEventListener("resize", resize);
   resize();
 
-  let mouse = { x: -9999, y: -9999 };
+  let mouse = { x: window.innerWidth/2, y: window.innerHeight/2 };
 
   document.addEventListener("mousemove", (e) => {
     mouse.x = e.clientX;
-    mouse.y = e.clientY;
+    mouse.y = e.clientY - 60;
     cursor.style.left = e.clientX + "px";
     cursor.style.top = e.clientY + "px";
   });
@@ -129,13 +250,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const dy = mouse.y - y;
         const distance = Math.sqrt(dx*dx + dy*dy);
 
-        let size = 1.5;
-        let alpha = 0.08;
+        let size = 1.2;
+        let alpha = 0.05;
 
         if (distance < radius) {
           const intensity = 1 - (distance / radius);
-          size += intensity * 2.5;
-          alpha += intensity * 0.6;
+          size += intensity * 3;
+          alpha += intensity * 0.7;
         }
 
         ctx.beginPath();
