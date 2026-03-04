@@ -27,9 +27,24 @@
       font-family: 'Inter', sans-serif;
       color: var(--text-main);
       overflow: hidden;
+      cursor: none; /* Hides real cursor */
     }
 
-    /* UPDATED TOP BAR */
+    /* --- CUSTOM CURSOR STYLES --- */
+    .custom-cursor {
+      width: 18px;
+      height: 18px;
+      background: var(--accent);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s, transform 0.1s;
+      box-shadow: 0 0 12px var(--accent);
+    }
+
+    /* --- TOP BAR --- */
     .top-bar {
       height: 64px;
       display: flex;
@@ -42,7 +57,6 @@
       z-index: 100;
     }
 
-    /* Fixed Logo Scaling */
     .controller-home {
       display: flex;
       align-items: center;
@@ -50,16 +64,11 @@
     }
 
     .controller-home img {
-      height: 32px; /* Fixed height to prevent squishing */
-      width: auto;   /* Natural width scaling */
+      height: 32px;
+      width: auto;
       display: block;
     }
 
-    .controller-home:hover {
-      transform: scale(1.1);
-    }
-
-    /* Back Button styling */
     #backBtn {
       display: none;
       background: #111;
@@ -69,13 +78,12 @@
       border-radius: 8px;
       font-family: 'Orbitron', sans-serif;
       font-size: 11px;
-      cursor: pointer;
+      cursor: none;
       margin-right: 20px;
       text-transform: uppercase;
       letter-spacing: 1px;
     }
 
-    /* RESTORED: Discord Button Styling */
     .discord-btn {
       padding: 8px 20px;
       border: 2px solid var(--accent);
@@ -89,6 +97,7 @@
       text-transform: uppercase;
       letter-spacing: 1px;
       box-shadow: 0 0 10px rgba(0, 255, 231, 0.2);
+      cursor: none;
     }
 
     .discord-btn:hover {
@@ -97,7 +106,7 @@
       box-shadow: 0 0 20px var(--accent);
     }
 
-    /* REST OF APP STYLES */
+    /* --- APP GRID --- */
     .app-shell {
       position: absolute;
       top: 64px;
@@ -105,8 +114,6 @@
       right: 0;
       bottom: 0;
       overflow-y: auto;
-      scrollbar-width: thin;
-      scrollbar-color: var(--card-border) transparent;
     }
 
     .app-selector {
@@ -124,7 +131,6 @@
       letter-spacing: 4px;
       margin-bottom: 50px;
       color: #fff;
-      text-transform: uppercase;
     }
 
     .app-buttons {
@@ -141,8 +147,8 @@
       border-radius: 12px;
       padding: 30px 20px;
       text-align: center;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      cursor: pointer;
+      transition: all 0.3s ease;
+      cursor: none;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -157,13 +163,8 @@
 
     .app-card span {
       font-size: 14px;
-      font-weight: 500;
       color: #ccc;
-      transition: color 0.3s;
-    }
-
-    .app-card:hover span {
-      color: var(--accent);
+      pointer-events: none;
     }
 
     .alt-badge {
@@ -173,17 +174,8 @@
       font-size: 9px;
       padding: 2px 6px;
       border-radius: 4px;
-      background: transparent;
       color: var(--accent);
       border: 1px solid var(--accent);
-      opacity: 0.6;
-      transition: opacity 0.3s;
-    }
-
-    .app-card:hover .alt-badge {
-      opacity: 1;
-      background: var(--accent);
-      color: #000;
     }
 
     .app-view {
@@ -200,6 +192,7 @@
       border: none;
     }
 
+    /* --- MODAL --- */
     .alt-popup {
       position: fixed;
       inset: 0;
@@ -209,6 +202,7 @@
       justify-content: center;
       z-index: 1000;
       backdrop-filter: blur(5px);
+      cursor: none;
     }
 
     .alt-popup-content {
@@ -229,27 +223,15 @@
       color: #fff;
       padding: 15px;
       border-radius: 8px;
-      cursor: pointer;
+      cursor: none;
       transition: 0.2s;
-    }
-
-    .alt-link-btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    .close-alt {
-      margin-top: 10px;
-      background: transparent;
-      color: #666;
-      border: none;
-      cursor: pointer;
-      font-size: 12px;
     }
   </style>
 </head>
 
 <body>
+
+<div class="custom-cursor" id="cursor"></div>
 
 <header class="top-bar">
   <div style="display: flex; align-items: center;">
@@ -258,31 +240,22 @@
       <img src="assets/img/controller.svg" alt="Home">
     </a>
   </div>
-
-  <a href="https://discord.gg/AC5nAtdd" target="_blank" rel="noopener noreferrer" class="discord-btn">
-    Discord
-  </a>
+  <a href="https://discord.gg/AC5nAtdd" target="_blank" class="discord-btn">Discord</a>
 </header>
 
 <main class="app-shell">
   <div class="app-selector" id="appSelector">
-    <h1>Systems</h1>
-
+    <h1>Apps</h1>
     <div class="app-buttons">
       <div class="app-card" onclick="launchApp('https://edu.waterloomath.com/')" data-alt="https://coolmathgames.metropolitanstaffingsolutions.com/,https://mathteachersforhire.shop/">
         <span>Truffled</span>
         <div class="alt-badge" onclick="openAlt(event, this.parentElement)">ALT</div>
       </div>
-
-      <div class="app-card" onclick="launchApp('https://shadow-good.bostoncareercounselor.com/')">
-        <span>Shadow Good</span>
-      </div>
-
+      <div class="app-card" onclick="launchApp('https://shadow-good.bostoncareercounselor.com/')"><span>Shadow Good</span></div>
       <div class="app-card" onclick="launchApp('https://highschoolmathteachers.com/')" data-alt="https://larp.now/">
         <span>Froggies Arcade</span>
         <div class="alt-badge" onclick="openAlt(event, this.parentElement)">ALT</div>
       </div>
-
       <div class="app-card" onclick="launchApp('https://abc.school.dovereducation.org/')"><span>Nebulo</span></div>
       <div class="app-card" onclick="launchApp('https://silvervalethegoat.graphicon.ru/')"><span>Zepto Learning 2</span></div>
       <div class="app-card" onclick="launchApp('https://pictures.about-anthony.com/')"><span>Infamous</span></div>
@@ -290,12 +263,10 @@
       <div class="app-card" onclick="launchApp('https://vcsayt.blanksheetstudios.com/')"><span>Rammerhead</span></div>
       <div class="app-card" onclick="launchApp('https://math-help.blanksheetstudios.com/')"><span>Glint Browser</span></div>
       <div class="app-card" onclick="launchApp('https://family.1382.hotelconsuladoinn.com/')"><span>Luminal OS</span></div>
-      
       <div class="app-card" onclick="launchApp('https://mathtoolseducation.allastella.it/')" data-alt="https://math5.tcloud.my/">
         <span>OverCloaked</span>
         <div class="alt-badge" onclick="openAlt(event, this.parentElement)">ALT</div>
       </div>
-
       <div class="app-card" onclick="launchApp('https://mall-shopping.egevad.se/')"><span>Galaxy V6</span></div>
       <div class="app-card" onclick="launchApp('https://joinergeometry.kathmandubiz.com/')"><span>Interstellar</span></div>
       <div class="app-card" onclick="launchApp('https://educationforindia.com/')"><span>Vapor V4</span></div>
@@ -317,6 +288,41 @@
 </div>
 
 <script>
+  const cursor = document.getElementById("cursor");
+
+  document.addEventListener("mousemove", (e) => {
+    cursor.style.left = e.clientX + "px";
+    cursor.style.top = e.clientY + "px";
+  });
+
+  document.addEventListener("mousedown", () => {
+    cursor.style.transform = "translate(-50%, -50%) scale(0.7)";
+  });
+
+  document.addEventListener("mouseup", () => {
+    cursor.style.transform = "translate(-50%, -50%) scale(1)";
+  });
+
+  // Cursor interaction for cards and buttons
+  function refreshCursorListeners() {
+    const interactive = document.querySelectorAll("a, button, .app-card, .alt-link-btn");
+    interactive.forEach(el => {
+      el.addEventListener("mouseenter", () => {
+        cursor.style.width = "28px";
+        cursor.style.height = "28px";
+        cursor.style.background = "rgba(0, 255, 231, 0.3)";
+        cursor.style.border = "1px solid var(--accent)";
+      });
+      el.addEventListener("mouseleave", () => {
+        cursor.style.width = "18px";
+        cursor.style.height = "18px";
+        cursor.style.background = "var(--accent)";
+        cursor.style.border = "none";
+      });
+    });
+  }
+  refreshCursorListeners();
+
   function launchApp(url) {
     document.getElementById('appSelector').style.display = 'none';
     document.getElementById('appView').style.display = 'block';
@@ -340,7 +346,7 @@
     const links = altData.split(',');
     const popup = document.getElementById('altPopup');
     const content = document.getElementById('altContent');
-    content.innerHTML = '<h2 style="font-size:14px; margin-top:0; color:#666;">SELECT VERSION</h2>';
+    content.innerHTML = '<h2 style="font-size:14px; margin-top:0; color:#666; font-family:Orbitron;">SELECT VERSION</h2>';
 
     links.forEach((link, index) => {
       const btn = document.createElement('button');
@@ -352,11 +358,14 @@
 
     const closeBtn = document.createElement('button');
     closeBtn.textContent = "CANCEL";
-    closeBtn.className = "close-alt";
+    closeBtn.className = "alt-link-btn";
+    closeBtn.style.marginTop = "10px";
+    closeBtn.style.color = "#666";
     closeBtn.onclick = () => popup.style.display = 'none';
     content.appendChild(closeBtn);
 
     popup.style.display = 'flex';
+    refreshCursorListeners(); // Re-bind for new buttons
   }
 
   window.onclick = function(event) {
