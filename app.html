@@ -23,7 +23,10 @@
     html, body {
       height: 100%;
       margin: 0;
-      background: var(--bg-dark);
+      /* Background added here using your uploaded image */
+      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                  url('image_46e6c0.png') no-repeat center center fixed;
+      background-size: cover;
       font-family: 'Inter', sans-serif;
       color: var(--text-main);
       overflow: hidden;
@@ -131,6 +134,7 @@
       letter-spacing: 4px;
       margin-bottom: 50px;
       color: #fff;
+      text-shadow: 0 0 10px rgba(0,0,0,0.5);
     }
 
     .app-buttons {
@@ -153,17 +157,19 @@
       flex-direction: column;
       justify-content: center;
       min-height: 100px;
+      backdrop-filter: blur(5px);
     }
 
     .app-card:hover {
-      background: rgba(255, 255, 255, 0.07);
+      background: rgba(255, 255, 255, 0.1);
       border-color: var(--accent);
       transform: translateY(-5px);
     }
 
     .app-card span {
       font-size: 14px;
-      color: #ccc;
+      color: #fff;
+      font-weight: 500;
       pointer-events: none;
     }
 
@@ -176,6 +182,7 @@
       border-radius: 4px;
       color: var(--accent);
       border: 1px solid var(--accent);
+      background: rgba(0,0,0,0.3);
     }
 
     .app-view {
@@ -303,7 +310,6 @@
     cursor.style.transform = "translate(-50%, -50%) scale(1)";
   });
 
-  // Cursor interaction for cards and buttons
   function refreshCursorListeners() {
     const interactive = document.querySelectorAll("a, button, .app-card, .alt-link-btn");
     interactive.forEach(el => {
@@ -365,7 +371,7 @@
     content.appendChild(closeBtn);
 
     popup.style.display = 'flex';
-    refreshCursorListeners(); // Re-bind for new buttons
+    refreshCursorListeners();
   }
 
   window.onclick = function(event) {
