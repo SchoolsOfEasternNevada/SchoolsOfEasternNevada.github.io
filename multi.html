@@ -16,6 +16,30 @@
       background: #000;
       font-family: 'Orbitron', sans-serif;
       overflow: hidden;
+      cursor: none;
+    }
+
+    #bgCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .custom-cursor {
+      position: fixed;
+      width: 18px;
+      height: 18px;
+      border: 2px solid #00ffff;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 10000;
+      box-shadow: 0 0 12px #00ffffaa;
+      transition: transform 0.08s ease-out, width 0.2s, height 0.2s;
     }
 
     .page {
@@ -26,6 +50,7 @@
       bottom: 0;
       padding: 40px;
       overflow-y: auto;
+      z-index: 1;
     }
 
     h1 {
@@ -36,7 +61,6 @@
       text-shadow: 0 0 25px #00ffff;
     }
 
-    /* GRID — 3 PER ROW */
     .game-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -45,15 +69,11 @@
     }
 
     @media (max-width: 1100px) {
-      .game-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      .game-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     @media (max-width: 700px) {
-      .game-grid {
-        grid-template-columns: 1fr;
-      }
+      .game-grid { grid-template-columns: 1fr; }
     }
 
     .game-card {
@@ -62,7 +82,7 @@
       background: #050505;
       border: 2px solid rgba(0,255,255,0.7);
       box-shadow: 0 0 18px rgba(0,255,255,0.4);
-      cursor: pointer;
+      cursor: none;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
@@ -100,65 +120,31 @@
       inset: 60px 0 0 0;
       background: #000;
       display: none;
+      z-index: 100;
     }
 
-    .iframe-view iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
+    .iframe-view iframe { width: 100%; height: 100%; border: none; }
 
     .back-btn {
       position: absolute;
       top: 20px;
       left: 20px;
-      z-index: 10;
+      z-index: 110;
       background: #000;
       color: #9ffcff;
       border: 2px solid #9ffcff;
       padding: 8px 16px;
       border-radius: 10px;
-      cursor: pointer;
+      cursor: none;
       box-shadow: 0 0 12px #00ffff;
     }
   </style>
 </head>
   
-<div class="custom-cursor" id="cursor"></div>
-
-<script>
-  const cursor = document.getElementById("cursor");
-
-  document.addEventListener("mousemove", (e) => {
-    cursor.style.left = e.clientX + "px";
-    cursor.style.top = e.clientY + "px";
-  });
-
-  document.addEventListener("mousedown", () => {
-    cursor.style.transform = "translate(-50%, -50%) scale(0.7)";
-  });
-
-  document.addEventListener("mouseup", () => {
-    cursor.style.transform = "translate(-50%, -50%) scale(1)";
-  });
-
-  const interactive = document.querySelectorAll("a, button, .nav-card");
-
-  interactive.forEach(el => {
-    el.addEventListener("mouseenter", () => {
-      cursor.style.width = "28px";
-      cursor.style.height = "28px";
-      cursor.style.boxShadow = "0 0 20px #00ffff";
-    });
-    el.addEventListener("mouseleave", () => {
-      cursor.style.width = "18px";
-      cursor.style.height = "18px";
-      cursor.style.boxShadow = "0 0 12px #00ffffaa";
-    });
-  });
-</script>
-  
 <body>
+
+<canvas id="bgCanvas"></canvas>
+<div class="custom-cursor" id="cursor"></div>
 
 <header class="top-bar">
   <a href="index.html" class="controller-home">
@@ -171,8 +157,6 @@
   <h1>Multi-Game Websites</h1>
 
   <div class="game-grid">
-
-    <!-- Existing / earlier -->
     <div class="game-card" onclick="launchSite('https://gr4ys0n.github.io')">
       <div class="game-thumb"><img src="assets/img/gr4ys0n.png"></div>
       <div class="game-title">educationbw.github.io</div>
@@ -183,12 +167,10 @@
       <div class="game-title">Tomb of the Mask</div>
     </div>
 
-    <!-- Added sites -->
     <div class="game-card" onclick="launchSite('https://polytrack.bitbucket.io/')">
       <div class="game-thumb"><img src="assets/img/polytrack.png"></div>
       <div class="game-title">PolyTrack</div>
     </div>
-
 
     <div class="game-card" onclick="launchSite('https://bendover111222333444.github.io/')">
       <div class="game-thumb"><img src="assets/img/bendover.png"></div>
@@ -223,6 +205,7 @@
     <div class="game-card" onclick="launchSite('https://gnumath.github.io/')">
       <div class="game-thumb"><img src="assets/img/gnmath.png"></div>
       <div class="game-title">Gnmath</div>
+    </div>
   </div>
 </main>
 
@@ -232,6 +215,73 @@
 </div>
 
 <script>
+  const canvas = document.getElementById("bgCanvas");
+  const ctx = canvas.getContext("2d");
+  const cursor = document.getElementById("cursor");
+  let mouse = { x: -1000, y: -1000 };
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener("resize", resize);
+  resize();
+
+  document.addEventListener("mousemove", (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+    cursor.style.left = e.clientX + "px";
+    cursor.style.top = e.clientY + "px";
+  });
+
+  document.addEventListener("mousedown", () => {
+    cursor.style.transform = "translate(-50%, -50%) scale(0.7)";
+  });
+
+  document.addEventListener("mouseup", () => {
+    cursor.style.transform = "translate(-50%, -50%) scale(1)";
+  });
+
+  const spacing = 40;
+  const radius = 150;
+  const baseSize = 1.5;
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let x = 0; x < canvas.width; x += spacing) {
+      for (let y = 0; y < canvas.height; y += spacing) {
+        const dx = mouse.x - x;
+        const dy = mouse.y - y;
+        const distance = Math.sqrt(dx*dx + dy*dy);
+        let size = baseSize;
+        if (distance < radius) {
+          const intensity = 1 - (distance / radius);
+          size = baseSize + intensity * 4;
+        }
+        ctx.beginPath();
+        ctx.arc(x, y, size, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(0, 255, 255, 0.12)";
+        ctx.fill();
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+
+  const interactive = document.querySelectorAll("a, button, .game-card");
+  interactive.forEach(el => {
+    el.addEventListener("mouseenter", () => {
+      cursor.style.width = "28px";
+      cursor.style.height = "28px";
+      cursor.style.boxShadow = "0 0 20px #00ffff";
+    });
+    el.addEventListener("mouseleave", () => {
+      cursor.style.width = "18px";
+      cursor.style.height = "18px";
+      cursor.style.boxShadow = "0 0 12px #00ffffaa";
+    });
+  });
+
   function launchSite(url) {
     document.getElementById('selectorView').style.display = 'none';
     document.getElementById('iframeView').style.display = 'block';
