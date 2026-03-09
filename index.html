@@ -48,15 +48,26 @@
       background-repeat: no-repeat;
       background-size: cover;
       display: none;
-      z-index: -1;
+      z-index: 0;
     }
 
     /* Updated Background State Logic */
     body.use-static .static-bg-layer { display: block; background-image: url('assets/img/bg-static.png'); }
+    body.use-bg1 .static-bg-layer { display: block; background-image: url('assets/img/bg1.png'); }
 
-    /* Hide canvas when static image is used */
-    body.use-static #bgCanvas { 
+    /* Hide canvas when static or bg1 image is used */
+    body.use-static #bgCanvas,
+    body.use-bg1 #bgCanvas { 
       display: none !important; 
+    }
+
+    /* Ensure main content stacks above background layer */
+    body.use-static main.home,
+    body.use-static .footer,
+    body.use-bg1 main.home,
+    body.use-bg1 .footer {
+      position: relative;
+      z-index: 1;
     }
 
     /* Custom Cursor Logic */
@@ -398,6 +409,10 @@
           <img src="assets/img/bg-static.png" alt="Static" onerror="this.src='https://via.placeholder.com/100x50/111/00ffe7?text=Static'">
           <span>Static</span>
         </div>
+        <div class="bg-opt" id="optBg1">
+          <img src="assets/img/bg1.png" alt="bg1" onerror="this.src='https://via.placeholder.com/100x50/111/00ffe7?text=bg1'">
+          <span>bg1</span>
+        </div>
         </div>
     </div>
   </div>
@@ -502,13 +517,16 @@ function applySettings(s) {
   document.body.classList.toggle('cursor-off', s.cursor === false);
   document.body.classList.toggle('sidebar-mode', s.sidebar === true);
   
-  // Only handle Dots and Static
-  document.body.classList.remove('use-static', 'use-grid', 'use-cool');
+  // Dots, Static, bg1
+  document.body.classList.remove('use-static', 'use-bg1', 'use-grid', 'use-cool');
   document.querySelectorAll('.bg-opt').forEach(opt => opt.classList.remove('active'));
 
   if(s.bg === 'static') {
     document.body.classList.add('use-static');
     if(document.getElementById('optStatic')) document.getElementById('optStatic').classList.add('active');
+  } else if(s.bg === 'bg1') {
+    document.body.classList.add('use-bg1');
+    if(document.getElementById('optBg1')) document.getElementById('optBg1').classList.add('active');
   } else {
     if(document.getElementById('optDots')) document.getElementById('optDots').classList.add('active');
   }
@@ -529,7 +547,7 @@ function saveOptions() {
   const settings = {
     cursor: document.getElementById('cursorToggle') ? document.getElementById('cursorToggle').checked : true,
     sidebar: document.getElementById('sidebarToggle') ? document.getElementById('sidebarToggle').checked : false,
-    bg: document.body.classList.contains('use-static') ? 'static' : 'dots'
+    bg: document.body.classList.contains('use-static') ? 'static' : document.body.classList.contains('use-bg1') ? 'bg1' : 'dots'
   };
   localStorage.setItem('ggui_settings', JSON.stringify(settings));
   applySettings(settings);
@@ -595,8 +613,9 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById('cursorToggle').onchange = saveOptions;
   document.getElementById('sidebarToggle').onchange = saveOptions;
   
-  document.getElementById('optDots').onclick = () => { document.body.classList.remove('use-static'); saveOptions(); };
-  document.getElementById('optStatic').onclick = () => { document.body.classList.add('use-static'); saveOptions(); };
+  document.getElementById('optDots').onclick = () => { document.body.classList.remove('use-static', 'use-bg1'); saveOptions(); };
+  document.getElementById('optStatic').onclick = () => { document.body.classList.remove('use-bg1'); document.body.classList.add('use-static'); saveOptions(); };
+  document.getElementById('optBg1').onclick = () => { document.body.classList.remove('use-static'); document.body.classList.add('use-bg1'); saveOptions(); };
 
   document.getElementById('cloakBtn').onclick = () => launchCloak();
   document.getElementById('openPresetsBtn').onclick = openPresets;

@@ -6,6 +6,7 @@ const imageCtx = imageCanvas.getContext("2d")
 const video = document.createElement("video")
 const resetButton = document.querySelector("#reset-button")
 const downloadButton = document.querySelector("#download-button")
+const sidewaysToggle = document.querySelector("#sideways-toggle")
 
 const $Effect = new TimeWarp({
   lineWidth: 3,
@@ -52,4 +53,9 @@ resetButton.addEventListener("click", () => {
 })
 downloadButton.addEventListener("click", () => {
   $Effect.download()
+})
+sidewaysToggle.addEventListener("click", () => {
+  const isOn = $Effect.toggleSideways()
+  sidewaysToggle.textContent = isOn ? "Vertical Warp" : "Sideways Warp"
+  $Effect.reset()
 })

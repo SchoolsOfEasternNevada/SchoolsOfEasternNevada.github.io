@@ -43,10 +43,12 @@
       background: url('assets/img/bg-static.png') no-repeat center center;
       background-size: cover;
       display: none;
-      z-index: -1;
+      z-index: 0;
     }
     body.use-static .static-bg-layer { display: block; }
-    body.use-static #bgCanvas { display: none; }
+    body.use-bg1 .static-bg-layer { display: block; background: url('assets/img/bg1.png') no-repeat center center; background-size: cover; }
+    body.use-static #bgCanvas,
+    body.use-bg1 #bgCanvas { display: none; }
 
     body.cursor-off { cursor: auto !important; }
     body.cursor-off .custom-cursor { display: none !important; }
@@ -307,6 +309,7 @@
       <div class="bg-preview-container">
         <div class="bg-opt active" id="optDots"><span>Dotted</span></div>
         <div class="bg-opt" id="optStatic"><span>Static</span></div>
+        <div class="bg-opt" id="optBg1"><span>bg1</span></div>
       </div>
     </div>
   </div>
@@ -383,14 +386,22 @@
     if(s.sidebar === true) document.body.classList.add('sidebar-mode');
     else document.body.classList.remove('sidebar-mode');
 
+    document.body.classList.remove('use-static', 'use-bg1');
     if(s.bg === 'static') {
       document.body.classList.add('use-static');
       document.getElementById('optStatic').classList.add('active');
       document.getElementById('optDots').classList.remove('active');
+      document.getElementById('optBg1')?.classList.remove('active');
+    } else if(s.bg === 'bg1') {
+      document.body.classList.add('use-bg1');
+      document.getElementById('optBg1')?.classList.add('active');
+      document.getElementById('optDots').classList.remove('active');
+      document.getElementById('optStatic').classList.remove('active');
     } else {
-      document.body.classList.remove('use-static');
+      document.body.classList.remove('use-static', 'use-bg1');
       document.getElementById('optDots').classList.add('active');
       document.getElementById('optStatic').classList.remove('active');
+      document.getElementById('optBg1')?.classList.remove('active');
     }
     resize();
   }
@@ -409,7 +420,7 @@
     const settings = {
       cursor: document.getElementById('cursorToggle').checked,
       sidebar: document.getElementById('sidebarToggle').checked,
-      bg: document.body.classList.contains('use-static') ? 'static' : 'dots'
+      bg: document.body.classList.contains('use-static') ? 'static' : document.body.classList.contains('use-bg1') ? 'bg1' : 'dots'
     };
     localStorage.setItem('ggui_settings', JSON.stringify(settings));
     applySettings(settings);
@@ -433,11 +444,17 @@
     document.getElementById('cursorToggle').addEventListener('change', saveOptions);
     document.getElementById('sidebarToggle').addEventListener('change', saveOptions);
     document.getElementById('optDots').addEventListener('click', () => {
-        document.body.classList.remove('use-static');
+        document.body.classList.remove('use-static', 'use-bg1');
         saveOptions();
     });
     document.getElementById('optStatic').addEventListener('click', () => {
+        document.body.classList.remove('use-bg1');
         document.body.classList.add('use-static');
+        saveOptions();
+    });
+    document.getElementById('optBg1').addEventListener('click', () => {
+        document.body.classList.remove('use-static');
+        document.body.classList.add('use-bg1');
         saveOptions();
     });
     
