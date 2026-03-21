@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>G.GUI — Resources</title>
+  <title>G.GUI — Backup</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/main.css">
-  <link rel="stylesheet" href="assets/css/pages.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/pages.css">
 
   <style>
     :root {
@@ -44,13 +44,13 @@
     .static-bg-layer {
       position: fixed;
       inset: 0;
-      background: url('assets/img/bg-static.png') no-repeat center center;
+      background: url('../assets/img/bg-static.png') no-repeat center center;
       background-size: cover;
       display: none;
       z-index: 0;
     }
     body.use-static .static-bg-layer { display: block; }
-    body.use-bg1 .static-bg-layer { display: block; background: url('assets/img/bg1.png') no-repeat center center; background-size: cover; }
+    body.use-bg1 .static-bg-layer { display: block; background: url('../assets/img/bg1.png') no-repeat center center; background-size: cover; }
     body.use-static #bgCanvas,
     body.use-bg1 #bgCanvas { display: none; }
 
@@ -107,11 +107,11 @@
       white-space: nowrap;
       color: #fff;
     }
-    
-    .side-item img, .side-item svg { 
-      width: 24px; 
-      height: 24px; 
-      min-width: 24px; 
+
+    .side-item img, .side-item svg {
+      width: 24px;
+      height: 24px;
+      min-width: 24px;
       opacity: 0.8;
       transition: opacity 0.3s ease;
     }
@@ -123,11 +123,11 @@
       transition: opacity 0.2s ease;
     }
     .side-nav:hover .side-item span { opacity: 1; }
-    
-    .side-item:hover { 
-      border-color: #00ffff; 
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.4); 
-      transform: translateX(5px); 
+
+    .side-item:hover {
+      border-color: #00ffff;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+      transform: translateX(5px);
     }
 
     body.sidebar-mode { padding-left: var(--side-width); }
@@ -162,38 +162,66 @@
       box-shadow: 0 0 12px rgba(0,255,255,0.4);
     }
 
-    .resources-page {
+    /* Page Layout */
+    .backup-page {
       position: relative;
       height: calc(100% - 60px);
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      gap: 40px;
+      justify-content: flex-start;
+      gap: 22px;
       z-index: 1;
+      padding: 40px 20px 60px;
+      overflow-y: auto;
     }
 
     .resources-title {
       font-size: 42px;
       color: #9ffcff;
       text-shadow: 0 0 30px #00ffff;
+      margin-top: 10px;
     }
 
-    .resource-btn {
-      padding: 24px 64px;
-      font-size: 18px;
-      border-radius: 16px;
-      border: 2px solid rgba(0,255,255,0.9);
-      background: #050505;
-      color: #9ffcff;
-      cursor: none;
-      text-decoration: none;
-      box-shadow: 0 0 20px rgba(0,255,255,0.6);
-      transition: 0.25s ease;
+    .backup-card {
+      width: min(780px, 100%);
+      background: rgba(5, 5, 5, 0.6);
+      border: 1px solid rgba(0, 255, 231, 0.25);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.08);
     }
-    .resource-btn:hover {
-      box-shadow: 0 0 40px rgba(0,255,255,1);
-      transform: translateY(-2px);
+
+    .backup-sub {
+      margin-top: 10px;
+      opacity: 0.9;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .backup-links {
+      margin-top: 14px;
+      padding-left: 18px;
+      width: 100%;
+      max-height: 55vh;
+      overflow-y: auto;
+    }
+
+    .backup-links li {
+      margin: 10px 0;
+      opacity: 0.95;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .backup-links a {
+      color: #9ffcff;
+      text-decoration: none;
+      border-bottom: 1px dashed rgba(159, 252, 255, 0.4);
+    }
+    .backup-links a:hover {
+      border-bottom-color: rgba(0,255,255,0.9);
+      box-shadow: 0 0 12px rgba(0,255,255,0.25);
     }
 
     /* Settings UI */
@@ -215,7 +243,7 @@
     }
     .settings-panel.open { right: 0; }
     .close-settings-btn { background: none; border: none; color: #fff; font-size: 32px; cursor: none !important; }
-    
+
     .switch { position: relative; display: inline-block; width: 44px; height: 22px; }
     .switch input { opacity: 0; width: 0; height: 0; }
     .slider { position: absolute; inset: 0; background-color: #333; transition: .4s; border-radius: 22px; cursor: none !important; }
@@ -223,7 +251,15 @@
     input:checked + .slider { background-color: #00ffff; }
     input:checked + .slider:before { transform: translateX(22px); }
 
-    .bg-opt { border: 2px solid transparent; border-radius: 12px; background: #111; padding: 8px; text-align: center; transition: 0.2s; cursor: none !important; }
+    .bg-opt {
+      border: 2px solid transparent;
+      border-radius: 12px;
+      background: #111;
+      padding: 8px;
+      text-align: center;
+      transition: 0.2s;
+      cursor: none !important;
+    }
     .bg-opt.active { border-color: #00ffff; box-shadow: 0 0 10px #00ffff; }
   </style>
 </head>
@@ -235,17 +271,17 @@
 <div class="custom-cursor" id="cursor"></div>
 
 <nav class="side-nav" id="sideNav">
-  <a href="index.html" class="side-item"><img src="assets/img/controller.svg" alt="Home"><span>Home</span></a>
-  <a href="multi.html" class="side-item"><img src="assets/img/grid.svg" alt="Multi"><span>Mlti-Gme Websites</span></a>
-  <a href="single.html" class="side-item"><img src="assets/img/square.svg" alt="Single"><span>1-Gme Websites</span></a>
-  <a href="app.html" class="side-item"><img src="assets/img/square.svg" alt="Apps"><span>Apps</span></a>
-  <a href="extras.html" class="side-item"><img src="assets/img/extras.png" alt="Extras"><span>Extras</span></a>
-  <a href="resources.html" class="side-item"><img src="assets/img/resources.png" alt="Res"><span>Resources</span></a>
-  <a href="G.GUI - Games/credits.html" class="side-item"><img src="assets/img/credits.png" alt="Credits"><span>Credits</span></a>
-  <a href="G.GUI - Games/backup.html" class="side-item"><img src="assets/img/backup.png" alt="Backup"><span>Backup Links</span></a>
-  <a href="G.GUI - Games/game.html" class="side-item"><img src="assets/img/game.png" alt="Games"><span>Games</span></a>
+  <a href="../index.html" class="side-item"><img src="../assets/img/controller.svg" alt="Home"><span>Home</span></a>
+  <a href="../multi.html" class="side-item"><img src="../assets/img/grid.svg" alt="Multi"><span>Mlti-Gme Websites</span></a>
+  <a href="../single.html" class="side-item"><img src="../assets/img/square.svg" alt="Single"><span>1-Gme Websites</span></a>
+  <a href="../app.html" class="side-item"><img src="../assets/img/square.svg" alt="Apps"><span>Apps</span></a>
+  <a href="../extras.html" class="side-item"><img src="../assets/img/extras.png" alt="Extras"><span>Extras</span></a>
+  <a href="../resources.html" class="side-item"><img src="../assets/img/resources.png" alt="Res"><span>Resources</span></a>
+  <a href="credits.html" class="side-item"><img src="../assets/img/credits.png" alt="Credits"><span>Credits</span></a>
+  <a href="backup.html" class="side-item"><img src="../assets/img/backup.png" alt="Backup"><span>Backup Links</span></a>
+  <a href="game.html" class="side-item"><img src="../assets/img/game.png" alt="Games"><span>Games</span></a>
   <div style="flex-grow: 1;"></div>
-  
+
   <button class="side-item" id="sideSettingsBtn" style="background:#111;">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="12" cy="12" r="3"></circle>
@@ -260,6 +296,7 @@
     <h2 style="color: #00ffff; font-size: 20px;">SETTINGS</h2>
     <button class="close-settings-btn" id="closeSettings">&times;</button>
   </div>
+
   <div class="settings-section">
     <h3 style="color:#9ffcff; font-size:12px; opacity:0.6; letter-spacing:2px;">Layout</h3>
     <div style="display:flex; justify-content: space-between; align-items:center; margin-top:10px;">
@@ -270,6 +307,7 @@
       </label>
     </div>
   </div>
+
   <div class="settings-section">
     <h3 style="color:#9ffcff; font-size:12px; opacity:0.6; letter-spacing:2px;">Personalization</h3>
     <div style="display:flex; justify-content: space-between; align-items:center; margin-top:10px;">
@@ -279,6 +317,7 @@
         <span class="slider"></span>
       </label>
     </div>
+
     <div style="margin-top:20px;">
       <span style="font-size: 13px; display: block; margin-bottom: 10px;">Background Mode</span>
       <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
@@ -292,12 +331,12 @@
 
 <header class="top-bar">
   <div class="top-left">
-    <a href="index.html" class="controller-home">
-      <img src="assets/img/controller.svg" alt="Home">
+    <a href="../index.html" class="controller-home">
+      <img src="../assets/img/controller.svg" alt="Home">
     </a>
-    <span class="top-link">Resources</span>
-    <a href="G.GUI - Games/credits.html" class="top-link">Credits</a>
-    <a href="G.GUI - Games/backup.html" class="top-link">Backup Links</a>
+    <a href="../resources.html" class="top-link">Resources</a>
+    <a href="credits.html" class="top-link">Credits</a>
+    <span class="top-link">Backup Links</span>
   </div>
 
   <div style="display: flex; gap: 15px; align-items: center;">
@@ -311,14 +350,31 @@
   </div>
 </header>
 
-<main class="resources-page">
-  <div class="resources-title">Resources</div>
+<main class="backup-page">
+  <div class="resources-title">Backup Links</div>
 
-  <a href="download.html" class="resource-btn">G.GUI-UGS Launcher</a>
+  <div class="backup-card">
+    <div class="credit-heading" style="color: #9ffcff; font-size: 18px; text-shadow: 0 0 20px rgba(0, 255, 255, 0.35); letter-spacing: 1px; margin-bottom: 8px;">
+      BACKUP LINKS
+    </div>
+    <div class="backup-sub">
+      Replace the example URLs below with your gaming website backups. Add more links by duplicating an
+      <code>&lt;li&gt;</code> row.
+    </div>
+
+    <ul class="backup-links" id="backupLinks">
+      <!-- Add your backup links below -->
+      <li><a href="#" target="_blank" rel="noopener noreferrer">Backup Link 1</a></li>
+      <li><a href="#" target="_blank" rel="noopener noreferrer">Backup Link 2</a></li>
+      <li><a href="#" target="_blank" rel="noopener noreferrer">Backup Link 3</a></li>
+      <li><a href="#" target="_blank" rel="noopener noreferrer">Backup Link 4</a></li>
+      <li><a href="#" target="_blank" rel="noopener noreferrer">Backup Link 5</a></li>
+    </ul>
+  </div>
 </main>
 
 <footer class="footer">
-  <span>G.GUI Project • Resources</span>
+  <span>G.GUI Project • Backup</span>
 </footer>
 
 <script>
@@ -378,11 +434,11 @@
 
     const openBtns = ['openSettings', 'sideSettingsBtn'];
     openBtns.forEach(id => {
-      document.getElementById(id)?.addEventListener('click', () => 
+      document.getElementById(id)?.addEventListener('click', () =>
         document.getElementById('settingsPanel').classList.add('open'));
     });
 
-    document.getElementById('closeSettings').addEventListener('click', () => 
+    document.getElementById('closeSettings').addEventListener('click', () =>
       document.getElementById('settingsPanel').classList.remove('open'));
 
     document.getElementById('cursorToggle').addEventListener('change', saveOptions);
