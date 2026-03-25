@@ -13,6 +13,8 @@
   <style>
     :root {
       --accent: #00ffe7;
+      --accent-soft: #9ffcff;
+      --accent-rgb: 0,255,231;
       --side-width: 80px;
       --side-expand: 240px;
     }
@@ -21,6 +23,37 @@
       background: #000;
       cursor: none;
       transition: padding-left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    body.settings-open {
+      overflow: hidden;
+      padding-left: 0 !important;
+      cursor: auto !important;
+    }
+
+    body.settings-open .custom-cursor,
+    body.settings-open .top-bar,
+    body.settings-open .side-nav {
+      display: none !important;
+    }
+
+    body.onboarding-active {
+      overflow: hidden;
+      cursor: auto !important;
+    }
+
+    body.onboarding-active .custom-cursor {
+      display: none !important;
+    }
+
+    body.onboarding-active .top-bar,
+    body.onboarding-active .side-nav,
+    body.onboarding-active .settings-panel,
+    body.onboarding-active .startup-screen,
+    body.onboarding-active #termsOverlay,
+    body.onboarding-active #updateOverlay,
+    body.onboarding-active #presetOverlay {
+      display: none !important;
     }
 
     /* Standard cursor when overlays are active */
@@ -52,7 +85,7 @@
     }
 
     /* Updated Background State Logic */
-    body.use-static .static-bg-layer { display: block; background-image: url('assets/img/bg-static.png'); }
+    body.use-static .static-bg-layer { display: block; background: #000; background-image: none; }
     body.use-bg1 .static-bg-layer { display: block; background-image: url('assets/img/bg1.png'); }
 
     /* Hide canvas when static or bg1 image is used */
@@ -87,6 +120,69 @@
     body.cursor-off .custom-cursor { display: none !important; }
     body.cursor-off { cursor: auto !important; }
     body.cursor-off a, body.cursor-off button, body.cursor-off .nav-card, body.cursor-off .icon-btn, body.cursor-off .side-item { cursor: auto !important; }
+
+    body.theme-neon {
+      --accent: #00ffe7;
+      --accent-soft: #9ffcff;
+      --accent-rgb: 0,255,231;
+    }
+
+    body.theme-violet {
+      --accent: #b47cff;
+      --accent-soft: #dac0ff;
+      --accent-rgb: 180,124,255;
+    }
+
+    body.theme-crimson {
+      --accent: #ff5f8a;
+      --accent-soft: #ffc4d6;
+      --accent-rgb: 255,95,138;
+    }
+
+    body.no-glow .site-title,
+    body.no-glow .startup-logo,
+    body.no-glow .settings-header h2 {
+      text-shadow: none !important;
+    }
+
+    body.no-glow .title-gif {
+      box-shadow: none !important;
+      border-color: rgba(var(--accent-rgb), 0.45) !important;
+    }
+
+    body.no-glow .nav-card,
+    body.no-glow .nav-card:hover,
+    body.no-glow .top-link:hover,
+    body.no-glow .discord-btn:hover,
+    body.no-glow .settings-section-btn.active {
+      box-shadow: none !important;
+      animation: none !important;
+    }
+
+    body.no-glow .custom-cursor,
+    body.no-glow .nav-card img,
+    body.no-glow .controller-home img,
+    body.no-glow .side-item:hover {
+      filter: none !important;
+      box-shadow: none !important;
+      text-shadow: none !important;
+    }
+
+    body.flat-cards .nav-grid {
+      gap: 24px;
+    }
+
+    body.flat-cards .nav-card {
+      width: 220px;
+      height: 145px;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    body.flat-cards .nav-card:hover {
+      transform: none !important;
+      animation: none !important;
+      box-shadow: 0 0 14px rgba(var(--accent-rgb), 0.35);
+    }
 
     /* Icon Button Styling */
     .icon-btn {
@@ -129,8 +225,8 @@
     .startup-logo {
       font-size: 64px;
       letter-spacing: 6px;
-      color: #9ffcff;
-      text-shadow: 0 0 35px #00ffff;
+      color: var(--accent-soft);
+      text-shadow: 0 0 35px var(--accent);
       animation: glowPulse 1.6s ease-in-out infinite;
     }
 
@@ -142,9 +238,9 @@
     }
 
     @keyframes glowPulse {
-      0% { text-shadow: 0 0 20px #00ffff; }
-      50% { text-shadow: 0 0 50px #00ffff; }
-      100% { text-shadow: 0 0 20px #00ffff; }
+      0% { text-shadow: 0 0 20px var(--accent); }
+      50% { text-shadow: 0 0 50px var(--accent); }
+      100% { text-shadow: 0 0 20px var(--accent); }
     }
 
     @keyframes startupFadeOut {
@@ -168,16 +264,16 @@
       background: #050505;
       border-radius: 28px;
       padding: 28px;
-      border: 2px solid rgba(0,255,255,0.8);
-      box-shadow: 0 0 40px rgba(0,255,255,0.6);
+      border: 2px solid rgba(var(--accent-rgb), 0.8);
+      box-shadow: 0 0 40px rgba(var(--accent-rgb), 0.6);
       text-align: center;
     }
 
     .box-title {
       font-size: 22px;
       margin-bottom: 12px;
-      color: #9ffcff;
-      text-shadow: 0 0 18px #00ffff;
+      color: var(--accent-soft);
+      text-shadow: 0 0 18px var(--accent);
     }
 
     .box-title-img {
@@ -198,45 +294,310 @@
 
     .box-btn {
       padding: 10px 28px;
-      border: 2px solid #9ffcff;
-      color: #9ffcff;
+      border: 2px solid var(--accent-soft);
+      color: var(--accent-soft);
       background: transparent;
       font-family: 'Orbitron', sans-serif;
       cursor: none;
       border-radius: 10px;
-      box-shadow: 0 0 15px #00ffff;
+      box-shadow: 0 0 15px var(--accent);
       transition: 0.25s ease;
     }
 
     .box-btn:hover {
-      box-shadow: 0 0 30px #00ffff;
+      box-shadow: 0 0 30px var(--accent);
       transform: translateY(-1px);
     }
 
     .hidden { display: none !important; }
 
+    .onboarding-overlay {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 21000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .onboarding-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background: #000;
+    }
+
+    .onboarding-continue {
+      position: absolute;
+      bottom: 180px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 14px 38px;
+      border: 2px solid var(--accent-soft);
+      color: var(--accent-soft);
+      background: rgba(0, 0, 0, 0.72);
+      border-radius: 12px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 15px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      box-shadow: 0 0 22px rgba(var(--accent-rgb), 0.8);
+      animation: glowPulse 1.6s ease-in-out infinite;
+      z-index: 2;
+    }
+
+    .onboarding-skip {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      font-size: 13px;
+      letter-spacing: 1px;
+      color: rgba(255,255,255,0.86);
+      text-shadow: 0 0 10px rgba(0,0,0,0.55);
+      cursor: pointer;
+      z-index: 2;
+      user-select: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .onboarding-skip:hover {
+      opacity: 0.72;
+    }
+
+    .onboarding-screen {
+      position: absolute;
+      inset: 0;
+      background: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+      z-index: 3;
+    }
+
+    .onboarding-title {
+      font-size: 30px;
+      text-align: center;
+      color: #fff;
+      text-shadow: 0 0 18px rgba(255, 255, 255, 0.7);
+      margin-bottom: 30px;
+      letter-spacing: 1px;
+    }
+
+    .onboarding-subtitle {
+      font-size: 13px;
+      color: #fff;
+      opacity: 0.95;
+      margin-bottom: 22px;
+      text-align: center;
+    }
+
+    .onboarding-bg-card span {
+      color: #fff;
+      font-weight: 700;
+      text-shadow: 0 0 12px rgba(255, 255, 255, 0.45);
+    }
+
+    .onboarding-bg-grid {
+      width: min(900px, 100%);
+      display: grid;
+      grid-template-columns: repeat(3, minmax(180px, 1fr));
+      gap: 18px;
+    }
+
+    .onboarding-bg-card {
+      background: #111;
+      border: 2px solid rgba(255,255,255,0.18);
+      border-radius: 16px;
+      padding: 12px;
+      cursor: pointer;
+      transition: 0.2s;
+      text-align: center;
+    }
+
+    .onboarding-bg-card:hover,
+    .onboarding-bg-card.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 18px var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .onboarding-bg-preview {
+      width: 100%;
+      height: 110px;
+      border-radius: 10px;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+
+    .onboarding-bg-preview.dots {
+      background: #000;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .onboarding-bg-preview.static {
+      background: #000;
+    }
+
+    .onboarding-bg-preview.dots::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(var(--accent-rgb), 0.52) 1.5px, transparent 1.5px);
+      background-size: 20px 20px;
+    }
+
+    .onboarding-choice-row {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .onboarding-choice-btn {
+      min-width: 190px;
+      padding: 16px 24px;
+      border-radius: 14px;
+      border: 2px solid var(--accent);
+      background: rgba(0,0,0,0.65);
+      color: var(--accent);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 14px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      box-shadow: 0 0 16px rgba(0,255,231,0.65);
+      transition: 0.2s;
+    }
+
+    .onboarding-choice-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 24px rgba(0,255,231,0.92);
+    }
+
+    @media (max-width: 900px) {
+      .onboarding-bg-grid {
+        grid-template-columns: 1fr;
+        max-width: 420px;
+      }
+
+      .onboarding-title {
+        font-size: 24px;
+      }
+    }
+
     /* ===== SETTINGS PANEL ===== */
     .settings-panel {
       position: fixed;
       top: 0;
-      right: -400px;
-      width: 350px;
-      height: 100%;
-      background: rgba(5, 5, 5, 0.95);
-      backdrop-filter: blur(20px);
-      border-left: 2px solid var(--accent);
-      z-index: 14000;
-      transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      padding: 30px;
-      display: flex;
-      flex-direction: column;
-      gap: 25px;
-      box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+      left: 0;
+      width: 100vw;
+      width: 100dvw;
+      height: 100vh;
+      height: 100dvh;
+      max-width: none;
+      max-height: none;
+      background: rgba(0, 0, 0, 0.985);
+      backdrop-filter: blur(12px);
+      z-index: 20000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
       cursor: auto !important;
-      overflow-y: auto;
+      overflow: hidden;
     }
 
-    .settings-panel.open { right: 0; }
+    .settings-panel.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .settings-shell {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-width: 0;
+    }
+
+    .settings-sidebar {
+      border-right: 1px solid rgba(0,255,231,0.35);
+      background: linear-gradient(180deg, rgba(10, 14, 16, 0.96), rgba(6, 7, 8, 0.95));
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .settings-sidebar-title {
+      color: var(--accent-soft);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: 0.85;
+      margin-bottom: 2px;
+      padding-left: 4px;
+    }
+
+    .settings-section-btn {
+      position: relative;
+      width: 100%;
+      text-align: left;
+      background: linear-gradient(180deg, rgba(16, 18, 21, 0.95), rgba(8, 10, 12, 0.92));
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #fff;
+      border-radius: 14px;
+      padding: 13px 14px 13px 38px;
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 1px;
+      font-size: 12px;
+      cursor: pointer !important;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+
+    .settings-section-btn::before {
+      content: '';
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.22);
+      box-shadow: 0 0 0 transparent;
+    }
+
+    .settings-section-btn:hover,
+    .settings-section-btn.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 0 0 16px rgba(0,255,231,0.35), inset 0 0 0 1px rgba(0,255,231,0.35);
+      transform: translateX(3px);
+    }
+
+    .settings-section-btn:hover::before,
+    .settings-section-btn.active::before {
+      background: var(--accent);
+      box-shadow: 0 0 12px rgba(0,255,231,0.95);
+    }
+
+    .settings-main {
+      padding: 30px 36px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      min-width: 0;
+    }
+
     .settings-header {
       display: flex;
       justify-content: space-between;
@@ -244,10 +605,22 @@
       border-bottom: 1px solid rgba(255,255,255,0.1);
       padding-bottom: 15px;
     }
+
     .settings-header h2 { font-size: 20px; color: var(--accent); text-shadow: 0 0 10px var(--accent); }
     .close-settings-btn { background: none; border: none; color: #fff; font-size: 32px; cursor: pointer !important; line-height: 1; }
-    .settings-section h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; color: #9ffcff; opacity: 0.6; }
+    .settings-section h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; color: var(--accent-soft); opacity: 0.6; }
     .setting-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .settings-tab {
+      display: none;
+      width: 100%;
+      max-width: 860px;
+      background: rgba(12, 12, 12, 0.9);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+    }
+    .settings-tab.active { display: block; }
     .switch { position: relative; display: inline-block; width: 44px; height: 22px; }
     .switch input { opacity: 0; width: 0; height: 0; }
     .slider { position: absolute; cursor: pointer !important; inset: 0; background-color: #333; transition: .4s; border-radius: 22px; }
@@ -258,6 +631,19 @@
     .bg-opt { border: 2px solid transparent; border-radius: 12px; background: #111; padding: 8px; text-align: center; cursor: pointer !important; transition: 0.2s; }
     .bg-opt img { width: 100%; height: 50px; border-radius: 6px; object-fit: cover; margin-bottom: 5px; }
     .bg-opt.active { border-color: var(--accent); box-shadow: 0 0 10px var(--accent); }
+    .theme-preview-container { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 12px; }
+    .theme-opt { border: 2px solid transparent; border-radius: 12px; background: #111; padding: 10px; text-align: center; cursor: pointer !important; transition: 0.2s; }
+    .theme-opt.active { border-color: var(--accent); box-shadow: 0 0 10px var(--accent); }
+    .theme-swatch { width: 100%; height: 24px; border-radius: 8px; margin-bottom: 8px; }
+    .theme-swatch.neon { background: linear-gradient(90deg, #00ffe7, #53ffff); }
+    .theme-swatch.violet { background: linear-gradient(90deg, #b47cff, #8f63ff); }
+    .theme-swatch.crimson { background: linear-gradient(90deg, #ff5f8a, #ff7f62); }
+    .button-style-slider-wrap { margin-top: 12px; padding: 12px; border-radius: 12px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); }
+    .button-style-slider { width: 100%; accent-color: var(--accent); cursor: pointer; }
+    .button-style-meta { margin-top: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
+    .button-style-value { color: var(--accent-soft); font-weight: 700; }
+    .button-style-ticks { margin-top: 8px; display: grid; grid-template-columns: repeat(2, 1fr); font-size: 10px; opacity: 0.75; }
+    .button-style-ticks span:nth-child(2) { text-align: center; }
     .cloak-input { width: 100%; background: #111; border: 1px solid rgba(255,255,255,0.2); padding: 12px; color: #fff; border-radius: 10px; margin-bottom: 10px; font-family: 'Orbitron'; font-size: 12px; }
     .cloak-launch-btn { width: 100%; padding: 12px; background: var(--accent); color: #000; border: none; border-radius: 10px; font-weight: bold; font-family: 'Orbitron'; cursor: pointer !important; margin-bottom: 10px; }
     .cloak-preset-btn { width: 100%; padding: 10px; background: #111; color: var(--accent); border: 1px solid var(--accent); border-radius: 10px; font-family: 'Orbitron'; font-size: 11px; cursor: pointer !important; transition: 0.2s; }
@@ -269,6 +655,31 @@
     .preset-card:hover { border-color: var(--accent); transform: scale(1.05); }
     .preset-card img { width: 32px; height: 32px; }
     .preset-card span { font-size: 12px; color: #fff; }
+
+    @media (max-width: 900px) {
+      .settings-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .settings-sidebar {
+        border-right: none;
+        border-bottom: 1px solid rgba(0,255,231,0.35);
+        padding: 18px;
+        gap: 10px;
+      }
+
+      .settings-sidebar-title {
+        display: none;
+      }
+
+      .settings-main {
+        padding: 18px;
+      }
+
+      .settings-section-btn {
+        padding-left: 34px;
+      }
+    }
 
     /* ===== SIDEBAR UI ===== */
     .side-nav {
@@ -375,54 +786,134 @@
 </div>
 
 <div class="settings-panel" id="settingsPanel">
-  <div class="settings-header">
-    <h2>SETTINGS</h2>
-    <button class="close-settings-btn" id="closeSettings">&times;</button>
-  </div>
-  <div class="settings-section">
-    <h3>Layout</h3>
-    <div class="setting-item">
-      <span>Sidebar Mode</span>
-      <label class="switch">
-        <input type="checkbox" id="sidebarToggle">
-        <span class="slider"></span>
-      </label>
-    </div>
-  </div>
-  <div class="settings-section">
-    <h3>Personalization</h3>
-    <div class="setting-item">
-      <span>Custom Cursor</span>
-      <label class="switch">
-        <input type="checkbox" id="cursorToggle" checked>
-        <span class="slider"></span>
-      </label>
-    </div>
-    <div style="margin-top:10px;">
-      <span style="font-size: 13px; display: block; margin-bottom: 10px;">Background Mode</span>
-      <div class="bg-preview-container">
-        <div class="bg-opt active" id="optDots">
-          <div style="height:50px; background:#000; display:flex; align-items:center; justify-content:center; border-radius:6px; margin-bottom:5px;">
-            <div style="width:4px; height:4px; background:var(--accent); border-radius:50%; box-shadow:0 0 5px var(--accent);"></div>
+  <div class="settings-shell">
+    <aside class="settings-sidebar">
+      <div class="settings-sidebar-title">Settings Sections</div>
+      <button class="settings-section-btn active" data-settings-tab="tabLayout">Layout</button>
+      <button class="settings-section-btn" data-settings-tab="tabPersonalization">Personalization</button>
+      <button class="settings-section-btn" data-settings-tab="tabCloaking">Cloaking</button>
+      <button class="settings-section-btn" data-settings-tab="tabSetup">Setup</button>
+    </aside>
+
+    <div class="settings-main">
+      <div class="settings-header">
+        <h2>SETTINGS</h2>
+        <button class="close-settings-btn" id="closeSettings">&times;</button>
+      </div>
+
+      <div class="settings-tab active" id="tabLayout">
+        <div class="settings-section">
+          <h3>Layout</h3>
+          <div class="setting-item">
+            <span>Sidebar Mode</span>
+            <label class="switch">
+              <input type="checkbox" id="sidebarToggle">
+              <span class="slider"></span>
+            </label>
           </div>
-          <span>Dotted</span>
+          <div class="setting-item">
+            <span>Startup Splash</span>
+            <label class="switch">
+              <input type="checkbox" id="startupToggle" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="setting-item">
+            <span>Compact Cards</span>
+            <label class="switch">
+              <input type="checkbox" id="compactCardsToggle">
+              <span class="slider"></span>
+            </label>
+          </div>
         </div>
-        <div class="bg-opt" id="optStatic">
-          <img src="assets/img/bg-static.png" alt="Static" onerror="this.src='https://via.placeholder.com/100x50/111/00ffe7?text=Static'">
-          <span>Static</span>
+      </div>
+
+      <div class="settings-tab" id="tabPersonalization">
+        <div class="settings-section">
+          <h3>Personalization</h3>
+          <div class="setting-item">
+            <span>Custom Cursor</span>
+            <label class="switch">
+              <input type="checkbox" id="cursorToggle" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="setting-item">
+            <span>Glow Effects</span>
+            <label class="switch">
+              <input type="checkbox" id="glowToggle" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div style="margin-top:10px;">
+            <span style="font-size: 13px; display: block; margin-bottom: 10px;">Theme</span>
+            <div class="theme-preview-container" id="themePreviewContainer">
+              <div class="theme-opt active" id="themeNeon" data-theme="neon">
+                <div class="theme-swatch neon"></div>
+                <span>Neon</span>
+              </div>
+              <div class="theme-opt" id="themeViolet" data-theme="violet">
+                <div class="theme-swatch violet"></div>
+                <span>Violet</span>
+              </div>
+              <div class="theme-opt" id="themeCrimson" data-theme="crimson">
+                <div class="theme-swatch crimson"></div>
+                <span>Crimson</span>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:10px;">
+            <span style="font-size: 13px; display: block; margin-bottom: 10px;">Button Style</span>
+            <div class="button-style-slider-wrap">
+              <input type="range" id="buttonStyleSlider" class="button-style-slider" min="0" max="1" step="1" value="0">
+              <div class="button-style-meta">
+                <span>Current Style</span>
+                <span class="button-style-value" id="buttonStyleValue">Frosted</span>
+              </div>
+              <div class="button-style-ticks">
+                <span>Frosted</span>
+                <span>Glass</span>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:10px;">
+            <span style="font-size: 13px; display: block; margin-bottom: 10px;">Background Mode</span>
+            <div class="bg-preview-container">
+              <div class="bg-opt active" id="optDots">
+                <div style="height:50px; background:#000; display:flex; align-items:center; justify-content:center; border-radius:6px; margin-bottom:5px;">
+                  <div style="width:4px; height:4px; background:var(--accent); border-radius:50%; box-shadow:0 0 5px var(--accent);"></div>
+                </div>
+                <span>Dotted</span>
+              </div>
+              <div class="bg-opt" id="optStatic">
+                <div style="height:50px; background:#000; border-radius:6px; margin-bottom:5px; border: 1px solid rgba(255,255,255,0.18);"></div>
+                <span>Static</span>
+              </div>
+              <div class="bg-opt" id="optBg1">
+                <img src="assets/img/bg1.png" alt="bg1" onerror="this.src='https://via.placeholder.com/100x50/111/00ffe7?text=bg1'">
+                <span>bg1</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="bg-opt" id="optBg1">
-          <img src="assets/img/bg1.png" alt="bg1" onerror="this.src='https://via.placeholder.com/100x50/111/00ffe7?text=bg1'">
-          <span>bg1</span>
+      </div>
+
+      <div class="settings-tab" id="tabCloaking">
+        <div class="settings-section">
+          <h3>Cloaking</h3>
+          <input type="text" id="cloakTitleInput" class="cloak-input" placeholder="Custom Tab Title">
+          <button class="cloak-launch-btn" id="cloakBtn">Launch about:blank</button>
+          <button class="cloak-preset-btn" id="openPresetsBtn">Cloaking Presets</button>
         </div>
+      </div>
+
+      <div class="settings-tab" id="tabSetup">
+        <div class="settings-section">
+          <h3>Setup</h3>
+          <button class="cloak-preset-btn" id="startOnboardingBtn">Onboarding</button>
         </div>
+      </div>
     </div>
-  </div>
-  <div class="settings-section">
-    <h3>Cloaking</h3>
-    <input type="text" id="cloakTitleInput" class="cloak-input" placeholder="Custom Tab Title">
-    <button class="cloak-launch-btn" id="cloakBtn">Launch about:blank</button>
-    <button class="cloak-preset-btn" id="openPresetsBtn">Cloaking Presets</button>
   </div>
 </div>
 
@@ -464,6 +955,57 @@ The creators and contributors are not responsible for consequences arising from 
   </div>
 </div>
 
+<div class="onboarding-overlay hidden" id="onboardingOverlay">
+  <video class="onboarding-video" id="onboardingVideo" playsinline muted preload="auto" src="assets/img/animation.mp4"></video>
+  <span class="onboarding-skip" id="onboardingSkipText">Skip</span>
+  <button class="onboarding-continue hidden" id="onboardingContinue">Continue</button>
+
+  <div class="onboarding-screen hidden" id="onboardingBgScreen">
+    <div class="onboarding-title">What background would you like?</div>
+    <div class="onboarding-subtitle">Choose one to continue</div>
+    <div class="onboarding-bg-grid" id="onboardingBgGrid">
+      <button class="onboarding-bg-card" data-bg="dots">
+        <div class="onboarding-bg-preview dots"></div>
+        <span>Dotted</span>
+      </button>
+      <button class="onboarding-bg-card" data-bg="static">
+        <div class="onboarding-bg-preview static" aria-label="Static background"></div>
+        <span>Static</span>
+      </button>
+      <button class="onboarding-bg-card" data-bg="bg1">
+        <img class="onboarding-bg-preview" src="assets/img/bg1.png" alt="bg1 background">
+        <span>bg1</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="onboarding-screen hidden" id="onboardingThemeScreen">
+    <div class="onboarding-title">Pick your theme</div>
+    <div class="onboarding-choice-row" id="onboardingThemeChoices">
+      <button class="onboarding-choice-btn" data-theme="neon">Neon</button>
+      <button class="onboarding-choice-btn" data-theme="violet">Violet</button>
+      <button class="onboarding-choice-btn" data-theme="crimson">Crimson</button>
+    </div>
+  </div>
+
+  <div class="onboarding-screen hidden" id="onboardingSidebarScreen">
+    <div class="onboarding-title">Do you want sidebar mode?</div>
+    <div class="onboarding-choice-row">
+      <button class="onboarding-choice-btn" id="onboardingSidebarYes">Yes, use sidebar</button>
+      <button class="onboarding-choice-btn" id="onboardingSidebarNo">No, use top bar</button>
+    </div>
+  </div>
+
+  <div class="onboarding-screen hidden" id="onboardingGlowScreen">
+    <div class="onboarding-title">Do you want glow effects?</div>
+    <div class="onboarding-choice-row">
+      <button class="onboarding-choice-btn" id="onboardingGlowYes">Yes, keep glow</button>
+      <button class="onboarding-choice-btn" id="onboardingGlowNo">No, cleaner look</button>
+    </div>
+  </div>
+
+</div>
+
 <header class="top-bar">
   <div class="top-left">
       <a href="index.html" class="controller-home"><img src="assets/img/controller.svg"></a>
@@ -495,6 +1037,7 @@ The creators and contributors are not responsible for consequences arising from 
   <span>G.GUI Project • Version 2.1</span>
 </footer>
 
+<script src="assets/js/nav.js"></script>
 <script>
 const currentVersion = "2.1"; 
 const cloakPresets = [
@@ -504,6 +1047,46 @@ const cloakPresets = [
   { name: "Google Classroom", title: "My Classroom", icon: "assets/img/gclassroom.png"},
   { name: "Classlink", title: "Classlink Launchpad", icon: "assets/img/classlink.png" }
 ];
+
+const defaultSettings = {
+  cursor: true,
+  sidebar: false,
+  bg: 'dots',
+  startup: true,
+  compactCards: false,
+  glow: true,
+  theme: 'neon',
+  buttonStyle: 'frosted'
+};
+let onboardingChoices = { ...defaultSettings };
+let pendingVersionPrompt = false;
+
+const buttonStyleOrder = ['frosted', 'glass'];
+
+function getButtonStyleLabel(style) {
+  if (style === 'glass') return 'Glass';
+  return 'Frosted';
+}
+
+function getButtonStyleByIndex(indexValue) {
+  const index = Number(indexValue);
+  return buttonStyleOrder[index] || 'frosted';
+}
+
+function getButtonStyleIndex(style) {
+  const index = buttonStyleOrder.indexOf(style);
+  return index === -1 ? 0 : index;
+}
+
+function getStoredSettings() {
+  const saved = localStorage.getItem('ggui_settings');
+  if (!saved) return { ...defaultSettings };
+  try {
+    return { ...defaultSettings, ...JSON.parse(saved) };
+  } catch {
+    return { ...defaultSettings };
+  }
+}
 
 function resizeCanvas() {
   const canvas = document.getElementById("bgCanvas");
@@ -517,10 +1100,19 @@ function applySettings(s) {
   if(!s) return;
   document.body.classList.toggle('cursor-off', s.cursor === false);
   document.body.classList.toggle('sidebar-mode', s.sidebar === true);
+  document.body.classList.toggle('no-glow', s.glow === false);
+  document.body.classList.toggle('flat-cards', s.compactCards === true);
+  const buttonStyle = s.buttonStyle === 'glass' ? 'glass' : 'frosted';
+  document.body.classList.remove('btn-style-frosted', 'btn-style-glass');
+  document.body.classList.add(`btn-style-${buttonStyle}`);
+  document.body.classList.remove('theme-neon', 'theme-violet', 'theme-crimson');
+  const activeTheme = (s.theme === 'violet' || s.theme === 'crimson') ? s.theme : 'neon';
+  document.body.classList.add(`theme-${activeTheme}`);
   
   // Dots, Static, bg1
   document.body.classList.remove('use-static', 'use-bg1', 'use-grid', 'use-cool');
   document.querySelectorAll('.bg-opt').forEach(opt => opt.classList.remove('active'));
+  document.querySelectorAll('.theme-opt').forEach(opt => opt.classList.remove('active'));
 
   if(s.bg === 'static') {
     document.body.classList.add('use-static');
@@ -531,27 +1123,169 @@ function applySettings(s) {
   } else {
     if(document.getElementById('optDots')) document.getElementById('optDots').classList.add('active');
   }
+
+  if (activeTheme === 'violet') {
+    if (document.getElementById('themeViolet')) document.getElementById('themeViolet').classList.add('active');
+  } else if (activeTheme === 'crimson') {
+    if (document.getElementById('themeCrimson')) document.getElementById('themeCrimson').classList.add('active');
+  } else {
+    if (document.getElementById('themeNeon')) document.getElementById('themeNeon').classList.add('active');
+  }
+
+  if (document.getElementById('buttonStyleSlider')) {
+    document.getElementById('buttonStyleSlider').value = String(getButtonStyleIndex(buttonStyle));
+  }
+  if (document.getElementById('buttonStyleValue')) {
+    document.getElementById('buttonStyleValue').textContent = getButtonStyleLabel(buttonStyle);
+  }
+
   resizeCanvas();
 }
 
 function loadOptions() {
-  const saved = localStorage.getItem('ggui_settings');
-  if(saved) {
-    const s = JSON.parse(saved);
-    if(document.getElementById('cursorToggle')) document.getElementById('cursorToggle').checked = s.cursor;
-    if(document.getElementById('sidebarToggle')) document.getElementById('sidebarToggle').checked = s.sidebar;
-    applySettings(s);
-  }
+  const s = getStoredSettings();
+  if(document.getElementById('cursorToggle')) document.getElementById('cursorToggle').checked = s.cursor;
+  if(document.getElementById('sidebarToggle')) document.getElementById('sidebarToggle').checked = s.sidebar;
+  if(document.getElementById('startupToggle')) document.getElementById('startupToggle').checked = s.startup;
+  if(document.getElementById('compactCardsToggle')) document.getElementById('compactCardsToggle').checked = s.compactCards;
+  if(document.getElementById('glowToggle')) document.getElementById('glowToggle').checked = s.glow;
+  if(document.getElementById('buttonStyleSlider')) document.getElementById('buttonStyleSlider').value = String(getButtonStyleIndex(s.buttonStyle));
+  applySettings(s);
 }
 
 function saveOptions() {
   const settings = {
     cursor: document.getElementById('cursorToggle') ? document.getElementById('cursorToggle').checked : true,
     sidebar: document.getElementById('sidebarToggle') ? document.getElementById('sidebarToggle').checked : false,
-    bg: document.body.classList.contains('use-static') ? 'static' : document.body.classList.contains('use-bg1') ? 'bg1' : 'dots'
+    bg: document.body.classList.contains('use-static') ? 'static' : document.body.classList.contains('use-bg1') ? 'bg1' : 'dots',
+    startup: document.getElementById('startupToggle') ? document.getElementById('startupToggle').checked : true,
+    compactCards: document.getElementById('compactCardsToggle') ? document.getElementById('compactCardsToggle').checked : false,
+    glow: document.getElementById('glowToggle') ? document.getElementById('glowToggle').checked : true,
+    theme: document.body.classList.contains('theme-violet') ? 'violet' : document.body.classList.contains('theme-crimson') ? 'crimson' : 'neon',
+    buttonStyle: document.getElementById('buttonStyleSlider') ? getButtonStyleByIndex(document.getElementById('buttonStyleSlider').value) : 'frosted'
   };
   localStorage.setItem('ggui_settings', JSON.stringify(settings));
   applySettings(settings);
+}
+
+function resetSettingsForOnboarding() {
+  localStorage.removeItem('ggui_settings');
+  onboardingChoices = { ...defaultSettings };
+  if (document.getElementById('cursorToggle')) document.getElementById('cursorToggle').checked = defaultSettings.cursor;
+  if (document.getElementById('sidebarToggle')) document.getElementById('sidebarToggle').checked = defaultSettings.sidebar;
+  if (document.getElementById('startupToggle')) document.getElementById('startupToggle').checked = defaultSettings.startup;
+  if (document.getElementById('compactCardsToggle')) document.getElementById('compactCardsToggle').checked = defaultSettings.compactCards;
+  if (document.getElementById('glowToggle')) document.getElementById('glowToggle').checked = defaultSettings.glow;
+  if (document.getElementById('buttonStyleSlider')) document.getElementById('buttonStyleSlider').value = String(getButtonStyleIndex(defaultSettings.buttonStyle));
+  applySettings(defaultSettings);
+}
+
+function startOnboarding() {
+  const overlay = document.getElementById('onboardingOverlay');
+  const video = document.getElementById('onboardingVideo');
+  const skipText = document.getElementById('onboardingSkipText');
+  const continueBtn = document.getElementById('onboardingContinue');
+  const bgScreen = document.getElementById('onboardingBgScreen');
+  const themeScreen = document.getElementById('onboardingThemeScreen');
+  const sidebarScreen = document.getElementById('onboardingSidebarScreen');
+  const glowScreen = document.getElementById('onboardingGlowScreen');
+
+  resetSettingsForOnboarding();
+  closeSettingsPanel();
+  overlay.classList.remove('hidden');
+  skipText.classList.remove('hidden');
+  continueBtn.classList.add('hidden');
+  bgScreen.classList.add('hidden');
+  themeScreen.classList.add('hidden');
+  sidebarScreen.classList.add('hidden');
+  glowScreen.classList.add('hidden');
+  video.classList.remove('hidden');
+
+  document.body.classList.add('onboarding-active', 'overlay-active');
+  video.currentTime = 0;
+  video.muted = true;
+  video.defaultMuted = true;
+
+  const playPromise = video.play();
+  if (playPromise && typeof playPromise.catch === 'function') {
+    playPromise.catch(() => {
+      skipText.classList.add('hidden');
+      continueBtn.classList.remove('hidden');
+    });
+  }
+}
+
+function showOnboardingBackgroundScreen() {
+  document.getElementById('onboardingVideo').classList.add('hidden');
+  document.getElementById('onboardingSkipText').classList.add('hidden');
+  document.getElementById('onboardingContinue').classList.add('hidden');
+  document.getElementById('onboardingBgScreen').classList.remove('hidden');
+}
+
+function showOnboardingSidebarScreen() {
+  document.getElementById('onboardingThemeScreen').classList.add('hidden');
+  document.getElementById('onboardingSidebarScreen').classList.remove('hidden');
+}
+
+function showOnboardingThemeScreen() {
+  document.getElementById('onboardingBgScreen').classList.add('hidden');
+  document.getElementById('onboardingThemeScreen').classList.remove('hidden');
+}
+
+function showOnboardingGlowScreen() {
+  document.getElementById('onboardingSidebarScreen').classList.add('hidden');
+  document.getElementById('onboardingGlowScreen').classList.remove('hidden');
+}
+
+function finishOnboarding() {
+  const finalSettings = {
+    cursor: defaultSettings.cursor,
+    sidebar: onboardingChoices.sidebar === true,
+    bg: onboardingChoices.bg || 'dots',
+    startup: defaultSettings.startup,
+    compactCards: defaultSettings.compactCards,
+    glow: onboardingChoices.glow !== false,
+    theme: onboardingChoices.theme || 'neon'
+  };
+
+  localStorage.setItem('ggui_settings', JSON.stringify(finalSettings));
+  localStorage.setItem('ggui_onboarding_done', '1');
+  if (document.getElementById('cursorToggle')) document.getElementById('cursorToggle').checked = finalSettings.cursor;
+  if (document.getElementById('sidebarToggle')) document.getElementById('sidebarToggle').checked = finalSettings.sidebar;
+  if (document.getElementById('startupToggle')) document.getElementById('startupToggle').checked = finalSettings.startup;
+  if (document.getElementById('compactCardsToggle')) document.getElementById('compactCardsToggle').checked = finalSettings.compactCards;
+  if (document.getElementById('glowToggle')) document.getElementById('glowToggle').checked = finalSettings.glow;
+  applySettings(finalSettings);
+
+  document.getElementById('onboardingOverlay').classList.add('hidden');
+  document.getElementById('onboardingVideo').pause();
+  document.getElementById('onboardingVideo').classList.remove('hidden');
+  document.getElementById('onboardingSkipText').classList.add('hidden');
+  document.getElementById('onboardingBgScreen').classList.add('hidden');
+  document.getElementById('onboardingThemeScreen').classList.add('hidden');
+  document.getElementById('onboardingSidebarScreen').classList.add('hidden');
+  document.getElementById('onboardingGlowScreen').classList.add('hidden');
+  document.body.classList.remove('onboarding-active', 'overlay-active');
+
+  if (pendingVersionPrompt) {
+    showVersionPrompt();
+  }
+}
+
+function showVersionPrompt() {
+  document.getElementById('termsOverlay').classList.remove('hidden');
+  document.getElementById('updateOverlay').classList.add('hidden');
+  document.body.classList.add('overlay-active');
+}
+
+function openSettingsPanel() {
+  document.getElementById('settingsPanel').classList.add('open');
+  document.body.classList.add('settings-open', 'overlay-active');
+}
+
+function closeSettingsPanel() {
+  document.getElementById('settingsPanel').classList.remove('open');
+  document.body.classList.remove('settings-open', 'overlay-active');
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -560,19 +1294,26 @@ document.addEventListener("DOMContentLoaded", () => {
   const cursor = document.getElementById("cursor");
   const startupScreen = document.getElementById("startupScreen");
   const termsOverlay = document.getElementById("termsOverlay");
+  const onboardingVideo = document.getElementById('onboardingVideo');
+  const onboardingContinue = document.getElementById('onboardingContinue');
+  const onboardingSkipText = document.getElementById('onboardingSkipText');
 
   loadOptions();
 
-  if (!sessionStorage.getItem('visited')) {
+  const activeSettings = getStoredSettings();
+
+  if (activeSettings.startup && !sessionStorage.getItem('visited')) {
     sessionStorage.setItem('visited', 'true');
   } else {
     startupScreen.style.display = 'none';
   }
 
   const savedVersion = localStorage.getItem('ggui_version');
-  if (savedVersion !== currentVersion) {
-    termsOverlay.classList.remove('hidden');
-    document.body.classList.add('overlay-active');
+  pendingVersionPrompt = savedVersion !== currentVersion;
+
+  const shouldAutoOnboard = localStorage.getItem('ggui_onboarding_done') !== '1';
+  if (pendingVersionPrompt && !shouldAutoOnboard) {
+    showVersionPrompt();
   }
 
   window.addEventListener("resize", resizeCanvas);
@@ -589,6 +1330,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const accentRgb = getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb').trim() || '0,255,231';
     const spacing = 40;
     const radius = 150;
     for (let x = 0; x < canvas.width; x += spacing) {
@@ -599,7 +1341,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let size = (distance < radius) ? 1.5 + (1 - distance / radius) * 4 : 1.5;
         ctx.beginPath();
         ctx.arc(x, y, size, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(0, 255, 255, 0.29)";
+        ctx.fillStyle = `rgba(${accentRgb}, 0.29)`;
         ctx.fill();
       }
     }
@@ -607,12 +1349,36 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   draw();
 
-  document.getElementById('openSettings').onclick = () => document.getElementById('settingsPanel').classList.add('open');
-  document.getElementById('sideSettingsBtn').onclick = () => document.getElementById('settingsPanel').classList.add('open');
-  document.getElementById('closeSettings').onclick = () => document.getElementById('settingsPanel').classList.remove('open');
+  document.getElementById('openSettings').onclick = () => openSettingsPanel();
+  document.getElementById('sideSettingsBtn').onclick = () => openSettingsPanel();
+  document.getElementById('closeSettings').onclick = () => closeSettingsPanel();
+
+  document.querySelectorAll('.settings-section-btn').forEach(btn => {
+    btn.onclick = () => {
+      const targetId = btn.dataset.settingsTab;
+      document.querySelectorAll('.settings-section-btn').forEach(other => other.classList.remove('active'));
+      document.querySelectorAll('.settings-tab').forEach(tab => tab.classList.remove('active'));
+      btn.classList.add('active');
+      const target = document.getElementById(targetId);
+      if (target) target.classList.add('active');
+    };
+  });
   
   document.getElementById('cursorToggle').onchange = saveOptions;
   document.getElementById('sidebarToggle').onchange = saveOptions;
+  document.getElementById('startupToggle').onchange = saveOptions;
+  document.getElementById('compactCardsToggle').onchange = saveOptions;
+  document.getElementById('glowToggle').onchange = saveOptions;
+  document.getElementById('buttonStyleSlider').oninput = saveOptions;
+
+  document.querySelectorAll('#themePreviewContainer .theme-opt').forEach(themeBtn => {
+    themeBtn.onclick = () => {
+      const selectedTheme = themeBtn.dataset.theme || 'neon';
+      document.body.classList.remove('theme-neon', 'theme-violet', 'theme-crimson');
+      document.body.classList.add(`theme-${selectedTheme}`);
+      saveOptions();
+    };
+  });
   
   document.getElementById('optDots').onclick = () => { document.body.classList.remove('use-static', 'use-bg1'); saveOptions(); };
   document.getElementById('optStatic').onclick = () => { document.body.classList.remove('use-bg1'); document.body.classList.add('use-static'); saveOptions(); };
@@ -620,6 +1386,58 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById('cloakBtn').onclick = () => launchCloak();
   document.getElementById('openPresetsBtn').onclick = openPresets;
+  document.getElementById('startOnboardingBtn').onclick = () => startOnboarding();
+
+  onboardingVideo.onended = () => {
+    onboardingSkipText.classList.add('hidden');
+    onboardingContinue.classList.remove('hidden');
+  };
+
+  onboardingSkipText.onclick = () => showOnboardingBackgroundScreen();
+
+  onboardingContinue.onclick = () => showOnboardingBackgroundScreen();
+
+  document.querySelectorAll('#onboardingBgGrid .onboarding-bg-card').forEach(card => {
+    card.onclick = () => {
+      const selectedBg = card.dataset.bg || 'dots';
+      onboardingChoices.bg = selectedBg;
+      document.querySelectorAll('#onboardingBgGrid .onboarding-bg-card').forEach(other => other.classList.remove('active'));
+      card.classList.add('active');
+      showOnboardingThemeScreen();
+    };
+  });
+
+  document.querySelectorAll('#onboardingThemeChoices [data-theme]').forEach(themeBtn => {
+    themeBtn.onclick = () => {
+      onboardingChoices.theme = themeBtn.dataset.theme || 'neon';
+      showOnboardingSidebarScreen();
+    };
+  });
+
+  document.getElementById('onboardingSidebarYes').onclick = () => {
+    onboardingChoices.sidebar = true;
+    showOnboardingGlowScreen();
+  };
+
+  document.getElementById('onboardingSidebarNo').onclick = () => {
+    onboardingChoices.sidebar = false;
+    showOnboardingGlowScreen();
+  };
+
+  document.getElementById('onboardingGlowYes').onclick = () => {
+    onboardingChoices.glow = true;
+    finishOnboarding();
+  };
+
+  document.getElementById('onboardingGlowNo').onclick = () => {
+    onboardingChoices.glow = false;
+    finishOnboarding();
+  };
+
+  if (shouldAutoOnboard) {
+    startOnboarding();
+  }
+
   renderPresets();
 });
 
@@ -631,6 +1449,7 @@ function closeUpdate() {
   document.getElementById('updateOverlay').classList.add('hidden');
   document.body.classList.remove('overlay-active');
   localStorage.setItem('ggui_version', currentVersion);
+  pendingVersionPrompt = false;
 }
 function launchCloak(t, i) {
   const title = t || document.getElementById('cloakTitleInput').value || "Google";

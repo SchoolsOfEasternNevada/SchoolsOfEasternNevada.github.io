@@ -496,6 +496,7 @@
   <div class="alt-popup-content" id="altContent"></div>
 </div>
 
+<script src="assets/js/nav.js"></script>
 <script>
   const canvas = document.getElementById("bgCanvas");
   const ctx = canvas.getContext("2d");
@@ -546,7 +547,9 @@
   }
 
   function saveOptions() {
+    const existing = JSON.parse(localStorage.getItem('ggui_settings') || '{}');
     const settings = {
+      ...existing,
       cursor: document.getElementById('cursorToggle').checked,
       sidebar: document.getElementById('sidebarToggle').checked,
       bg: document.body.classList.contains('use-static') ? 'static' : document.body.classList.contains('use-bg1') ? 'bg1' : 'dots'
