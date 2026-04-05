@@ -760,6 +760,9 @@
 <canvas id="bgCanvas"></canvas>
 <div class="static-bg-layer" id="staticBg"></div>
 <div class="custom-cursor" id="cursor"></div>
+<div class="easter-art" aria-hidden="true">
+  <img class="easter-basket-art" src="assets/img/easter-basket.svg" alt="">
+</div>
 
 <nav class="side-nav" id="sideNav">
   <a href="index.html" class="side-item"><img src="assets/img/controller.svg" alt="Home"><span>Home</span></a>
@@ -842,6 +845,13 @@
             <span>Glow Effects</span>
             <label class="switch">
               <input type="checkbox" id="glowToggle" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="setting-item">
+            <span>Easter Pink Mode</span>
+            <label class="switch">
+              <input type="checkbox" id="easterToggle">
               <span class="slider"></span>
             </label>
           </div>
@@ -1056,10 +1066,20 @@ const defaultSettings = {
   compactCards: false,
   glow: true,
   theme: 'neon',
-  buttonStyle: 'frosted'
+  buttonStyle: 'frosted',
+  easterMode: true
 };
 let onboardingChoices = { ...defaultSettings };
 let pendingVersionPrompt = false;
+
+// ===== LIMITED-TIME EASTER MODE (easy to remove) =====
+const EASTER_EVENT_AUTO_ENABLE = true;
+const EASTER_EVENT_BOOT_KEY = 'ggui_easter_event_boot_v1';
+const easterTheme = {
+  accent: '#ff64b4',
+  soft: '#ffd2ea',
+  rgb: '255,100,180'
+};
 
 const buttonStyleOrder = ['frosted', 'glass'];
 
@@ -1080,12 +1100,22 @@ function getButtonStyleIndex(style) {
 
 function getStoredSettings() {
   const saved = localStorage.getItem('ggui_settings');
-  if (!saved) return { ...defaultSettings };
+  if (!saved) return applyEventAutostart({ ...defaultSettings });
   try {
-    return { ...defaultSettings, ...JSON.parse(saved) };
+    return applyEventAutostart({ ...defaultSettings, ...JSON.parse(saved) });
   } catch {
-    return { ...defaultSettings };
+    return applyEventAutostart({ ...defaultSettings });
   }
+}
+
+function applyEventAutostart(settings) {
+  if (!EASTER_EVENT_AUTO_ENABLE) return settings;
+  const hasBooted = localStorage.getItem(EASTER_EVENT_BOOT_KEY) === '1';
+  if (hasBooted) return settings;
+  const updated = { ...settings, easterMode: true };
+  localStorage.setItem('ggui_settings', JSON.stringify(updated));
+  localStorage.setItem(EASTER_EVENT_BOOT_KEY, '1');
+  return updated;
 }
 
 function resizeCanvas() {
@@ -1102,12 +1132,24 @@ function applySettings(s) {
   document.body.classList.toggle('sidebar-mode', s.sidebar === true);
   document.body.classList.toggle('no-glow', s.glow === false);
   document.body.classList.toggle('flat-cards', s.compactCards === true);
+  document.body.classList.toggle('season-easter', s.easterMode === true);
   const buttonStyle = s.buttonStyle === 'glass' ? 'glass' : 'frosted';
   document.body.classList.remove('btn-style-frosted', 'btn-style-glass');
   document.body.classList.add(`btn-style-${buttonStyle}`);
   document.body.classList.remove('theme-neon', 'theme-violet', 'theme-crimson');
   const activeTheme = (s.theme === 'violet' || s.theme === 'crimson') ? s.theme : 'neon';
   document.body.classList.add(`theme-${activeTheme}`);
+
+  const activeAccent = s.easterMode === true
+    ? easterTheme
+    : activeTheme === 'violet'
+      ? { accent: '#b47cff', soft: '#dac0ff', rgb: '180,124,255' }
+      : activeTheme === 'crimson'
+        ? { accent: '#ff5f8a', soft: '#ffc4d6', rgb: '255,95,138' }
+        : { accent: '#00ffe7', soft: '#9ffcff', rgb: '0,255,231' };
+  document.documentElement.style.setProperty('--accent', activeAccent.accent);
+  document.documentElement.style.setProperty('--accent-soft', activeAccent.soft);
+  document.documentElement.style.setProperty('--accent-rgb', activeAccent.rgb);
   
   // Dots, Static, bg1
   document.body.classList.remove('use-static', 'use-bg1', 'use-grid', 'use-cool');
@@ -1149,6 +1191,7 @@ function loadOptions() {
   if(document.getElementById('startupToggle')) document.getElementById('startupToggle').checked = s.startup;
   if(document.getElementById('compactCardsToggle')) document.getElementById('compactCardsToggle').checked = s.compactCards;
   if(document.getElementById('glowToggle')) document.getElementById('glowToggle').checked = s.glow;
+  if(document.getElementById('easterToggle')) document.getElementById('easterToggle').checked = s.easterMode === true;
   if(document.getElementById('buttonStyleSlider')) document.getElementById('buttonStyleSlider').value = String(getButtonStyleIndex(s.buttonStyle));
   applySettings(s);
 }
@@ -1161,6 +1204,7 @@ function saveOptions() {
     startup: document.getElementById('startupToggle') ? document.getElementById('startupToggle').checked : true,
     compactCards: document.getElementById('compactCardsToggle') ? document.getElementById('compactCardsToggle').checked : false,
     glow: document.getElementById('glowToggle') ? document.getElementById('glowToggle').checked : true,
+    easterMode: document.getElementById('easterToggle') ? document.getElementById('easterToggle').checked : false,
     theme: document.body.classList.contains('theme-violet') ? 'violet' : document.body.classList.contains('theme-crimson') ? 'crimson' : 'neon',
     buttonStyle: document.getElementById('buttonStyleSlider') ? getButtonStyleByIndex(document.getElementById('buttonStyleSlider').value) : 'frosted'
   };
@@ -1176,6 +1220,7 @@ function resetSettingsForOnboarding() {
   if (document.getElementById('startupToggle')) document.getElementById('startupToggle').checked = defaultSettings.startup;
   if (document.getElementById('compactCardsToggle')) document.getElementById('compactCardsToggle').checked = defaultSettings.compactCards;
   if (document.getElementById('glowToggle')) document.getElementById('glowToggle').checked = defaultSettings.glow;
+  if (document.getElementById('easterToggle')) document.getElementById('easterToggle').checked = defaultSettings.easterMode;
   if (document.getElementById('buttonStyleSlider')) document.getElementById('buttonStyleSlider').value = String(getButtonStyleIndex(defaultSettings.buttonStyle));
   applySettings(defaultSettings);
 }
@@ -1245,7 +1290,9 @@ function finishOnboarding() {
     startup: defaultSettings.startup,
     compactCards: defaultSettings.compactCards,
     glow: onboardingChoices.glow !== false,
-    theme: onboardingChoices.theme || 'neon'
+    theme: onboardingChoices.theme || 'neon',
+    buttonStyle: defaultSettings.buttonStyle,
+    easterMode: true
   };
 
   localStorage.setItem('ggui_settings', JSON.stringify(finalSettings));
@@ -1369,6 +1416,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById('startupToggle').onchange = saveOptions;
   document.getElementById('compactCardsToggle').onchange = saveOptions;
   document.getElementById('glowToggle').onchange = saveOptions;
+  document.getElementById('easterToggle').onchange = saveOptions;
   document.getElementById('buttonStyleSlider').oninput = saveOptions;
 
   document.querySelectorAll('#themePreviewContainer .theme-opt').forEach(themeBtn => {

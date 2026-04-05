@@ -1,19 +1,33 @@
 
 (function () {
+	const EASTER_EVENT_AUTO_ENABLE = true;
+	const EASTER_EVENT_BOOT_KEY = 'ggui_easter_event_boot_v1';
+	const EASTER_THEME = { accent: '#ff64b4', soft: '#ffd2ea', rgb: '255,100,180' };
 	const THEME_MAP = {
 		neon: { accent: '#00ffe7', soft: '#9ffcff', rgb: '0,255,231' },
 		violet: { accent: '#b47cff', soft: '#dac0ff', rgb: '180,124,255' },
 		crimson: { accent: '#ff5f8a', soft: '#ffc4d6', rgb: '255,95,138' }
 	};
 
+	function applyEventAutostart(settings) {
+		if (!EASTER_EVENT_AUTO_ENABLE) return settings;
+		const hasBooted = localStorage.getItem(EASTER_EVENT_BOOT_KEY) === '1';
+		if (hasBooted) return settings;
+		const updated = { ...settings, easterMode: true };
+		localStorage.setItem('ggui_settings', JSON.stringify(updated));
+		localStorage.setItem(EASTER_EVENT_BOOT_KEY, '1');
+		return updated;
+	}
+
 	function getStoredSettings() {
-		const fallback = { theme: 'neon', glow: true, buttonStyle: 'frosted' };
+		const fallback = { theme: 'neon', glow: true, buttonStyle: 'frosted', easterMode: false };
 		const raw = localStorage.getItem('ggui_settings');
-		if (!raw) return fallback;
+		if (!raw) return applyEventAutostart(fallback);
 		try {
-			return { ...fallback, ...JSON.parse(raw) };
+			const parsed = { ...fallback, ...JSON.parse(raw) };
+			return applyEventAutostart(parsed);
 		} catch {
-			return fallback;
+			return applyEventAutostart(fallback);
 		}
 	}
 
@@ -82,7 +96,8 @@
 		const settings = getStoredSettings();
 		const themeKey = Object.prototype.hasOwnProperty.call(THEME_MAP, settings.theme) ? settings.theme : 'neon';
 		const buttonStyle = settings.buttonStyle === 'glass' ? 'glass' : 'frosted';
-		const theme = THEME_MAP[themeKey];
+		const useEasterTheme = settings.easterMode === true;
+		const theme = useEasterTheme ? EASTER_THEME : THEME_MAP[themeKey];
 		const root = document.documentElement;
 
 		root.style.setProperty('--accent', theme.accent);
@@ -92,6 +107,7 @@
 		if (!document.body) return;
 		document.body.classList.remove('theme-neon', 'theme-violet', 'theme-crimson');
 		document.body.classList.add(`theme-${themeKey}`);
+		document.body.classList.toggle('season-easter', useEasterTheme);
 		document.body.classList.toggle('no-glow', settings.glow === false);
 		document.body.classList.remove('btn-style-frosted', 'btn-style-glass');
 		document.body.classList.add(`btn-style-${buttonStyle}`);

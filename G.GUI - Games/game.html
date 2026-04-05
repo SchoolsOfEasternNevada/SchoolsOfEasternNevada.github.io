@@ -16,6 +16,15 @@
             --g-border: rgba(0, 242, 255, 0.2);
         }
 
+        body.season-easter {
+            --g-accent: #ff69b8;
+            --g-bg: #170711;
+            --g-panel: #2a0d1f;
+            --g-text: #ffe8f5;
+            --g-glass: rgba(255, 170, 219, 0.08);
+            --g-border: rgba(255, 134, 201, 0.36);
+        }
+
         * { box-sizing: border-box; }
 
         body {
@@ -27,6 +36,10 @@
             overflow-x: hidden;
             background-image: radial-gradient(circle at 50% 50%, #001a1d 0%, #050505 100%);
             min-height: 100vh;
+        }
+
+        body.season-easter {
+            background-image: radial-gradient(circle at 50% 50%, #2a0a20 0%, #170711 100%);
         }
 
         header {
@@ -156,6 +169,10 @@
             transform: scale(1.02);
         }
 
+        body.season-easter .zone-item:hover {
+            box-shadow: 0 0 22px rgba(255, 122, 198, 0.34);
+        }
+
         .zone-item img {
             width: 100%;
             height: 100%;
@@ -180,6 +197,19 @@
             cursor: pointer;
             text-transform: uppercase;
             font-size: 0.8rem;
+        }
+
+        body.season-easter .g-btn:hover {
+            color: #fff6fc;
+            box-shadow: 0 0 16px rgba(255, 115, 194, 0.8);
+        }
+
+        body.season-easter hr {
+            border-top-color: rgba(255, 136, 203, 0.24) !important;
+        }
+
+        body.season-easter .logo {
+            text-shadow: 0 0 10px rgba(255, 125, 200, 0.62);
         }
 
         #zoneViewer {
@@ -311,5 +341,17 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        (function applySeasonModeFromSettings() {
+            try {
+                const raw = localStorage.getItem('ggui_settings');
+                if (!raw) return;
+                const settings = JSON.parse(raw);
+                document.body.classList.toggle('season-easter', settings && settings.easterMode === true);
+            } catch (_) {
+                /* Ignore malformed settings and keep default theme. */
+            }
+        })();
+    </script>
 </body>
 </html>

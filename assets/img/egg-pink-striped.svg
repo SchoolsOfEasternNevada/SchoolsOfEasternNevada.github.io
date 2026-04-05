@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 150" role="img" aria-label="Pink striped easter egg">
+  <defs>
+    <linearGradient id="base" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffd7ee"/>
+      <stop offset="100%" stop-color="#ff7ebf"/>
+    </linearGradient>
+  </defs>
+  <path d="M60 8C39 8 17 28 17 70c0 42 22 72 43 72s43-30 43-72C103 28 81 8 60 8z" fill="url(#base)" stroke="#fff1f8" stroke-width="4"/>
+  <path d="M29 58h62" stroke="#ff4fa1" stroke-width="8" stroke-linecap="round"/>
+  <path d="M33 82h54" stroke="#fff0f8" stroke-width="7" stroke-linecap="round"/>
+  <path d="M28 104h64" stroke="#ff5ba9" stroke-width="8" stroke-linecap="round"/>
+</svg>

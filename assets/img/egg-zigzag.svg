@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 150" role="img" aria-label="Zigzag easter egg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffd8ef"/>
+      <stop offset="100%" stop-color="#ff92c9"/>
+    </linearGradient>
+  </defs>
+  <path d="M60 8C39 8 17 28 17 70c0 42 22 72 43 72s43-30 43-72C103 28 81 8 60 8z" fill="url(#bg)" stroke="#fff1f8" stroke-width="4"/>
+  <path d="M25 54l12 8 12-8 12 8 12-8 12 8 12-8" fill="none" stroke="#ff4ea0" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M25 79l12 8 12-8 12 8 12-8 12 8 12-8" fill="none" stroke="#fff4fa" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M25 104l12 8 12-8 12 8 12-8 12 8 12-8" fill="none" stroke="#ff5aaa" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

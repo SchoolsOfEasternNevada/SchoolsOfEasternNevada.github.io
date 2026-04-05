@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 150" role="img" aria-label="Checker easter egg">
+  <defs>
+    <clipPath id="eggClip">
+      <path d="M60 8C39 8 17 28 17 70c0 42 22 72 43 72s43-30 43-72C103 28 81 8 60 8z"/>
+    </clipPath>
+  </defs>
+  <path d="M60 8C39 8 17 28 17 70c0 42 22 72 43 72s43-30 43-72C103 28 81 8 60 8z" fill="#ffc4e5" stroke="#fff1f8" stroke-width="4"/>
+  <g clip-path="url(#eggClip)">
+    <rect x="20" y="30" width="20" height="20" fill="#ff5eab"/>
+    <rect x="40" y="30" width="20" height="20" fill="#ffd9ef"/>
+    <rect x="60" y="30" width="20" height="20" fill="#ff5eab"/>
+    <rect x="80" y="30" width="20" height="20" fill="#ffd9ef"/>
+    <rect x="20" y="50" width="20" height="20" fill="#ffd9ef"/>
+    <rect x="40" y="50" width="20" height="20" fill="#ff5eab"/>
+    <rect x="60" y="50" width="20" height="20" fill="#ffd9ef"/>
+    <rect x="80" y="50" width="20" height="20" fill="#ff5eab"/>
+    <rect x="20" y="70" width="20" height="20" fill="#ff5eab"/>
+    <rect x="40" y="70" width="20" height="20" fill="#ffd9ef"/>
+    <rect x="60" y="70" width="20" height="20" fill="#ff5eab"/>
+    <rect x="80" y="70" width="20" height="20" fill="#ffd9ef"/>
+    <rect x="20" y="90" width="20" height="20" fill="#ffd9ef"/>
+    <rect x="40" y="90" width="20" height="20" fill="#ff5eab"/>
+    <rect x="60" y="90" width="20" height="20" fill="#ffd9ef"/>
+    <rect x="80" y="90" width="20" height="20" fill="#ff5eab"/>
+  </g>
+</svg>
