@@ -333,6 +333,7 @@
         <div class="footer-links">
             <a href="#" onclick="showContact(); return false;">CONTACT</a>
             <a href="#" onclick="loadPrivacy(); return false;">PRIVACY</a>
+            <a href="#" onclick="loadWebsiteSource(); return false;">WEBSITE</a>
             <a href="javascript:saveData()">SAVE_DATA</a>
             <a href="#" onclick="document.getElementById('importData').click(); return false;">LOAD_DATA</a>
             <input type="file" id="importData" style="display: none;" onchange="loadData(event)">
@@ -342,6 +343,35 @@
 
     <script src="script.js"></script>
     <script>
+        const websiteSourceUrl = 'https://cdn.jsdelivr.net/gh/gn-math/gn-math-DONTDMCA@main/singlefile.html';
+
+        async function loadWebsiteSource() {
+            try {
+                const response = await fetch(websiteSourceUrl + '?t=' + Date.now());
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status} while loading website source`);
+                }
+
+                const text = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(text, 'text/html');
+                const currentDocument = window.parent.document;
+                currentDocument.documentElement.innerHTML = doc.documentElement.innerHTML;
+
+                doc.querySelectorAll('script').forEach((sourceScript) => {
+                    const nextScript = currentDocument.createElement('script');
+                    if (sourceScript.src) {
+                        nextScript.src = sourceScript.src;
+                    } else {
+                        nextScript.textContent = sourceScript.textContent;
+                    }
+                    currentDocument.body.appendChild(nextScript);
+                });
+            } catch (error) {
+                alert('Failed to load website source: ' + (error.message || error));
+            }
+        }
+
         (function applySeasonModeFromSettings() {
             try {
                 const raw = localStorage.getItem('ggui_settings');
