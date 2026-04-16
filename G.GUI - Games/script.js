@@ -288,31 +288,47 @@ function filterZones() {
 }
 
 function openZone(file) {
-    if (file.url.startsWith("http")) {
-        window.open(file.url, "_blank");
-    } else {
-        const url = file.url.replace("{COVER_URL}", coverURL).replace("{HTML_URL}", htmlURL);
-        fetch(url+"?t="+Date.now()).then(response => response.text()).then(html => {
-            if (zoneFrame.contentDocument === null) {
-                zoneFrame = document.createElement("iframe");
-                zoneFrame.id = "zoneFrame";
-                zoneViewer.appendChild(zoneFrame);
-            }
-            zoneFrame.contentDocument.open();
-            zoneFrame.contentDocument.write(html);
-            zoneFrame.contentDocument.close();
-            document.getElementById('zoneName').textContent = file.name;
-            document.getElementById('zoneId').textContent = file.id;
-            document.getElementById('zoneAuthor').textContent = "by " + file.author;
-            if (file.authorLink) {
-                document.getElementById('zoneAuthor').href = file.authorLink;
-            }
-            zoneViewer.style.display = "block";
-            const url = new URL(window.location);
-            url.searchParams.set('id', file.id);
-            history.pushState(null, '', url.toString());
-        }).catch(error => alert("Failed to load zone: " + error));
+  const url = file.url.startsWith("http")
+    ? file.url
+    : file.url.replace("{COVER_URL}", coverURL).replace("{HTML_URL}", htmlURL);
+
+  fetch(url + "?t=" + Date.now()).then(response => response.text()).then(html => {
+    if (zoneFrame.contentDocument === null) {
+      zoneFrame = document.createElement("iframe");
+      zoneFrame.id = "zoneFrame";
+      zoneViewer.appendChild(zoneFrame);
     }
+    zoneFrame.contentDocument.open();
+    zoneFrame.contentDocument.write(html);
+    zoneFrame.contentDocument.close();
+    document.getElementById('zoneName').textContent = file.name;
+    document.getElementById('zoneId').textContent = file.id;
+    document.getElementById('zoneAuthor').textContent = "by " + (file.author || "Unknown");
+    if (file.authorLink) {
+      document.getElementById('zoneAuthor').href = file.authorLink;
+    }
+    zoneViewer.style.display = "block";
+    const currentUrl = new URL(window.location);
+    currentUrl.searchParams.set('id', file.id);
+    history.pushState(null, '', currentUrl.toString());
+  }).catch(() => {
+    if (zoneFrame.contentDocument === null) {
+      zoneFrame = document.createElement("iframe");
+      zoneFrame.id = "zoneFrame";
+      zoneViewer.appendChild(zoneFrame);
+    }
+    zoneFrame.src = url;
+    document.getElementById('zoneName').textContent = file.name;
+    document.getElementById('zoneId').textContent = file.id;
+    document.getElementById('zoneAuthor').textContent = "by " + (file.author || "Unknown");
+    if (file.authorLink) {
+      document.getElementById('zoneAuthor').href = file.authorLink;
+    }
+    zoneViewer.style.display = "block";
+    const currentUrl = new URL(window.location);
+    currentUrl.searchParams.set('id', file.id);
+    history.pushState(null, '', currentUrl.toString());
+  });
 }
 
 function aboutBlank() {
