@@ -1,0 +1,76 @@
+# GitHub Raw Overlay — Manifest
+# Format: type | relative_path
+# Types: entry (main HTML loaded in iframe), html, css, js, asset
+# Lines starting with # are ignored
+
+entry  | index.html
+
+html   | app.html
+html   | download.html
+html   | extras.html
+html   | multi.html
+html   | offlinegame.html
+html   | resources.html
+html   | single.html
+
+css    | assets/css/main.css
+css    | assets/css/pages.css
+
+js     | assets/js/nav.js
+
+asset  | assets/img/animation.mp4
+asset  | assets/img/backup.png
+asset  | assets/img/bendover.png
+asset  | assets/img/bg1.png
+asset  | assets/img/classlink.png
+asset  | assets/img/classroomaccess.png
+asset  | assets/img/controller.gif
+asset  | assets/img/controller.svg
+asset  | assets/img/credits.png
+asset  | assets/img/discord.png
+asset  | assets/img/easter-basket.svg
+asset  | assets/img/egg-checker.svg
+asset  | assets/img/egg-pink-striped.svg
+asset  | assets/img/egg-zigzag.svg
+asset  | assets/img/extras.png
+asset  | assets/img/favicon.png
+asset  | assets/img/game.png
+asset  | assets/img/gameboislogo512.gif
+asset  | assets/img/gclassroom.png
+asset  | assets/img/gnmath.png
+asset  | assets/img/gr4ys0n.png
+asset  | assets/img/grid.svg
+asset  | assets/img/hollow_knight.png
+asset  | assets/img/instructure.png
+asset  | assets/img/polytrack.png
+asset  | assets/img/resources.png
+asset  | assets/img/schoology.png
+asset  | assets/img/setting.png
+asset  | assets/img/sound.png
+asset  | assets/img/square.svg
+asset  | assets/img/tgc.png
+asset  | assets/img/tomb.png
+asset  | assets/img/Undertale Yellow.png
+asset  | assets/img/V2.png
+asset  | assets/img/warpfilter.png
+
+html   | G.GUI - Games/backup.html
+html   | G.GUI - Games/credits.html
+css    | G.GUI - Games/game.css
+html   | G.GUI - Games/game.html
+js     | G.GUI - Games/script.js
+
+html   | games/Axiom.html
+html   | games/Hollow Knight.html
+html   | games/sound.html
+html   | games/Undertale Yellow.html
+
+html   | games/lasereyes/index.html
+js     | games/lasereyes/main.js
+asset  | games/lasereyes/logor.png
+
+html   | games/timewarpfilter/index.html
+js     | games/timewarpfilter/devices.js
+js     | games/timewarpfilter/effect.js
+js     | games/timewarpfilter/script.js
+css    | games/timewarpfilter/styles.css
