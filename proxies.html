@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>G.GUI — Apps</title>
+  <title>G.GUI — Proxies</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <link rel="icon" type="image/png" href="assets/img/favicon.png" />
@@ -224,112 +224,172 @@
 
     .app-selector h1 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 32px;
+      font-size: 36px;
       letter-spacing: 4px;
-      margin-bottom: 50px;
+      margin-bottom: 14px;
       color: #fff;
       text-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
     }
 
-    .app-buttons {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 20px;
-      width: 100%;
-    }
-
-    .app-card {
-      position: relative;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      padding: 30px 20px;
+    .feed-subtitle {
+      margin: 0;
+      opacity: 0.82;
+      letter-spacing: 0.03em;
       text-align: center;
-      transition: all 0.3s ease;
-      cursor: none;
+    }
+
+    .feed-toolbar {
+      margin-top: 28px;
+      width: min(1120px, 100%);
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      min-height: 100px;
-      backdrop-filter: blur(4px);
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
-    .app-card:hover {
-      background: rgba(0, 255, 231, 0.05);
-      border-color: var(--accent);
-      transform: translateY(-5px);
+    .toolbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
-    .alt-badge {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      font-size: 9px;
-      padding: 2px 6px;
-      border-radius: 4px;
-      color: var(--accent);
-      border: 1px solid var(--accent);
-      background: rgba(0,0,0,0.6);
-      cursor: pointer !important;
-    }
-
-    #backBtn {
-      display: none;
-      background: #111;
-      border: 1px solid var(--accent);
-      color: var(--accent);
-      padding: 8px 16px;
-      border-radius: 8px;
+    .feed-btn {
+      border: 1px solid rgba(0, 255, 231, 0.45);
+      background: rgba(10, 20, 20, 0.72);
+      color: #b6fff8;
+      border-radius: 10px;
+      padding: 10px 14px;
       font-family: 'Orbitron', sans-serif;
       font-size: 11px;
-      margin-right: 20px;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      cursor: pointer !important;
+      text-decoration: none;
+      cursor: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     }
 
-    .app-view {
-      position: fixed;
-      inset: 64px 0 0 0;
-      display: none;
-      background: #000;
-      z-index: 200;
+    .feed-btn:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 12px rgba(0, 255, 231, 0.35);
+      transform: translateY(-2px);
     }
 
-    iframe { width: 100%; height: 100%; border: none; }
-
-    .alt-popup {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.9);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 10000;
-      backdrop-filter: blur(5px);
-      cursor: auto !important;
+    .feed-meta {
+      font-size: 12px;
+      letter-spacing: 0.03em;
+      opacity: 0.9;
     }
 
-    .alt-popup-content {
-      background: #111;
-      padding: 40px;
-      border-radius: 20px;
-      border: 1px solid var(--card-border);
+    .feed-grid {
+      width: min(1120px, 100%);
+      margin-top: 26px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 18px;
+      padding-bottom: 40px;
+    }
+
+    .drop-card {
+      background: linear-gradient(160deg, rgba(10, 24, 22, 0.8), rgba(10, 13, 18, 0.74));
+      border: 1px solid rgba(0, 255, 231, 0.24);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), inset 0 0 25px rgba(0, 255, 231, 0.03);
       display: flex;
       flex-direction: column;
       gap: 12px;
-      width: 90%;
-      max-width: 350px;
+      min-height: 220px;
     }
 
-    .alt-link-btn {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      color: #fff;
-      padding: 15px;
-      border-radius: 8px;
-      transition: 0.2s;
-      cursor: pointer !important;
+    .drop-card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .drop-source {
+      margin: 0;
+      color: #d6ffff;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 14px;
+      letter-spacing: 0.04em;
+      line-height: 1.35;
+      word-break: break-word;
+    }
+
+    .drop-count {
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #9ef6ff;
+      border: 1px solid rgba(0, 255, 231, 0.42);
+      border-radius: 999px;
+      padding: 4px 8px;
+      background: rgba(0, 255, 231, 0.08);
+      white-space: nowrap;
+    }
+
+    .drop-links {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 270px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+
+    .drop-link {
+      display: block;
+      padding: 9px 10px;
+      border-radius: 10px;
+      color: #bffeff;
+      text-decoration: none;
+      font-size: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.04);
+      line-height: 1.35;
+      word-break: break-all;
+      transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .drop-link:hover {
+      border-color: rgba(0, 255, 231, 0.6);
+      transform: translateX(3px);
+      box-shadow: 0 0 15px rgba(0, 255, 231, 0.22);
+    }
+
+    .feed-empty {
+      width: min(760px, 100%);
+      margin-top: 24px;
+      border: 1px solid rgba(255, 95, 138, 0.4);
+      color: #ffd6e3;
+      background: rgba(255, 95, 138, 0.08);
+      border-radius: 14px;
+      padding: 16px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    @media (max-width: 760px) {
+      .app-selector {
+        padding: 38px 14px;
+      }
+
+      .app-selector h1 {
+        font-size: 28px;
+        letter-spacing: 0.08em;
+      }
+
+      .feed-meta {
+        width: 100%;
+        text-align: center;
+      }
     }
 
     /* SETTINGS PANEL */
@@ -377,11 +437,10 @@
   <a href="index.html" class="side-item"><img src="assets/img/controller.svg" alt="Home"><span>Home</span></a>
   <a href="multi.html" class="side-item"><img src="assets/img/grid.svg" alt="Multi"><span>Mlti-Gme Websites</span></a>
   <a href="single.html" class="side-item"><img src="assets/img/square.svg" alt="Single"><span>1-Gme Websites</span></a>
-  <a href="app.html" class="side-item"><img src="assets/img/square.svg" alt="Apps"><span>Apps</span></a>
+  <a href="proxies.html" class="side-item"><img src="assets/img/square.svg" alt="Proxies"><span>Proxies</span></a>
   <a href="extras.html" class="side-item"><img src="assets/img/extras.png" alt="Extras"><span>Extras</span></a>
   <a href="resources.html" class="side-item"><img src="assets/img/resources.png" alt="Res"><span>Resources</span></a>
   <a href="G.GUI - Games/credits.html" class="side-item"><img src="assets/img/credits.png" alt="Credits"><span>Credits</span></a>
-  <a href="G.GUI - Games/backup.html" class="side-item"><img src="assets/img/backup.png" alt="Backup"><span>Backup Links</span></a>
   <a href="G.GUI - Games/game.html" class="side-item"><img src="assets/img/game.png" alt="Games"><span>Games</span></a>
   <div style="flex-grow: 1;"></div>
   <button class="side-item icon-btn" id="sideSettingsBtn">
@@ -431,7 +490,6 @@
 
 <header class="top-bar">
   <div style="display: flex; align-items: center;">
-    <button id="backBtn">← BACK</button>
     <a href="index.html" class="controller-home" title="Home">
       <img src="assets/img/controller.svg" alt="Home">
     </a>
@@ -449,58 +507,24 @@
 
 <main class="app-shell">
   <div class="app-selector" id="appSelector">
-    <h1>Apps</h1>
-    <div class="app-buttons">
-      <div class="app-card" onclick="launchApp('https://edu.waterloomath.com/')" data-alt="https://coolmathgames.metropolitanstaffingsolutions.com/,https://mathteachersforhire.shop/,https://farmlands-policestation.planetlabs.net/">
-        <span>Truffled</span>
-        <div class="alt-badge" onclick="openAlt(event, this.parentElement)">ALT</div>
+    <h1 id="feedTitle">Daily Drops</h1>
+    <p class="feed-subtitle">Distrubtion of these proxies is to be done with credit to G.GUI</p>
+    <div class="feed-toolbar">
+      <div class="toolbar-actions">
+        <button id="refreshDrops" class="feed-btn">Refresh Feed</button>
       </div>
-      <div class="app-card" onclick="launchApp('https://shadow-good.bostoncareercounselor.com/')"><span>Shadow Good</span></div>
-      <div class="app-card" onclick="launchApp('https://highschoolmathteachers.com/')" data-alt="https://larp.now/,https://brooklyn.foundation/">
-        <span>Froggies Arcade</span>
-        <div class="alt-badge" onclick="openAlt(event, this.parentElement)">ALT</div>
-      </div>
-      <div class="app-card" onclick="launchApp('https://abc.school.dovereducation.org/')"><span>Nebulo</span></div>
-      <div class="app-card" onclick="launchApp('https://help.getwellnessconnect.com/')"><span>Zepto Learning 2</span></div>
-      <div class="app-card" onclick="launchApp('https://canvas.com.botanicaltech.com/')"><span>Infamous</span></div>
-      <div class="app-card" onclick="launchApp('https://rooms.verandahotels.com/')"><span>Void Network</span></div>
-      <div class="app-card" onclick="launchApp('https://vcsayt.blanksheetstudios.com/')" data-alt="https://babapapa.001-lab.space/,https://homework.fascinatingphoto.com/">
-        <span>Rammerhead</span>
-        <div class="alt-badge" onclick="openAlt(event, this.parentElement)">ALT</div>
-      </div>
-      <div class="app-card" onclick="launchApp('https://math-help.blanksheetstudios.com/')"><span>Glint Browser</span></div>
-      <div class="app-card" onclick="launchApp('https://nirprobytes.riseelevetors.com/')"><span>LuminalOS</span></div>
-      <div class="app-card" onclick="launchApp('https://mathtoolseducation.allastella.it/')" data-alt="https://math5.tcloud.my/">
-        <span>OverCloaked</span>
-        <div class="alt-badge" onclick="openAlt(event, this.parentElement)">ALT</div>
-      </div>
-      <div class="app-card" onclick="launchApp('https://invest.orlandobestinvest.com/onboarding/')"><span>Galaxy V6</span></div>
-
-      <div class="app-card" onclick="launchApp('https://sound.djalexbeats.co.uk/')"><span>Interstellar</span></div>
-      <div class="app-card" onclick="launchApp('https://educationforindia.com/')"><span>Vapor V4</span></div>
-      <div class="app-card" onclick="launchApp('https://cheese-tutorial-culinary-sciences.b-cdn.net/')"><span>Cheesy</span></div>
-      <div class="app-card" onclick="launchApp('https://subscribevcsa.slowfactory.es/')"><span>Boredom V2</span></div>
-      <div class="app-card" onclick="launchApp('http://math.nei.cl/')"><span>Reds Exploits</span></div>
-      <div class="app-card" onclick="launchApp('https://travel-earth4.hotelconsuladoinn.com/')"><span>EarthHub</span></div>
-      <div class="app-card" onclick="launchApp('https://educationalarts.polden.com/')"><span>Bromine</span></div>
-      <div class="app-card" onclick="launchApp('games/Axiom.html')"><span>Axiom</spawn></div>
+      <div class="feed-meta" id="dropMeta">Loading feed...</div>
     </div>
-  </div>
-
-  <div class="app-view" id="appView">
-    <iframe id="appFrame"></iframe>
+    <div class="feed-grid" id="dropSections"></div>
   </div>
 </main>
-
-<div class="alt-popup" id="altPopup">
-  <div class="alt-popup-content" id="altContent"></div>
-</div>
 
 <script src="assets/js/nav.js"></script>
 <script>
   const canvas = document.getElementById("bgCanvas");
   const ctx = canvas.getContext("2d");
   const cursor = document.getElementById("cursor");
+  const DAILY_DROP_URL = "https://cdn.jsdelivr.net/gh/GGUI-Classroom/GGUI-DailyDrops@master/DailyDrop.txt";
 
   function resize() {
     canvas.width = window.innerWidth;
@@ -589,7 +613,9 @@
         document.body.classList.add('use-bg1');
         saveOptions();
     });
-    document.getElementById('backBtn').addEventListener('click', closeApp);
+
+    document.getElementById('refreshDrops').addEventListener('click', loadDailyDrops);
+    loadDailyDrops();
   });
 
   let mouse = { x: window.innerWidth/2, y: window.innerHeight/2 };
@@ -611,7 +637,7 @@
   });
 
   function refreshCursorListeners() {
-    const interactive = document.querySelectorAll("a, button, .app-card, .alt-badge, .icon-btn, .side-item");
+    const interactive = document.querySelectorAll("a, button, .drop-link, .icon-btn, .side-item");
     interactive.forEach(el => {
       el.addEventListener("mouseenter", () => {
         cursor.style.width = "28px";
@@ -629,42 +655,152 @@
   }
   refreshCursorListeners();
 
-  function launchApp(url) {
-    document.getElementById('appSelector').style.display = 'none';
-    document.getElementById('appView').style.display = 'block';
-    document.getElementById('backBtn').style.display = 'block';
-    document.getElementById('appFrame').src = url;
-    document.getElementById('altPopup').style.display = 'none';
+  function normalizeUrl(candidate) {
+    const cleaned = candidate.replace(/\s+/g, '').replace(/[),.;]+$/g, '');
+    if (!cleaned) return null;
+    if (/^ttps:\/\//i.test(cleaned)) return `https://${cleaned.slice(7)}`;
+    if (/^https\/\//i.test(cleaned)) return `https://${cleaned.slice(8)}`;
+    if (/^http\/\//i.test(cleaned)) return `http://${cleaned.slice(7)}`;
+    if (/^https?:\/\//i.test(cleaned)) return cleaned;
+    return null;
   }
 
-  function closeApp() {
-    document.getElementById('appSelector').style.display = 'flex';
-    document.getElementById('appView').style.display = 'none';
-    document.getElementById('backBtn').style.display = 'none';
-    document.getElementById('appFrame').src = '';
-  }
+  function parseDailyDrops(rawText) {
+    const lines = rawText.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+    let title = 'Daily Drops';
+    const sections = [];
+    let current = null;
 
-  function openAlt(event, parentCard) {
-    event.stopPropagation();
-    const altData = parentCard.getAttribute('data-alt');
-    if (!altData) return;
-    const links = altData.split(',');
-    const popup = document.getElementById('altPopup');
-    const content = document.getElementById('altContent');
-    content.innerHTML = '<h2 style="font-size:14px; color:#666; font-family:Orbitron;">SELECT VERSION</h2>';
-    links.forEach((link, index) => {
-      const btn = document.createElement('button');
-      btn.className = 'alt-link-btn';
-      btn.textContent = "Mirror Link " + (index + 1);
-      btn.onclick = () => launchApp(link.trim());
-      content.appendChild(btn);
+    const getOrCreateSection = (name) => {
+      current = { name, links: [] };
+      sections.push(current);
+      return current;
+    };
+
+    lines.forEach((line) => {
+      if (/links for/i.test(line) && title === 'Daily Drops') {
+        title = line;
+        return;
+      }
+
+      const inlineMatches = line.match(/https?:\/\/[^\s]+/gi) || [];
+      const normalizedInline = inlineMatches
+        .map((value) => normalizeUrl(value))
+        .filter(Boolean);
+
+      if (normalizedInline.length > 0) {
+        if (!current) getOrCreateSection('General');
+        normalizedInline.forEach((url) => {
+          if (!current.links.includes(url)) current.links.push(url);
+        });
+        return;
+      }
+
+      const singleUrl = normalizeUrl(line);
+      if (singleUrl) {
+        if (!current) getOrCreateSection('General');
+        if (!current.links.includes(singleUrl)) current.links.push(singleUrl);
+        return;
+      }
+
+      if (/^\.{2,}$/g.test(line) || line.toLowerCase() === 'x') {
+        return;
+      }
+
+      getOrCreateSection(line);
     });
-    popup.style.display = 'flex';
+
+    const filteredSections = sections.filter((section) => section.links.length > 0);
+    const totalLinks = filteredSections.reduce((sum, section) => sum + section.links.length, 0);
+
+    return {
+      title,
+      sections: filteredSections,
+      totalLinks
+    };
   }
 
-  window.onclick = function(event) {
-    const popup = document.getElementById('altPopup');
-    if (event.target == popup) popup.style.display = "none";
+  function renderDailyDrops(parsed) {
+    const feedTitle = document.getElementById('feedTitle');
+    const dropMeta = document.getElementById('dropMeta');
+    const dropSections = document.getElementById('dropSections');
+
+    feedTitle.textContent = parsed.title;
+    dropMeta.textContent = `${parsed.totalLinks} links across ${parsed.sections.length} sources`;
+    dropSections.innerHTML = '';
+
+    if (parsed.sections.length === 0) {
+      const empty = document.createElement('div');
+      empty.className = 'feed-empty';
+      empty.textContent = 'No links were parsed from the feed right now. Try refresh in a moment.';
+      dropSections.appendChild(empty);
+      refreshCursorListeners();
+      return;
+    }
+
+    parsed.sections.forEach((section) => {
+      const card = document.createElement('section');
+      card.className = 'drop-card';
+
+      const cardHead = document.createElement('div');
+      cardHead.className = 'drop-card-head';
+
+      const source = document.createElement('h2');
+      source.className = 'drop-source';
+      source.textContent = section.name;
+
+      const count = document.createElement('span');
+      count.className = 'drop-count';
+      count.textContent = `${section.links.length} links`;
+
+      cardHead.appendChild(source);
+      cardHead.appendChild(count);
+
+      const links = document.createElement('ul');
+      links.className = 'drop-links';
+
+      section.links.forEach((url) => {
+        const item = document.createElement('li');
+        const anchor = document.createElement('a');
+        anchor.className = 'drop-link';
+        anchor.href = url;
+        anchor.target = '_blank';
+        anchor.rel = 'noopener noreferrer';
+        anchor.textContent = url;
+        item.appendChild(anchor);
+        links.appendChild(item);
+      });
+
+      card.appendChild(cardHead);
+      card.appendChild(links);
+      dropSections.appendChild(card);
+    });
+
+    refreshCursorListeners();
+  }
+
+  async function loadDailyDrops() {
+    const dropMeta = document.getElementById('dropMeta');
+    const refreshBtn = document.getElementById('refreshDrops');
+    refreshBtn.disabled = true;
+    dropMeta.textContent = 'Refreshing feed...';
+
+    try {
+      const response = await fetch(`${DAILY_DROP_URL}?t=${Date.now()}`, { cache: 'no-store' });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const text = await response.text();
+      const parsed = parseDailyDrops(text);
+      renderDailyDrops(parsed);
+      dropMeta.textContent = `${parsed.totalLinks} links across ${parsed.sections.length} sources`;
+    } catch (error) {
+      dropMeta.textContent = 'Feed failed to load right now.';
+      const dropSections = document.getElementById('dropSections');
+      dropSections.innerHTML = '<div class="feed-empty">Unable to load DailyDrop feed. Check your connection and try Refresh.</div>';
+      console.error('Failed to load DailyDrop:', error);
+    } finally {
+      refreshBtn.disabled = false;
+      refreshCursorListeners();
+    }
   }
 
   function draw() {

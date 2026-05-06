@@ -5,48 +5,90 @@ const searchBar = document.getElementById('searchBar');
 const sortOptions = document.getElementById('sortOptions');
 // https://www.jsdelivr.com/tools/purge
 const zonesurls = [
-    "https://cdn.jsdelivr.net/gh/gn-math/assets@main/zones.json",
-    "https://cdn.jsdelivr.net/gh/gn-math/assets@latest/zones.json",
-    "https://cdn.jsdelivr.net/gh/gn-math/assets@master/zones.json",
-    "https://cdn.jsdelivr.net/gh/gn-math/assets/zones.json"
+  "./zones.json",
+  "https://cdn.jsdelivr.net/gh/freebuisness/assets@main/zones.json",
+  "https://cdn.jsdelivr.net/gh/freebuisness/assets@latest/zones.json",
+  "https://cdn.jsdelivr.net/gh/freebuisness/assets@master/zones.json",
+  "https://cdn.jsdelivr.net/gh/freebuisness/assets/zones.json"
 ];
-let zonesURL = zonesurls[Math.floor(Math.random() * zonesurls.length)];
-const coverURL = "https://cdn.jsdelivr.net/gh/gn-math/covers@main";
-const htmlURL = "https://cdn.jsdelivr.net/gh/gn-math/html@main";
+let zonesURL = zonesurls[0];
+const coverURL = "https://cdn.jsdelivr.net/gh/freebuisness/covers@main";
+const htmlURL = "https://cdn.jsdelivr.net/gh/freebuisness/html@main";
 let zones = [];
 let popularityData = {};
 const featuredContainer = document.getElementById('featuredZones');
+
+async function fetchZonesJson(url) {
+    const response = await fetch(url + "?t=" + Date.now());
+    if (!response.ok) {
+        throw new Error(`HTTP ${response.status} while loading zones`);
+    }
+
+  const text = (await response.text()).replace(/^\uFEFF/, "").trimStart();
+    let parsed;
+    try {
+        parsed = JSON.parse(text);
+    } catch (error) {
+        throw new Error(`Invalid zones JSON from ${url}: ${text.slice(0, 80)}`);
+    }
+
+    if (!Array.isArray(parsed)) {
+        throw new Error(`Zones payload from ${url} was not an array`);
+    }
+
+    return parsed;
+}
+
 async function listZones() {
     try {
       let sharesponse;
       let shajson;
       let sha;
         try {
-          sharesponse = await fetch("https://api.github.com/repos/gn-math/assets/commits?t="+Date.now());
+          sharesponse = await fetch("https://api.github.com/repos/freebuisness/assets/commits?t="+Date.now());
         } catch (error) {}
         if (sharesponse && sharesponse.status === 200) {
           try {
             shajson = await sharesponse.json();
             sha = shajson[0]['sha'];
             if (sha) {
-                zonesURL = `https://cdn.jsdelivr.net/gh/gn-math/assets@${sha}/zones.json`;
+                zonesURL = `https://cdn.jsdelivr.net/gh/freebuisness/assets@${sha}/zones.json`;
             }
           } catch (error) {
             try {
-                let secondarysharesponse = await fetch("https://raw.githubusercontent.com/gn-math/xml/refs/heads/main/sha.txt?t="+Date.now());
+                let secondarysharesponse = await fetch("https://raw.githubusercontent.com/freebuisness/xml/refs/heads/main/sha.txt?t="+Date.now());
                 if (secondarysharesponse && secondarysharesponse.status === 200) {
                     sha = (await secondarysharesponse.text()).trim();
                     if (sha) {
-                        zonesURL = `https://cdn.jsdelivr.net/gh/gn-math/assets@${sha}/zones.json`;
+                        zonesURL = `https://cdn.jsdelivr.net/gh/freebuisness/assets@${sha}/zones.json`;
                     }
                 }
             } catch(error) {}
           }
         }
-        const response = await fetch(zonesURL+"?t="+Date.now());
-        const json = await response.json();
-        zones = json;
+        
+      const zoneSources = [zonesURL, ...zonesurls.filter(url => url !== zonesURL)];
+      let loadedZones = null;
+      let lastError = null;
+
+      for (const source of zoneSources) {
+        try {
+          loadedZones = await fetchZonesJson(source);
+          zonesURL = source;
+          break;
+        } catch (error) {
+          lastError = error;
+        }
+      }
+
+      if (!loadedZones) {
+        throw lastError || new Error('Unable to load zones');
+      }
+
+      zones = loadedZones;
+      if (zones.length > 0 && zones[0]) {
         zones[0].featured = true; // always gonna be the discord
+      }
         await fetchPopularity();
         sortZones();
         const search = new URLSearchParams(window.location.search);
@@ -106,12 +148,12 @@ async function listZones() {
         }
     } catch (error) {
         console.error(error);
-        container.innerHTML = `Error loading zones: ${error}`;
+      container.innerHTML = `Error loading zones: ${error.message || error}`;
     }
 }
 async function fetchPopularity() {
     try {
-        const response = await fetch("https://data.jsdelivr.com/v1/stats/packages/gh/gn-math/html@main/files?period=year");
+        const response = await fetch("https://data.jsdelivr.com/v1/stats/packages/gh/freebuisness/html@main/files?period=year");
         const data = await response.json();
         data.forEach(file => {
             const idMatch = file.name.match(/\/(\d+)\.html$/);
@@ -246,31 +288,47 @@ function filterZones() {
 }
 
 function openZone(file) {
-    if (file.url.startsWith("http")) {
-        window.open(file.url, "_blank");
-    } else {
-        const url = file.url.replace("{COVER_URL}", coverURL).replace("{HTML_URL}", htmlURL);
-        fetch(url+"?t="+Date.now()).then(response => response.text()).then(html => {
-            if (zoneFrame.contentDocument === null) {
-                zoneFrame = document.createElement("iframe");
-                zoneFrame.id = "zoneFrame";
-                zoneViewer.appendChild(zoneFrame);
-            }
-            zoneFrame.contentDocument.open();
-            zoneFrame.contentDocument.write(html);
-            zoneFrame.contentDocument.close();
-            document.getElementById('zoneName').textContent = file.name;
-            document.getElementById('zoneId').textContent = file.id;
-            document.getElementById('zoneAuthor').textContent = "by " + file.author;
-            if (file.authorLink) {
-                document.getElementById('zoneAuthor').href = file.authorLink;
-            }
-            zoneViewer.style.display = "block";
-            const url = new URL(window.location);
-            url.searchParams.set('id', file.id);
-            history.pushState(null, '', url.toString());
-        }).catch(error => alert("Failed to load zone: " + error));
+  const url = file.url.startsWith("http")
+    ? file.url
+    : file.url.replace("{COVER_URL}", coverURL).replace("{HTML_URL}", htmlURL);
+
+  fetch(url + "?t=" + Date.now()).then(response => response.text()).then(html => {
+    if (zoneFrame.contentDocument === null) {
+      zoneFrame = document.createElement("iframe");
+      zoneFrame.id = "zoneFrame";
+      zoneViewer.appendChild(zoneFrame);
     }
+    zoneFrame.contentDocument.open();
+    zoneFrame.contentDocument.write(html);
+    zoneFrame.contentDocument.close();
+    document.getElementById('zoneName').textContent = file.name;
+    document.getElementById('zoneId').textContent = file.id;
+    document.getElementById('zoneAuthor').textContent = "by " + (file.author || "Unknown");
+    if (file.authorLink) {
+      document.getElementById('zoneAuthor').href = file.authorLink;
+    }
+    zoneViewer.style.display = "block";
+    const currentUrl = new URL(window.location);
+    currentUrl.searchParams.set('id', file.id);
+    history.pushState(null, '', currentUrl.toString());
+  }).catch(() => {
+    if (zoneFrame.contentDocument === null) {
+      zoneFrame = document.createElement("iframe");
+      zoneFrame.id = "zoneFrame";
+      zoneViewer.appendChild(zoneFrame);
+    }
+    zoneFrame.src = url;
+    document.getElementById('zoneName').textContent = file.name;
+    document.getElementById('zoneId').textContent = file.id;
+    document.getElementById('zoneAuthor').textContent = "by " + (file.author || "Unknown");
+    if (file.authorLink) {
+      document.getElementById('zoneAuthor').href = file.authorLink;
+    }
+    zoneViewer.style.display = "block";
+    const currentUrl = new URL(window.location);
+    currentUrl.searchParams.set('id', file.id);
+    history.pushState(null, '', currentUrl.toString());
+  });
 }
 
 function aboutBlank() {

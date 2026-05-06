@@ -760,19 +760,15 @@
 <canvas id="bgCanvas"></canvas>
 <div class="static-bg-layer" id="staticBg"></div>
 <div class="custom-cursor" id="cursor"></div>
-<div class="easter-art" aria-hidden="true">
-  <img class="easter-basket-art" src="assets/img/easter-basket.svg" alt="">
-</div>
 
 <nav class="side-nav" id="sideNav">
   <a href="index.html" class="side-item"><img src="assets/img/controller.svg" alt="Home"><span>Home</span></a>
   <a href="multi.html" class="side-item"><img src="assets/img/grid.svg" alt="Multi"><span>Mlti-Gme Websites</span></a>
   <a href="single.html" class="side-item"><img src="assets/img/square.svg" alt="Single"><span>1-Gme Websites</span></a>
-  <a href="app.html" class="side-item"><img src="assets/img/square.svg" alt="Apps"><span>Apps</span></a>
+  <a href="proxies.html" class="side-item"><img src="assets/img/square.svg" alt="Proxies"><span>Proxies</span></a>
   <a href="extras.html" class="side-item"><img src="assets/img/extras.png" alt="Extras"><span>Extras</span></a>
   <a href="resources.html" class="side-item"><img src="assets/img/resources.png" alt="Res"><span>Resources</span></a>
   <a href="G.GUI - Games/credits.html" class="side-item"><img src="assets/img/credits.png" alt="Credits"><span>Credits</span></a>
-  <a href="G.GUI - Games/backup.html" class="side-item"><img src="assets/img/backup.png" alt="Backup"><span>Backup Links</span></a>
   <a href="G.GUI - Games/game.html" class="side-item"><img src="assets/img/game.png" alt="Games"><span>Games</span></a>
   
   <div style="flex-grow: 1;"></div>
@@ -845,13 +841,6 @@
             <span>Glow Effects</span>
             <label class="switch">
               <input type="checkbox" id="glowToggle" checked>
-              <span class="slider"></span>
-            </label>
-          </div>
-          <div class="setting-item">
-            <span>Easter Pink Mode</span>
-            <label class="switch">
-              <input type="checkbox" id="easterToggle">
               <span class="slider"></span>
             </label>
           </div>
@@ -955,11 +944,13 @@ The creators and contributors are not responsible for consequences arising from 
 
 <div class="overlay hidden" id="updateOverlay">
   <div class="box">
-    <img src="assets/img/V2.png" alt="Version 2.1" class="box-title-img">
+    <img src="assets/img/V2.png" alt="Version 2.2" class="box-title-img">
     <div class="box-text" style="text-align:center">
-      ➤ Small Proxie Refresh
-      ➤(MORE COMING IN THE NEXT UPD)
-
+Version 2.2 is here!
+NEW:
+MUSIC APP - In extras section.
+FIXED:
+Minor bugs.
     </div>
     <button class="box-btn" onclick="closeUpdate()">Continue</button>
   </div>
@@ -1021,7 +1012,6 @@ The creators and contributors are not responsible for consequences arising from 
       <a href="index.html" class="controller-home"><img src="assets/img/controller.svg"></a>
       <a href="resources.html" class="top-link">Resources</a>
       <a href="G.GUI - Games/credits.html" class="top-link">Credits</a>
-      <a href="G.GUI - Games/backup.html" class="top-link">Backup Links</a>
   </div>
   <div style="display: flex; gap: 15px; align-items: center;">
     <button id="openSettings" class="icon-btn"><img src="assets/img/setting.png"></button>
@@ -1037,19 +1027,19 @@ The creators and contributors are not responsible for consequences arising from 
   <div class="nav-grid">
     <a href="multi.html" class="nav-card"><img src="assets/img/grid.svg"><span>Multi-Game Websites</span></a>
     <a href="single.html" class="nav-card"><img src="assets/img/square.svg"><span>Single-Game Websites</span></a>
-    <a href="app.html" class="nav-card"><img src="assets/img/square.svg"><span>Apps</span></a>
+    <a href="proxies.html" class="nav-card"><img src="assets/img/square.svg"><span>Proxies</span></a>
     <a href="extras.html" class="nav-card"><img src="assets/img/extras.png"><span>Extra Games</span></a>
     <a href="G.GUI - Games/game.html" class="nav-card"><img src="assets/img/game.png"><span>Games</span></a>
   </div>
 </main>
 
 <footer class="footer">
-  <span>G.GUI Project • Version 2.1</span>
+  <span>G.GUI Project • Version 2.2</span>
 </footer>
 
 <script src="assets/js/nav.js"></script>
 <script>
-const currentVersion = "2.1"; 
+const currentVersion = "2.2"; 
 const cloakPresets = [
   { name: "Google", title: "Google", icon: "https://www.google.com/favicon.ico" },
   { name: "Canvas", title: "Canvas", icon: "assets/img/instructure.png" },
@@ -1066,20 +1056,10 @@ const defaultSettings = {
   compactCards: false,
   glow: true,
   theme: 'neon',
-  buttonStyle: 'frosted',
-  easterMode: true
+  buttonStyle: 'frosted'
 };
 let onboardingChoices = { ...defaultSettings };
 let pendingVersionPrompt = false;
-
-// ===== LIMITED-TIME EASTER MODE (easy to remove) =====
-const EASTER_EVENT_AUTO_ENABLE = true;
-const EASTER_EVENT_BOOT_KEY = 'ggui_easter_event_boot_v1';
-const easterTheme = {
-  accent: '#ff64b4',
-  soft: '#ffd2ea',
-  rgb: '255,100,180'
-};
 
 const buttonStyleOrder = ['frosted', 'glass'];
 
@@ -1100,22 +1080,12 @@ function getButtonStyleIndex(style) {
 
 function getStoredSettings() {
   const saved = localStorage.getItem('ggui_settings');
-  if (!saved) return applyEventAutostart({ ...defaultSettings });
+  if (!saved) return { ...defaultSettings };
   try {
-    return applyEventAutostart({ ...defaultSettings, ...JSON.parse(saved) });
+    return { ...defaultSettings, ...JSON.parse(saved) };
   } catch {
-    return applyEventAutostart({ ...defaultSettings });
+    return { ...defaultSettings };
   }
-}
-
-function applyEventAutostart(settings) {
-  if (!EASTER_EVENT_AUTO_ENABLE) return settings;
-  const hasBooted = localStorage.getItem(EASTER_EVENT_BOOT_KEY) === '1';
-  if (hasBooted) return settings;
-  const updated = { ...settings, easterMode: true };
-  localStorage.setItem('ggui_settings', JSON.stringify(updated));
-  localStorage.setItem(EASTER_EVENT_BOOT_KEY, '1');
-  return updated;
 }
 
 function resizeCanvas() {
@@ -1132,7 +1102,6 @@ function applySettings(s) {
   document.body.classList.toggle('sidebar-mode', s.sidebar === true);
   document.body.classList.toggle('no-glow', s.glow === false);
   document.body.classList.toggle('flat-cards', s.compactCards === true);
-  document.body.classList.toggle('season-easter', s.easterMode === true);
   const buttonStyle = s.buttonStyle === 'glass' ? 'glass' : 'frosted';
   document.body.classList.remove('btn-style-frosted', 'btn-style-glass');
   document.body.classList.add(`btn-style-${buttonStyle}`);
@@ -1140,13 +1109,11 @@ function applySettings(s) {
   const activeTheme = (s.theme === 'violet' || s.theme === 'crimson') ? s.theme : 'neon';
   document.body.classList.add(`theme-${activeTheme}`);
 
-  const activeAccent = s.easterMode === true
-    ? easterTheme
-    : activeTheme === 'violet'
-      ? { accent: '#b47cff', soft: '#dac0ff', rgb: '180,124,255' }
-      : activeTheme === 'crimson'
-        ? { accent: '#ff5f8a', soft: '#ffc4d6', rgb: '255,95,138' }
-        : { accent: '#00ffe7', soft: '#9ffcff', rgb: '0,255,231' };
+  const activeAccent = activeTheme === 'violet'
+    ? { accent: '#b47cff', soft: '#dac0ff', rgb: '180,124,255' }
+    : activeTheme === 'crimson'
+      ? { accent: '#ff5f8a', soft: '#ffc4d6', rgb: '255,95,138' }
+      : { accent: '#00ffe7', soft: '#9ffcff', rgb: '0,255,231' };
   document.documentElement.style.setProperty('--accent', activeAccent.accent);
   document.documentElement.style.setProperty('--accent-soft', activeAccent.soft);
   document.documentElement.style.setProperty('--accent-rgb', activeAccent.rgb);
@@ -1191,7 +1158,6 @@ function loadOptions() {
   if(document.getElementById('startupToggle')) document.getElementById('startupToggle').checked = s.startup;
   if(document.getElementById('compactCardsToggle')) document.getElementById('compactCardsToggle').checked = s.compactCards;
   if(document.getElementById('glowToggle')) document.getElementById('glowToggle').checked = s.glow;
-  if(document.getElementById('easterToggle')) document.getElementById('easterToggle').checked = s.easterMode === true;
   if(document.getElementById('buttonStyleSlider')) document.getElementById('buttonStyleSlider').value = String(getButtonStyleIndex(s.buttonStyle));
   applySettings(s);
 }
@@ -1204,7 +1170,6 @@ function saveOptions() {
     startup: document.getElementById('startupToggle') ? document.getElementById('startupToggle').checked : true,
     compactCards: document.getElementById('compactCardsToggle') ? document.getElementById('compactCardsToggle').checked : false,
     glow: document.getElementById('glowToggle') ? document.getElementById('glowToggle').checked : true,
-    easterMode: document.getElementById('easterToggle') ? document.getElementById('easterToggle').checked : false,
     theme: document.body.classList.contains('theme-violet') ? 'violet' : document.body.classList.contains('theme-crimson') ? 'crimson' : 'neon',
     buttonStyle: document.getElementById('buttonStyleSlider') ? getButtonStyleByIndex(document.getElementById('buttonStyleSlider').value) : 'frosted'
   };
@@ -1220,7 +1185,6 @@ function resetSettingsForOnboarding() {
   if (document.getElementById('startupToggle')) document.getElementById('startupToggle').checked = defaultSettings.startup;
   if (document.getElementById('compactCardsToggle')) document.getElementById('compactCardsToggle').checked = defaultSettings.compactCards;
   if (document.getElementById('glowToggle')) document.getElementById('glowToggle').checked = defaultSettings.glow;
-  if (document.getElementById('easterToggle')) document.getElementById('easterToggle').checked = defaultSettings.easterMode;
   if (document.getElementById('buttonStyleSlider')) document.getElementById('buttonStyleSlider').value = String(getButtonStyleIndex(defaultSettings.buttonStyle));
   applySettings(defaultSettings);
 }
@@ -1291,8 +1255,7 @@ function finishOnboarding() {
     compactCards: defaultSettings.compactCards,
     glow: onboardingChoices.glow !== false,
     theme: onboardingChoices.theme || 'neon',
-    buttonStyle: defaultSettings.buttonStyle,
-    easterMode: true
+    buttonStyle: defaultSettings.buttonStyle
   };
 
   localStorage.setItem('ggui_settings', JSON.stringify(finalSettings));
@@ -1416,7 +1379,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById('startupToggle').onchange = saveOptions;
   document.getElementById('compactCardsToggle').onchange = saveOptions;
   document.getElementById('glowToggle').onchange = saveOptions;
-  document.getElementById('easterToggle').onchange = saveOptions;
   document.getElementById('buttonStyleSlider').oninput = saveOptions;
 
   document.querySelectorAll('#themePreviewContainer .theme-opt').forEach(themeBtn => {
